@@ -1,4 +1,4 @@
-package com.example.cinequest.model;
+package com.example.cinequest.model.repsonse;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
