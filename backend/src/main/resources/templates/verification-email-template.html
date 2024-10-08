@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinequest Movie Booking App - Verification</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #1C1C1C;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: #EDEEEE;
+        }
+
+        h1 {
+            color: #EDEEEE;
+            text-align: center;
+        }
+
+        h3 {
+            color: #EDEEEE;
+            text-align: start;
+        }
+
+        .verification-code h2, .verification-code p {
+            color: #000000;
+            text-align: center;
+        }
+
+        .verification-code {
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .verification-box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+ul.no-bullets {
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center; 
+}
+
+        .code-digit {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .code-digit:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .about-section {
+            margin-top: 30px;
+        }
+
+        .about-section p {
+            text-align: justify;
+            color: #6B6B6B;
+        }
+
+        .developer-info {
+            display: grid; grid-template-columns: 1fr auto;
+            margin-top: 30px;
+        }
+        .developer-info span {
+            color: #EDEEEE;
+        }
+
+
+        .developer-info a {
+            text-decoration: none;
+            color: #EDEEEE;
+            padding: 5px 10px;
+            border: 1px solid #6B6B6B;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .developer-info a:hover {
+            background-color: #EDEEEE;
+            color: #1C1C1C;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6B6B6B;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="text-center mb-4">
+                <h1>Welcome to Cinequest Movie Booking App</h1>
+            </div>
+            <section class="verification-code">
+                <h2>Verification Code</h2>
+                <p>Use the following code to complete your account creation:</p>
+                <ul class="verification-box no-bullets" th:each="code : ${characters}">
+                    <li class="code-digit" th:text="${code}">1</li>
+                    <li class="code-digit" th:text="${code}">1</li>
+                    <li class="code-digit" th:text="${code}">1</li>
+
+                </ul>
+                <p class="text-muted">This code will expire in 5 minutes.</p>
+            </section>
+
+            <div class="about-section">
+                <h3>About Cinequest</h3>
+                <p>Cinequest is a movie ticket booking app designed to simulate the movie booking experience. The backend is built using Java and Spring Boot, ensuring robust performance and scalability. The frontend is developed with Dart and Flutter, offering a smooth and responsive user interface.</p>
+
+                <p>The mobile UI design draws inspiration from 
+                    <a href="https://www.behance.net/gallery/173303277/CineQuest?tracking_source=search_projects_appreciations|movie+ui+mobile+app&l=510" target="_blank">Behance - Cinequest</a> 
+                    to create an engaging user experience. Additionally, Cinequest leverages the 
+                    <a href="https://www.themoviedb.org/" target="_blank">TheMovieDb (TMDB) API</a> 
+                    to retrieve movie data, enhancing the app with real-time movie information.
+                </p>
+                <p>This app is developed solely for learning and personal development purposes.</p>
+            </div>
+
+            <div class="developer-info">
+                <span>Nguyen Khai Hoan</span>
+                <div>
+                    <a href="https://www.facebook.com/bang.hoan.710">Facebook</a>
+                    <a href="https://github.com/NguyenKhaiHoan">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -2,7 +2,6 @@ package com.example.cinequest.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.cinequest.entity.Movie;
@@ -13,10 +12,12 @@ import com.example.cinequest.model.request.MovieListRequest;
 import com.example.cinequest.repository.FavoriteMovieRepository;
 import com.example.cinequest.service.FavoriteMovieService;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Service
 public class FavoriteMovieServiceImpl implements FavoriteMovieService {
-    @Autowired
-    private FavoriteMovieRepository favoriteMovieRepository;
+    private final FavoriteMovieRepository favoriteMovieRepository;
 
     @Override
     public void addFavorite(AddFavoriteRequest request) throws CinequestApiException {

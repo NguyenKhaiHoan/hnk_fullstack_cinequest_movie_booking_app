@@ -6,7 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum EnumException {
-    SUCCESS(1, 200, "Success."), INVALID_SERVICE(2, 501, "Invalid service: this service does not exist."),
+    SUCCESS(1, 200, "Success."),
+    INVALID_SERVICE(2, 501, "Invalid service: this service does not exist."),
     AUTHENTICATION_FAILURE(3, 401, "Authentication failed: You do not have access to the service."),
     INVALID_FORMAT(4, 405, "Invalid format: This service does not exist in that format."),
     INVALID_PARAMETER(5, 422, "Invalid parameter: Your request parameters are incorrect."),
@@ -17,9 +18,12 @@ public enum EnumException {
     API_KEY_SUSPENDED(10, 401, "API key suspended: Your access has been suspended, contact TMDB."),
     INTERNAL_ERROR(11, 500, "Internal error: An error occurred, please contact TMDB."),
     RECORD_UPDATED_SUCCESS(12, 201, "Record successfully updated."),
-    RECORD_DELETED_SUCCESS(13, 200, "Record successfully deleted."), AUTH_FAILURE(14, 401, "Authentication failure."),
-    FAILURE(15, 500, "Failure."), DEVICE_REJECTED(16, 401, "Device denied."),
-    SESSION_REJECTED(17, 401, "Session denied."), AUTHENTICATION_FAILED(18, 400, "Authentication failed."),
+    RECORD_DELETED_SUCCESS(13, 200, "Record successfully deleted."),
+    AUTH_FAILURE(14, 401, "Authentication failure."),
+    FAILURE(15, 500, "Failure."),
+    DEVICE_REJECTED(16, 401, "Device denied."),
+    SESSION_REJECTED(17, 401, "Session denied."),
+    AUTHENTICATION_FAILED(18, 400, "Authentication failed."),
     INVALID_ACCEPT_HEADER(19, 406, "Invalid accept header."),
     INVALID_DATE_RANGE(20, 422, "Invalid date range: The date range cannot be greater than 14 days."),
     ENTRY_NOT_FOUND(21, 200, "Entry not found: The item you are trying to edit was not found."),
@@ -32,7 +36,7 @@ public enum EnumException {
     INVALID_TIMEZONE(28, 400, "Invalid timezone: Please refer to the documentation for valid timezones."),
     CONFIRMATION_REQUIRED(29, 400, "You must confirm this action: Please provide parameter confirm=true."),
     INVALID_CREDENTIALS(30, 401, "Invalid username and/or password: You did not provide valid credentials."),
-    ACCOUNT_DISABLED(31, 401, "Account disabled: Your account is no longer active. Contact TMDB if this is a mistake."),
+    ACCOUNT_DISABLED(31, 401, "Account disabled: Your account is no longer active."),
     EMAIL_NOT_VERIFIED(32, 401, "Email not verified: Your email address has not been verified."),
     INVALID_REQUEST_TOKEN(33, 401, "Invalid request token: The request token has expired or is invalid."),
     RESOURCE_NOT_FOUND(34, 404, "The resource you requested could not be found."),
@@ -40,13 +44,19 @@ public enum EnumException {
     NO_WRITE_PERMISSION(36, 401, "User has not been granted write access for this token."),
     SESSION_NOT_FOUND(37, 404, "The requested session was not found."),
     NO_EDIT_PERMISSION(38, 401, "You do not have permission to edit this resource."),
-    RESOURCE_PRIVATE(39, 401, "This resource is private."), NOTHING_TO_UPDATE(40, 200, "Nothing to update."),
+    RESOURCE_PRIVATE(39, 401, "This resource is private."),
+    NOTHING_TO_UPDATE(40, 200, "Nothing to update."),
     REQUEST_TOKEN_NOT_APPROVED(41, 422, "This request token has not been approved by the user."),
     METHOD_NOT_SUPPORTED(42, 405, "This request method is not supported for this resource."),
     BACKEND_SERVER_UNREACHABLE(43, 502, "Unable to connect to the backend server."),
-    INVALID_ID_ERROR(44, 500, "Invalid ID."), USER_SUSPENDED(45, 403, "This user has been suspended."),
+    INVALID_ID_ERROR(44, 500, "Invalid ID."),
+    USER_SUSPENDED(45, 403, "This user has been suspended."),
     API_UNDER_MAINTENANCE(46, 503, "API is under maintenance. Please try again later."),
-    INVALID_INPUT(47, 400, "Invalid input.");
+    INVALID_INPUT(47, 400, "Invalid input."),
+    EXPIRED_VERIFICATION_CODE(48, 400, "Expired verification code: The verification code has expired."),
+    INVALID_VERIFICATION_CODE(49, 400, "Invalid verification code: The verification code provided is incorrect."),
+    ACCOUNT_ALREADY_VERIFIED(50, 422, "Invalid parameter: Your account is already verified."),
+    ACCOUNT_NOT_VERIFIED(51, 403, "Account not verified: Please verify your account.");
 
     private final int statusCode;
     private final int httpStatusCode;
