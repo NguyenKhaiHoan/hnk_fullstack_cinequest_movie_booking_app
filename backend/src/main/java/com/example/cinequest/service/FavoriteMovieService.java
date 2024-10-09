@@ -10,4 +10,6 @@ public interface FavoriteMovieService {
     void addFavorite(AddFavoriteRequest request);
 
     List<Movie> getFavorites(MovieListRequest request);
+
+    int getFavoritesSize();
 }
