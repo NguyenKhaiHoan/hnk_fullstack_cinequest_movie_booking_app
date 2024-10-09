@@ -11,7 +11,7 @@ import org.thymeleaf.context.Context;
 
 import com.example.cinequest.entity.AppUser;
 import com.example.cinequest.exception.CinequestApiException;
-import com.example.cinequest.exception.EnumException;
+import com.example.cinequest.exception.ApiResponseCode;
 import com.example.cinequest.model.request.LoginRequest;
 import com.example.cinequest.model.request.SignUpRequest;
 import com.example.cinequest.model.request.VerifyUserRequest;
@@ -35,12 +35,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final EmailService emailService;
 
     @Override
-    public AppUser signup(SignUpRequest input) {
+    public AppUser signup(SignUpRequest input) throws CinequestApiException {
         AppUser user = new AppUser(input.getEmail(), passwordEncoder.encode(input.getPassword()));
+
         user.setVerificationCode(generateVerificationCode());
         user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(5));
         user.setEnabled(false);
+
         sendVerificationEmailWithHtmlTemplate(user);
+
         return userRepository.save(user);
     }
 
@@ -48,21 +51,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AppUser login(LoginRequest input) throws CinequestApiException {
         AppUser user = userRepository.findByEmail(input.getEmail())
                 .orElseThrow(() -> {
-                    final EnumException exception = EnumException.RESOURCE_NOT_FOUND;
+                    final ApiResponseCode responseCode = ApiResponseCode.ACCOUNT_NOT_REGISTERED;
                     throw new CinequestApiException(
                             false,
-                            exception.getStatusCode(),
-                            exception.getHttpStatusCode(),
-                            "User not found: The user associated with the provided email address does not exist in our records. Please check the email entered or register for a new account.");
+                            responseCode.getStatusCode(),
+                            responseCode.getHttpStatusCode(),
+                            responseCode.getStatusMessage());
                 });
 
         if (!user.isEnabled()) {
-            final EnumException exception = EnumException.ACCOUNT_NOT_VERIFIED;
+            final ApiResponseCode responseCode = ApiResponseCode.ACCOUNT_NOT_VERIFIED;
             throw new CinequestApiException(
                     false,
-                    exception.getStatusCode(),
-                    exception.getHttpStatusCode(),
-                    exception.getStatusMessage());
+                    responseCode.getStatusCode(),
+                    responseCode.getHttpStatusCode(),
+                    responseCode.getStatusMessage());
         }
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -75,51 +78,57 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public void verify(VerifyUserRequest input) throws CinequestApiException {
         Optional<AppUser> optionalUser = userRepository.findByEmail(input.getEmail());
+
         if (optionalUser.isPresent()) {
             AppUser user = optionalUser.get();
             if (user.getVerificationCodeExpiresAt().isBefore(LocalDateTime.now())) {
-                final EnumException exception = EnumException.EXPIRED_VERIFICATION_CODE;
-                throw new CinequestApiException(false, exception.getStatusCode(), exception.getHttpStatusCode(),
-                        exception.getStatusMessage());
+                final ApiResponseCode responseCode = ApiResponseCode.EMAIL_VERIFICATION_CODE_EXPIRED;
+                throw new CinequestApiException(false, responseCode.getStatusCode(), responseCode.getHttpStatusCode(),
+                        responseCode.getStatusMessage());
             }
+
             if (user.getVerificationCode().equals(input.getVerificationCode())) {
                 user.setEnabled(true);
                 user.setVerificationCode(null);
                 user.setVerificationCodeExpiresAt(null);
                 userRepository.save(user);
             } else {
-                final EnumException exception = EnumException.INVALID_VERIFICATION_CODE;
-                throw new CinequestApiException(false, exception.getStatusCode(), exception.getHttpStatusCode(),
-                        exception.getStatusMessage());
+                final ApiResponseCode responseCode = ApiResponseCode.EMAIL_VERIFICATION_CODE_INVALID;
+                throw new CinequestApiException(false, responseCode.getStatusCode(), responseCode.getHttpStatusCode(),
+                        responseCode.getStatusMessage());
             }
         } else {
-            final EnumException exception = EnumException.RESOURCE_NOT_FOUND;
-            throw new CinequestApiException(false, exception.getStatusCode(), exception.getHttpStatusCode(),
-                    exception.getStatusMessage());
+            final ApiResponseCode responseCode = ApiResponseCode.VERIFY_ACCOUNT_FAIL;
+            throw new CinequestApiException(false, responseCode.getStatusCode(), responseCode.getHttpStatusCode(),
+                    responseCode.getStatusMessage());
         }
     }
 
     @Override
     public void resendVerificationEmail(String email) throws CinequestApiException {
         Optional<AppUser> optionalUser = userRepository.findByEmail(email);
+
         if (optionalUser.isPresent()) {
             AppUser user = optionalUser.get();
+
             if (user.isEnabled()) {
-                final EnumException exception = EnumException.ACCOUNT_ALREADY_VERIFIED;
-                throw new CinequestApiException(false, exception.getStatusCode(), exception.getHttpStatusCode(),
-                        exception.getStatusMessage());
+                final ApiResponseCode responseCode = ApiResponseCode.ACCOUNT_ALREADY_VERIFIED;
+                throw new CinequestApiException(false, responseCode.getStatusCode(), responseCode.getHttpStatusCode(),
+                        responseCode.getStatusMessage());
             }
+
             user.setVerificationCode(generateVerificationCode());
-            user.setVerificationCodeExpiresAt(LocalDateTime.now().plusHours(1));
+            user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(5));
+
             sendVerificationEmail(user);
             userRepository.save(user);
         } else {
-            final EnumException exception = EnumException.RESOURCE_NOT_FOUND;
+            final ApiResponseCode responseCode = ApiResponseCode.USER_NOT_FOUND;
             throw new CinequestApiException(
                     false,
-                    exception.getStatusCode(),
-                    exception.getHttpStatusCode(),
-                    "User not found: The user associated with the provided email address does not exist in our records. Please check the email entered or register for a new account.");
+                    responseCode.getStatusCode(),
+                    responseCode.getHttpStatusCode(),
+                    responseCode.getStatusMessage());
         }
     }
 
@@ -133,12 +142,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             emailService.sendVerificationEmail(user.getEmail(), subject, text);
         } catch (MessagingException e) {
             e.printStackTrace();
-            final EnumException exception = EnumException.RESOURCE_NOT_FOUND;
+            final ApiResponseCode responseCode = ApiResponseCode.USER_NOT_FOUND;
             throw new CinequestApiException(
                     false,
-                    exception.getStatusCode(),
-                    exception.getHttpStatusCode(),
-                    "User not found: The user associated with the provided email address does not exist in our records. Please check the email entered or register for a new account.");
+                    responseCode.getStatusCode(),
+                    responseCode.getHttpStatusCode(),
+                    responseCode.getStatusMessage());
         }
     }
 
@@ -146,8 +155,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String subject = "Email Verification";
         Context context = new Context();
         String verificationCode = user.getVerificationCode();
-        String[] characters = verificationCode.split("");
-        context.setVariable("characters", characters);
+        context.setVariable("verificationCode", verificationCode);
 
         try {
             emailService.sendVerificationEmailWithHtmlTemplate(user.getEmail(), subject, "verification-email-template",
@@ -155,12 +163,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         } catch (MessagingException e) {
             e.printStackTrace();
-            final EnumException exception = EnumException.RESOURCE_NOT_FOUND;
+            final ApiResponseCode responseCode = ApiResponseCode.USER_NOT_FOUND;
             throw new CinequestApiException(
                     false,
-                    exception.getStatusCode(),
-                    exception.getHttpStatusCode(),
-                    "User not found: The user associated with the provided email address does not exist in our records. Please check the email entered or register for a new account.");
+                    responseCode.getStatusCode(),
+                    responseCode.getHttpStatusCode(),
+                    responseCode.getStatusMessage());
         }
     }
 

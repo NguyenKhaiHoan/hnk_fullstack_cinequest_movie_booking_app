@@ -13,7 +13,4 @@ public class SignUpRequest {
 
     @JsonProperty("password")
     private String password;
-
-    @JsonProperty("username")
-    private String username;
 }

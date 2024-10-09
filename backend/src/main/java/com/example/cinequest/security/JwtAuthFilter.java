@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import com.example.cinequest.exception.ApiResponseCode;
+import com.example.cinequest.exception.CinequestApiException;
+
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -32,12 +35,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain) throws ServletException, IOException {
+            @NonNull FilterChain filterChain) throws CinequestApiException, ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-            return;
+
+            final ApiResponseCode responseCode = ApiResponseCode.UNAUTHORIZED_ACCESS;
+            throw new CinequestApiException(
+                    false,
+                    responseCode.getStatusCode(),
+                    responseCode.getHttpStatusCode(),
+                    responseCode.getStatusMessage());
         }
 
         try {
@@ -57,6 +66,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                } else {
+                    final ApiResponseCode responseCode = ApiResponseCode.UNAUTHORIZED_ACCESS;
+                    throw new CinequestApiException(
+                            false,
+                            responseCode.getStatusCode(),
+                            responseCode.getHttpStatusCode(),
+                            responseCode.getStatusMessage());
                 }
             }
 
