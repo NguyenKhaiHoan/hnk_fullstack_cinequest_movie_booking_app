@@ -1,0 +1,370 @@
+{
+    "theater_id": 1,
+    "hall_id": 101,
+    "available_seats": [
+        {
+            "seat_id": "1A",
+            "is_available": true
+        },
+        {
+            "seat_id": "1B",
+            "is_available": false
+        },
+        {
+            "seat_id": "1C",
+            "is_available": true
+        },
+        {
+            "seat_id": "1D",
+            "is_available": false
+        },
+        {
+            "seat_id": "1E",
+            "is_available": true
+        },
+        {
+            "seat_id": "1F",
+            "is_available": false
+        },
+        {
+            "seat_id": "1G",
+            "is_available": true
+        },
+        {
+            "seat_id": "1H",
+            "is_available": false
+        },
+        {
+            "seat_id": "1I",
+            "is_available": true
+        },
+        {
+            "seat_id": "1J",
+            "is_available": false
+        },
+        {
+            "seat_id": "1K",
+            "is_available": true
+        },
+        {
+            "seat_id": "1L",
+            "is_available": false
+        },
+        {
+            "seat_id": "1M",
+            "is_available": true
+        },
+        {
+            "seat_id": "2A",
+            "is_available": false
+        },
+        {
+            "seat_id": "2B",
+            "is_available": true
+        },
+        {
+            "seat_id": "2C",
+            "is_available": false
+        },
+        {
+            "seat_id": "2D",
+            "is_available": true
+        },
+        {
+            "seat_id": "2E",
+            "is_available": false
+        },
+        {
+            "seat_id": "2F",
+            "is_available": true
+        },
+        {
+            "seat_id": "2G",
+            "is_available": false
+        },
+        {
+            "seat_id": "2H",
+            "is_available": true
+        },
+        {
+            "seat_id": "2I",
+            "is_available": false
+        },
+        {
+            "seat_id": "2J",
+            "is_available": true
+        },
+        {
+            "seat_id": "2K",
+            "is_available": false
+        },
+        {
+            "seat_id": "2L",
+            "is_available": true
+        },
+        {
+            "seat_id": "2M",
+            "is_available": false
+        },
+        {
+            "seat_id": "3A",
+            "is_available": true
+        },
+        {
+            "seat_id": "3B",
+            "is_available": false
+        },
+        {
+            "seat_id": "3C",
+            "is_available": true
+        },
+        {
+            "seat_id": "3D",
+            "is_available": false
+        },
+        {
+            "seat_id": "3E",
+            "is_available": true
+        },
+        {
+            "seat_id": "3F",
+            "is_available": false
+        },
+        {
+            "seat_id": "3G",
+            "is_available": true
+        },
+        {
+            "seat_id": "3H",
+            "is_available": false
+        },
+        {
+            "seat_id": "3I",
+            "is_available": true
+        },
+        {
+            "seat_id": "3J",
+            "is_available": false
+        },
+        {
+            "seat_id": "3K",
+            "is_available": true
+        },
+        {
+            "seat_id": "3L",
+            "is_available": false
+        },
+        {
+            "seat_id": "3M",
+            "is_available": true
+        },
+        {
+            "seat_id": "4A",
+            "is_available": false
+        },
+        {
+            "seat_id": "4B",
+            "is_available": true
+        },
+        {
+            "seat_id": "4C",
+            "is_available": false
+        },
+        {
+            "seat_id": "4D",
+            "is_available": true
+        },
+        {
+            "seat_id": "4E",
+            "is_available": false
+        },
+        {
+            "seat_id": "4F",
+            "is_available": true
+        },
+        {
+            "seat_id": "4G",
+            "is_available": false
+        },
+        {
+            "seat_id": "4H",
+            "is_available": true
+        },
+        {
+            "seat_id": "4I",
+            "is_available": false
+        },
+        {
+            "seat_id": "4J",
+            "is_available": true
+        },
+        {
+            "seat_id": "4K",
+            "is_available": false
+        },
+        {
+            "seat_id": "4L",
+            "is_available": true
+        },
+        {
+            "seat_id": "4M",
+            "is_available": false
+        },
+        {
+            "seat_id": "5A",
+            "is_available": true
+        },
+        {
+            "seat_id": "5B",
+            "is_available": false
+        },
+        {
+            "seat_id": "5C",
+            "is_available": true
+        },
+        {
+            "seat_id": "5D",
+            "is_available": false
+        },
+        {
+            "seat_id": "5E",
+            "is_available": true
+        },
+        {
+            "seat_id": "5F",
+            "is_available": false
+        },
+        {
+            "seat_id": "5G",
+            "is_available": true
+        },
+        {
+            "seat_id": "5H",
+            "is_available": false
+        },
+        {
+            "seat_id": "5I",
+            "is_available": true
+        },
+        {
+            "seat_id": "5J",
+            "is_available": false
+        },
+        {
+            "seat_id": "5K",
+            "is_available": true
+        },
+        {
+            "seat_id": "5L",
+            "is_available": false
+        },
+        {
+            "seat_id": "5M",
+            "is_available": true
+        },
+        {
+            "seat_id": "6A",
+            "is_available": false
+        },
+        {
+            "seat_id": "6B",
+            "is_available": true
+        },
+        {
+            "seat_id": "6C",
+            "is_available": false
+        },
+        {
+            "seat_id": "6D",
+            "is_available": true
+        },
+        {
+            "seat_id": "6E",
+            "is_available": false
+        },
+        {
+            "seat_id": "6F",
+            "is_available": true
+        },
+        {
+            "seat_id": "6G",
+            "is_available": false
+        },
+        {
+            "seat_id": "6H",
+            "is_available": true
+        },
+        {
+            "seat_id": "6I",
+            "is_available": false
+        },
+        {
+            "seat_id": "6J",
+            "is_available": true
+        },
+        {
+            "seat_id": "6K",
+            "is_available": false
+        },
+        {
+            "seat_id": "6L",
+            "is_available": true
+        },
+        {
+            "seat_id": "6M",
+            "is_available": false
+        },
+        {
+            "seat_id": "7A",
+            "is_available": true
+        },
+        {
+            "seat_id": "7B",
+            "is_available": false
+        },
+        {
+            "seat_id": "7C",
+            "is_available": true
+        },
+        {
+            "seat_id": "7D",
+            "is_available": false
+        },
+        {
+            "seat_id": "7E",
+            "is_available": true
+        },
+        {
+            "seat_id": "7F",
+            "is_available": false
+        },
+        {
+            "seat_id": "7G",
+            "is_available": true
+        },
+        {
+            "seat_id": "7H",
+            "is_available": false
+        },
+        {
+            "seat_id": "7I",
+            "is_available": true
+        },
+        {
+            "seat_id": "7J",
+            "is_available": false
+        },
+        {
+            "seat_id": "7K",
+            "is_available": true
+        },
+        {
+            "seat_id": "7L",
+            "is_available": false
+        },
+        {
+            "seat_id": "7M",
+            "is_available": true
+        }
+    ]
+}
