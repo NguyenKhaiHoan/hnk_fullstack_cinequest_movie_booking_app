@@ -1,12 +1,13 @@
 package com.example.cinequest.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.example.cinequest.entity.Movie;
 import com.example.cinequest.exception.CinequestApiException;
-import com.example.cinequest.exception.EnumException;
+import com.example.cinequest.exception.ApiResponseCode;
 import com.example.cinequest.model.request.AddFavoriteRequest;
 import com.example.cinequest.model.request.MovieListRequest;
 import com.example.cinequest.repository.FavoriteMovieRepository;
@@ -24,33 +25,69 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
         final Movie movie = request.getMovie();
         final boolean favorite = request.isFavorite();
         final boolean exists = favoriteMovieRepository.existsById(movie.getId());
+
         if (favorite) {
             if (exists) {
                 favoriteMovieRepository.deleteById(movie.getId());
                 favoriteMovieRepository.save(movie);
-                final EnumException exception = EnumException.RECORD_UPDATED_SUCCESS;
-                throw new CinequestApiException(true, exception.getStatusCode(), exception.getHttpStatusCode(),
-                        exception.getStatusMessage());
+
+                final ApiResponseCode responseCode = ApiResponseCode.FAVORITE_MOVIE_UPDATED_SUCCESS;
+
+                throw new CinequestApiException(true, responseCode.getStatusCode(), responseCode.getHttpStatusCode(),
+                        responseCode.getStatusMessage());
             }
+
             favoriteMovieRepository.save(movie);
         } else {
             if (!exists) {
-                final EnumException exception = EnumException.RECORD_DELETED_SUCCESS;
-                throw new CinequestApiException(true, exception.getStatusCode(), exception.getHttpStatusCode(),
-                        exception.getStatusMessage());
+                final ApiResponseCode responseCode = ApiResponseCode.FAVORITE_MOVIE_REMOVED_SUCCESS;
+
+                throw new CinequestApiException(true, responseCode.getStatusCode(), responseCode.getHttpStatusCode(),
+                        responseCode.getStatusMessage());
             }
+
             favoriteMovieRepository.delete(movie);
         }
     }
 
     @Override
     public List<Movie> getFavorites(MovieListRequest request) throws CinequestApiException {
-        final int page = request.getPage();
-        if (page < 0) {
-            final EnumException exception = EnumException.INVALID_PAGE;
-            throw new CinequestApiException(false, exception.getStatusCode(), exception.getHttpStatusCode(),
-                    exception.getStatusMessage());
+        int page = request.getPage();
+
+        if (page < 1) {
+            final ApiResponseCode responseCode = ApiResponseCode.INVALID_PAGE_NUMBER;
+
+            throw new CinequestApiException(false, responseCode.getStatusCode(),
+                    responseCode.getHttpStatusCode(), responseCode.getStatusMessage());
         }
-        return favoriteMovieRepository.findAll();
+
+        List<Movie> movies = favoriteMovieRepository.findAll();
+
+        if (movies == null || movies.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        final int limit = 20;
+        final int totalResults = movies.size();
+        final int totalPages = (int) Math.ceil((double) totalResults / limit);
+
+        if (page > totalPages) {
+            return new ArrayList<>();
+        }
+
+        final int start = (page - 1) * limit;
+        final int end = Math.min(start + limit, totalResults);
+        return movies.subList(start, end);
+    }
+
+    @Override
+    public int getFavoritesSize() {
+        List<Movie> movies = favoriteMovieRepository.findAll();
+
+        if (movies == null || movies.isEmpty()) {
+            return 0;
+        }
+
+        return movies.size();
     }
 }
