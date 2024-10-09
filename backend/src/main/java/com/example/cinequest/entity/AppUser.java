@@ -33,10 +33,6 @@ public class AppUser implements UserDetails {
     @JsonProperty("email")
     private String email;
 
-    @Column(name = "username", unique = true, nullable = false)
-    @JsonProperty("username")
-    private String username;
-
     @Column(name = "password", nullable = false)
     @JsonProperty("password")
     private String password;
@@ -48,8 +44,7 @@ public class AppUser implements UserDetails {
     private LocalDateTime verificationCodeExpiresAt;
     private boolean enabled;
 
-    public AppUser(String username, String email, String password) {
-        this.username = username;
+    public AppUser(String email, String password) {
         this.email = email;
         this.password = password;
     }
@@ -57,5 +52,10 @@ public class AppUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 }

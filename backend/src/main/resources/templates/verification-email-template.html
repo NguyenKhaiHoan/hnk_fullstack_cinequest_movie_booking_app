@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +38,8 @@
             text-align: start;
         }
 
-        .verification-code h2, .verification-code p {
+        .verification-code h2,
+        .verification-code p {
             color: #000000;
             text-align: center;
         }
@@ -52,23 +54,19 @@
         }
 
         .verification-box {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 20px;
-}
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 20px;
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
 
-ul.no-bullets {
-    list-style-type: none;
-    margin: 0 auto;
-    padding: 0;
-    display: flex;
-    flex-direction: row; 
-    justify-content: center;
-    align-items: center; 
-}
-
-        .code-digit {
+        .code {
             font-size: 2rem;
             font-weight: bold;
             color: #333;
@@ -80,9 +78,9 @@ ul.no-bullets {
             transition: all 0.3s ease;
         }
 
-        .code-digit:hover {
+        .code:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .about-section {
@@ -95,13 +93,14 @@ ul.no-bullets {
         }
 
         .developer-info {
-            display: grid; grid-template-columns: 1fr auto;
+            display: flex;
+            gap: 20px;
             margin-top: 30px;
         }
+
         .developer-info span {
             color: #EDEEEE;
         }
-
 
         .developer-info a {
             text-decoration: none;
@@ -124,6 +123,7 @@ ul.no-bullets {
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="card">
@@ -133,36 +133,30 @@ ul.no-bullets {
             <section class="verification-code">
                 <h2>Verification Code</h2>
                 <p>Use the following code to complete your account creation:</p>
-                <ul class="verification-box no-bullets" th:each="code : ${characters}">
-                    <li class="code-digit" th:text="${code}">1</li>
-                    <li class="code-digit" th:text="${code}">1</li>
-                    <li class="code-digit" th:text="${code}">1</li>
-
-                </ul>
+                <div class="verification-box">
+                    <span class="code" th:text="${verificationCode}">123456</span>
+                </div>
                 <p class="text-muted">This code will expire in 5 minutes.</p>
             </section>
-
             <div class="about-section">
                 <h3>About Cinequest</h3>
                 <p>Cinequest is a movie ticket booking app designed to simulate the movie booking experience. The backend is built using Java and Spring Boot, ensuring robust performance and scalability. The frontend is developed with Dart and Flutter, offering a smooth and responsive user interface.</p>
-
-                <p>The mobile UI design draws inspiration from 
-                    <a href="https://www.behance.net/gallery/173303277/CineQuest?tracking_source=search_projects_appreciations|movie+ui+mobile+app&l=510" target="_blank">Behance - Cinequest</a> 
-                    to create an engaging user experience. Additionally, Cinequest leverages the 
-                    <a href="https://www.themoviedb.org/" target="_blank">TheMovieDb (TMDB) API</a> 
+                <p>The mobile UI design draws inspiration from
+                    <a href="https://www.behance.net/gallery/173303277/CineQuest?tracking_source=search_projects_appreciations|movie+ui+mobile+app&l=510" target="_blank">Behance - Cinequest</a>
+                    to create an engaging user experience. Additionally, Cinequest leverages the
+                    <a href="https://www.themoviedb.org/" target="_blank">TheMovieDb (TMDB) API</a>
                     to retrieve movie data, enhancing the app with real-time movie information.
                 </p>
                 <p>This app is developed solely for learning and personal development purposes.</p>
             </div>
-
             <div class="developer-info">
                 <span>Nguyen Khai Hoan</span>
                 <div>
-                    <a href="https://www.facebook.com/bang.hoan.710">Facebook</a>
-                    <a href="https://github.com/NguyenKhaiHoan">GitHub</a>
+                    <a href="https://github.com/NguyenKhaiHoan/hnk_fullstack_cinequest_movie_booking_app">GitHub</a>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>
