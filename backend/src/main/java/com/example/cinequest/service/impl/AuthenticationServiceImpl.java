@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AppUser signup(SignUpRequest input) {
-        AppUser user = new AppUser(input.getUsername(), input.getEmail(), passwordEncoder.encode(input.getPassword()));
+        AppUser user = new AppUser(input.getEmail(), passwordEncoder.encode(input.getPassword()));
         user.setVerificationCode(generateVerificationCode());
         user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(5));
         user.setEnabled(false);
@@ -45,7 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AppUser login(LoginRequest input) {
+    public AppUser login(LoginRequest input) throws CinequestApiException {
         AppUser user = userRepository.findByEmail(input.getEmail())
                 .orElseThrow(() -> {
                     final EnumException exception = EnumException.RESOURCE_NOT_FOUND;
@@ -73,7 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void verify(VerifyUserRequest input) {
+    public void verify(VerifyUserRequest input) throws CinequestApiException {
         Optional<AppUser> optionalUser = userRepository.findByEmail(input.getEmail());
         if (optionalUser.isPresent()) {
             AppUser user = optionalUser.get();
@@ -100,7 +100,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void resendVerificationEmail(String email) {
+    public void resendVerificationEmail(String email) throws CinequestApiException {
         Optional<AppUser> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent()) {
             AppUser user = optionalUser.get();
@@ -123,7 +123,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
-    private void sendVerificationEmail(AppUser user) {
+    private void sendVerificationEmail(AppUser user) throws CinequestApiException {
         String subject = "Email Verification";
         String verificationCode = user.getVerificationCode();
         String text = "Welcome back Cinequest - Movie Booking App!\nPlease enter the verification code below to continue: "
@@ -142,7 +142,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
-    private void sendVerificationEmailWithHtmlTemplate(AppUser user) {
+    private void sendVerificationEmailWithHtmlTemplate(AppUser user) throws CinequestApiException {
         String subject = "Email Verification";
         Context context = new Context();
         String verificationCode = user.getVerificationCode();
