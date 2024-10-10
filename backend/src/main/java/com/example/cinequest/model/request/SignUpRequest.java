@@ -13,4 +13,7 @@ public class SignUpRequest {
 
     @JsonProperty("password")
     private String password;
+
+    @JsonProperty("confirm_password")
+    private String confirmPassword;
 }
