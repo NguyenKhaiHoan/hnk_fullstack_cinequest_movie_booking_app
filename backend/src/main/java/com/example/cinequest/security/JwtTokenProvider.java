@@ -42,11 +42,11 @@ public class JwtTokenProvider {
     }
 
     public String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return buildToken(extraClaims, userDetails, 12*3*jwtExpiration);
+        return buildToken(extraClaims, userDetails, 12 * 3 * jwtExpiration);
     }
 
     public Long getExpirationTime(boolean isAccessToken) {
-        return isAccessToken ? jwtExpiration : 12*3*jwtExpiration;
+        return isAccessToken ? jwtExpiration : 12 * 3 * jwtExpiration;
     }
 
     private String buildToken(
@@ -69,6 +69,7 @@ public class JwtTokenProvider {
     }
 
     public boolean isRefreshTokenValid(String token, UserDetails userDetails) {
+        // TODO
         return false;
     }
 

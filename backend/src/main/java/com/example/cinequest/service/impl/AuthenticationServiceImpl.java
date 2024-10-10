@@ -18,6 +18,7 @@ import org.thymeleaf.context.Context;
 import com.example.cinequest.entity.AppUser;
 import com.example.cinequest.exception.CinequestApiException;
 import com.example.cinequest.exception.ApiResponseCode;
+import com.example.cinequest.model.request.ForgotPasswordRequest;
 import com.example.cinequest.model.request.LoginRequest;
 import com.example.cinequest.model.request.SignUpRequest;
 import com.example.cinequest.model.request.VerifyUserRequest;
@@ -177,6 +178,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return user;
     }
 
+    @Override
+    public void forgotPassword(ForgotPasswordRequest request) {
+        validateForgotPasswordRequest(request);
+
+        AppUser user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new CinequestApiException(
+                        false,
+                        ApiResponseCode.ACCOUNT_NOT_REGISTERED.getStatusCode(),
+                        ApiResponseCode.ACCOUNT_NOT_REGISTERED.getHttpStatusCode(),
+                        ApiResponseCode.ACCOUNT_NOT_REGISTERED.getStatusMessage()));
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+    }
+
     public void saveToken(String token, String email) throws CinequestApiException {
         RefreshToken refreshToken = refreshTokenRepository.findByEmail(email).orElse(new RefreshToken());
 
@@ -250,6 +266,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private void validateLoginRequest(LoginRequest request) throws CinequestApiException {
         validateEmail(request.getEmail());
         validatePassword(request.getPassword());
+    }
+
+    private void validateForgotPasswordRequest(ForgotPasswordRequest request) throws CinequestApiException {
+        validateEmail(request.getEmail());
+        validatePassword(request.getNewPassword());
     }
 
     private void validatePassword(String password) throws CinequestApiException {

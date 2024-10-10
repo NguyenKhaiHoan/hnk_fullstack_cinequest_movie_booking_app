@@ -44,8 +44,10 @@ public enum ApiResponseCode {
         VERIFICATION_CODE_SENT(2017, 200, "A new verification code has been sent. Please check!"),
         SIGN_UP_SUCCESS(2018, 200,
                         "Sign up successful: Your account has been created. Please check your email to verify your account."),
-        EMAIL_ALREADY_REGISTERED(1014, 409,
+        EMAIL_ALREADY_REGISTERED(2019, 409,
                         "The email address is already registered. Please log in or use a different email."),
+        RESET_PASSWORD_SUCCESS(2020, 200,
+                        "Your password has been successfully updated. You can now log in with your new password."),
 
         // Mã danh sách phim yêu thích
         FAVORITE_MOVIE_NOT_FOUND(3001, 404,
