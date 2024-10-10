@@ -11,16 +11,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponse {
+public class AuthResponse {
     @JsonProperty("access_token")
     private String accessToken;
 
-    @JsonProperty("expires_in")
-    private Long expiresIn;
+    @JsonProperty("access_expiration")
+    private Long accessTokenExpiresAt;
 
     @JsonProperty("refresh_token")
     private String refreshToken;
 
-    @JsonProperty("refresh_expires_in")
-    private Long refreshExpiresIn;
+    @JsonProperty("refresh_expiration")
+    private Long refreshTokenExpiresAt;
 }

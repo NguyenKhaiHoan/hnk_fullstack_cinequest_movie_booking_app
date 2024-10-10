@@ -7,13 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SignUpRequest {
+public class ForgotPasswordRequest {
     @JsonProperty("email")
     private String email;
 
-    @JsonProperty("password")
-    private String password;
-
-    @JsonProperty("confirm_password")
-    private String confirmPassword;
+    @JsonProperty("new_password")
+    private String newPassword;
 }

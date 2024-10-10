@@ -32,16 +32,21 @@ public class JwtTokenProvider {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(UserDetails userDetails, boolean isAccessToken) {
+        return isAccessToken ? generateAccessToken(new HashMap<>(), userDetails)
+                : generateRefreshToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateAccessToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
-    public Long getExpirationTime() {
-        return jwtExpiration;
+    public String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        return buildToken(extraClaims, userDetails, 12 * 3 * jwtExpiration);
+    }
+
+    public Long getExpirationTime(boolean isAccessToken) {
+        return isAccessToken ? jwtExpiration : 12 * 3 * jwtExpiration;
     }
 
     private String buildToken(
@@ -59,8 +64,13 @@ public class JwtTokenProvider {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        final String userEmail = extractUsername(token);
+        return (userEmail.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    public boolean isRefreshTokenValid(String token, UserDetails userDetails) {
+        // TODO
+        return false;
     }
 
     private boolean isTokenExpired(String token) {

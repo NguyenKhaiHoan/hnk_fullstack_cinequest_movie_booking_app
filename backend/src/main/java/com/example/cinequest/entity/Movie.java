@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "favorite_movie")
+@Entity(name = "movie")
 public class Movie {
     @Id
     @JsonProperty("id")
