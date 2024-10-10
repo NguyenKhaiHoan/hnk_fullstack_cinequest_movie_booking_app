@@ -1,5 +1,6 @@
 package com.example.cinequest.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cinequest.entity.AppUser;
 import com.example.cinequest.exception.ApiResponseCode;
-import com.example.cinequest.model.repsonse.LoginResponse;
+import com.example.cinequest.model.repsonse.AuthResponse;
 import com.example.cinequest.model.repsonse.Response;
 import com.example.cinequest.model.request.LoginRequest;
 import com.example.cinequest.model.request.ResendEmailRequest;
@@ -37,12 +38,15 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         AppUser user = authenticationService.login(request);
-        String jwtToken = jwtTokenProvider.generateToken(user);
+        String accessToken = jwtTokenProvider.generateToken(user, true);
+        String refreshToken = jwtTokenProvider.generateToken(user, false);
 
-        return ResponseEntity.ok(new LoginResponse(jwtToken, jwtTokenProvider.getExpirationTime(), "",
-                jwtTokenProvider.getExpirationTime()));
+        authenticationService.saveToken(refreshToken, user.getEmail());
+
+        return ResponseEntity.ok(new AuthResponse(accessToken, jwtTokenProvider.getExpirationTime(true),
+                refreshToken, jwtTokenProvider.getExpirationTime(false)));
     }
 
     @PostMapping("/verify")
@@ -60,5 +64,18 @@ public class AuthController {
 
         return ResponseEntity.ok(new Response(true, exception.getStatusCode(),
                 exception.getStatusMessage()));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthResponse> refreshToken(HttpServletRequest request) {
+        AppUser user = authenticationService.refreshToken(request);
+
+        String accessToken = jwtTokenProvider.generateToken(user, true);
+        String refreshToken = jwtTokenProvider.generateToken(user, false);
+
+        authenticationService.saveToken(refreshToken, user.getEmail());
+
+        return ResponseEntity.ok(new AuthResponse(accessToken, jwtTokenProvider.getExpirationTime(true),
+                refreshToken, jwtTokenProvider.getExpirationTime(false)));
     }
 }

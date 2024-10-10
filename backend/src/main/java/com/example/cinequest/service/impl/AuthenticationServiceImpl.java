@@ -1,10 +1,16 @@
 package com.example.cinequest.service.impl;
 
+import com.example.cinequest.entity.RefreshToken;
+import com.example.cinequest.repository.RefreshTokenRepository;
+import com.example.cinequest.security.JwtTokenProvider;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
@@ -30,6 +36,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final EmailService emailService;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public AppUser signup(SignUpRequest request) throws CinequestApiException {
@@ -135,6 +143,48 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(5));
         sendVerificationEmail(user);
         userRepository.save(user);
+    }
+
+    @Override
+    public AppUser refreshToken(HttpServletRequest request) throws CinequestApiException {
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new CinequestApiException(false,
+                    ApiResponseCode.UNAUTHORIZED_ACCESS.getStatusCode(),
+                    ApiResponseCode.UNAUTHORIZED_ACCESS.getHttpStatusCode(),
+                    ApiResponseCode.UNAUTHORIZED_ACCESS.getStatusMessage());
+        }
+
+        String token = authHeader.substring(7);
+
+        String userEmail = jwtTokenProvider.extractUsername(token);
+
+        AppUser user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new CinequestApiException(false,
+                        ApiResponseCode.USER_NOT_FOUND.getStatusCode(),
+                        ApiResponseCode.USER_NOT_FOUND.getHttpStatusCode(),
+                        ApiResponseCode.USER_NOT_FOUND.getStatusMessage()));
+
+        if (jwtTokenProvider.isRefreshTokenValid(token, user)) {
+            throw new CinequestApiException(false,
+                    ApiResponseCode.UNAUTHORIZED_ACCESS.getStatusCode(),
+                    ApiResponseCode.UNAUTHORIZED_ACCESS.getHttpStatusCode(),
+                    ApiResponseCode.UNAUTHORIZED_ACCESS.getStatusMessage());
+        }
+        SecurityContextHolder.clearContext();
+
+        return user;
+    }
+
+    public void saveToken(String token, String email) throws CinequestApiException {
+        RefreshToken refreshToken = refreshTokenRepository.findByEmail(email).orElse(new RefreshToken());
+
+        refreshToken.setEmail(email);
+        refreshToken.setRefreshToken(token);
+        refreshToken.setRefreshTokenExpiresAt(LocalDateTime.now().plusDays(3));
+
+        refreshTokenRepository.save(refreshToken);
     }
 
     private void sendVerificationEmail(AppUser user) throws CinequestApiException {

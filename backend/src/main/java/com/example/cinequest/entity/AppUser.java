@@ -42,6 +42,8 @@ public class AppUser implements UserDetails {
 
     @Column(name = "verification_expiration")
     private LocalDateTime verificationCodeExpiresAt;
+
+    @Column(name = "enable")
     private boolean enabled;
 
     public AppUser(String email, String password) {
