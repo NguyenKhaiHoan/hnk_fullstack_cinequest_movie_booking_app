@@ -1,11 +1,5 @@
 /// Secure Storage
-const String authKey = 'Auth';
-
-/// Cloud Firestore
-const String usersKey = 'Users';
-
-/// Firebase Storage
-const String profilePhotoStorageKey = 'ProfilePhotos';
+const String authKey = 'auth';
 
 /// Sqlite
 const String favouriteMoviesTableKey = 'favorite_movies';

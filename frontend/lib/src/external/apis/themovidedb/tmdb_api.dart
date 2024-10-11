@@ -1,30 +1,29 @@
 import 'package:cinequest/src/external/apis/themovidedb/tmdb_url.dart';
-import 'package:cinequest/src/feature/movie/data/models/movie_lists_model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'tmdb_api.g.dart';
 
 /// Api TheMovieDb
-@RestApi(baseUrl: TMDBUrl.movieBaseUrl)
+@RestApi(baseUrl: TMDBUrl.baseUrl)
 abstract class TMDBApi {
   factory TMDBApi(Dio dio) = _TMDBApi;
 
-  /// Now playing
-  @GET('/movie/now_playing')
-  Future<MovieListsModel> getNowPlayingMovies({
-    @Query('language') required String language,
-    @Query('page') required int page,
-    @Query('api_key') required String apiKey,
-  });
+  // /// Lấy dữ liệu các phim đang công chiếu
+  // @GET(TMDBUrl.getNowPlayingMoviesUrl)
+  // Future<MovieListResponse> getNowPlayingMovies({
+  //   @Query('language') required String language,
+  //   @Query('page') required int page,
+  //   @Query('api_key') required String apiKey,
+  // });
 
-  /// Popular
-  @GET('/movie/popular')
-  Future<MovieListsModel> getPopularMovies({
-    @Query('language') required String language,
-    @Query('page') required int page,
-    @Query('api_key') required String apiKey,
-  });
+  // /// Lấy dữ liệu các phim phổ biến
+  // @GET(TMDBUrl.getPopularMoviesUrl)
+  // Future<MovieListResponse> getPopularMovies({
+  //   @Query('language') required String language,
+  //   @Query('page') required int page,
+  //   @Query('api_key') required String apiKey,
+  // });
 
   // @GET('/movie/{movie_id}/similar')
   // Future<> getSimilarMovies(
