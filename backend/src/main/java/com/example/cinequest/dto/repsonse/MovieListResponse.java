@@ -1,4 +1,4 @@
-package com.example.cinequest.model.repsonse;
+package com.example.cinequest.dto.repsonse;
 
 import java.util.List;
 

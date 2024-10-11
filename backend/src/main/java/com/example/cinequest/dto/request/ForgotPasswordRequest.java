@@ -1,4 +1,4 @@
-package com.example.cinequest.model.request;
+package com.example.cinequest.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,10 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginRequest {
+public class ForgotPasswordRequest {
     @JsonProperty("email")
     private String email;
 
-    @JsonProperty("password")
-    private String password;
+    @JsonProperty("new_password")
+    private String newPassword;
 }

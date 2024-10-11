@@ -2,6 +2,8 @@ package com.example.cinequest.config;
 
 import com.example.cinequest.exception.ApiResponseCode;
 import com.example.cinequest.exception.CinequestApiException;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,12 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.cinequest.repository.AppUserRepository;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 @Configuration
 public class ApplicationConfiguration {
-    private final AppUserRepository appUserRepository;
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @Bean
     UserDetailsService userDetailsService() throws CinequestApiException {

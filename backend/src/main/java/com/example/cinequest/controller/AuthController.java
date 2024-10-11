@@ -1,33 +1,33 @@
 package com.example.cinequest.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.cinequest.dto.repsonse.AuthResponse;
+import com.example.cinequest.dto.repsonse.Response;
+import com.example.cinequest.dto.request.ForgotPasswordRequest;
+import com.example.cinequest.dto.request.LoginRequest;
+import com.example.cinequest.dto.request.ResendEmailRequest;
+import com.example.cinequest.dto.request.SignUpRequest;
+import com.example.cinequest.dto.request.VerifyUserRequest;
 import com.example.cinequest.entity.AppUser;
 import com.example.cinequest.exception.ApiResponseCode;
-import com.example.cinequest.model.repsonse.AuthResponse;
-import com.example.cinequest.model.repsonse.Response;
-import com.example.cinequest.model.request.ForgotPasswordRequest;
-import com.example.cinequest.model.request.LoginRequest;
-import com.example.cinequest.model.request.ResendEmailRequest;
-import com.example.cinequest.model.request.SignUpRequest;
-import com.example.cinequest.model.request.VerifyUserRequest;
 import com.example.cinequest.security.JwtTokenProvider;
 import com.example.cinequest.service.AuthenticationService;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
-    private final JwtTokenProvider jwtTokenProvider;
-
-    private final AuthenticationService authenticationService;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @PostMapping("/signup")
     public ResponseEntity<Response> register(@RequestBody SignUpRequest request) {

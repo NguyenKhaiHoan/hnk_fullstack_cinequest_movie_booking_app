@@ -1,10 +1,11 @@
 package com.example.cinequest.service;
 
+import com.example.cinequest.dto.request.ForgotPasswordRequest;
+import com.example.cinequest.dto.request.LoginRequest;
+import com.example.cinequest.dto.request.SignUpRequest;
+import com.example.cinequest.dto.request.VerifyUserRequest;
 import com.example.cinequest.entity.AppUser;
-import com.example.cinequest.model.request.ForgotPasswordRequest;
-import com.example.cinequest.model.request.LoginRequest;
-import com.example.cinequest.model.request.SignUpRequest;
-import com.example.cinequest.model.request.VerifyUserRequest;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface AuthenticationService {

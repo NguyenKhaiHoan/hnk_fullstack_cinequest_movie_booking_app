@@ -2,12 +2,12 @@ package com.example.cinequest.service.impl;
 
 import com.example.cinequest.entity.RefreshToken;
 import com.example.cinequest.repository.RefreshTokenRepository;
+import com.example.cinequest.security.JwtAppUser;
 import com.example.cinequest.security.JwtTokenProvider;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
 
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,13 +15,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 
+import com.example.cinequest.dto.request.ForgotPasswordRequest;
+import com.example.cinequest.dto.request.LoginRequest;
+import com.example.cinequest.dto.request.SignUpRequest;
+import com.example.cinequest.dto.request.VerifyUserRequest;
 import com.example.cinequest.entity.AppUser;
 import com.example.cinequest.exception.CinequestApiException;
+import com.example.cinequest.model.JwtModel;
 import com.example.cinequest.exception.ApiResponseCode;
-import com.example.cinequest.model.request.ForgotPasswordRequest;
-import com.example.cinequest.model.request.LoginRequest;
-import com.example.cinequest.model.request.SignUpRequest;
-import com.example.cinequest.model.request.VerifyUserRequest;
 import com.example.cinequest.repository.AppUserRepository;
 import com.example.cinequest.service.AuthenticationService;
 import com.example.cinequest.service.EmailService;
@@ -30,15 +31,22 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-@AllArgsConstructor
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private final AppUserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final EmailService emailService;
-    private final RefreshTokenRepository refreshTokenRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private AppUserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private JwtAppUser jwtAppUser;
 
     @Override
     public AppUser signup(SignUpRequest request) throws CinequestApiException {
@@ -148,26 +156,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AppUser refreshToken(HttpServletRequest request) throws CinequestApiException {
-        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        JwtModel jwtModel = jwtAppUser.getJwtModel(request);
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new CinequestApiException(false,
-                    ApiResponseCode.UNAUTHORIZED_ACCESS.getStatusCode(),
-                    ApiResponseCode.UNAUTHORIZED_ACCESS.getHttpStatusCode(),
-                    ApiResponseCode.UNAUTHORIZED_ACCESS.getStatusMessage());
-        }
-
-        String token = authHeader.substring(7);
-
-        String userEmail = jwtTokenProvider.extractUsername(token);
-
-        AppUser user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new CinequestApiException(false,
-                        ApiResponseCode.USER_NOT_FOUND.getStatusCode(),
-                        ApiResponseCode.USER_NOT_FOUND.getHttpStatusCode(),
-                        ApiResponseCode.USER_NOT_FOUND.getStatusMessage()));
-
-        if (jwtTokenProvider.isRefreshTokenValid(token, user)) {
+        if (jwtTokenProvider.isRefreshTokenValid(jwtModel.getToken(), jwtModel.getUser())) {
             throw new CinequestApiException(false,
                     ApiResponseCode.UNAUTHORIZED_ACCESS.getStatusCode(),
                     ApiResponseCode.UNAUTHORIZED_ACCESS.getHttpStatusCode(),
@@ -175,7 +166,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         SecurityContextHolder.clearContext();
 
-        return user;
+        return jwtModel.getUser();
     }
 
     @Override
