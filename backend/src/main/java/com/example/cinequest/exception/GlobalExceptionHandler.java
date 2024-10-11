@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-import com.example.cinequest.model.repsonse.Response;
+import com.example.cinequest.dto.repsonse.Response;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

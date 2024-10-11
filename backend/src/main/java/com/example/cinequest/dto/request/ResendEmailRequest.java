@@ -1,4 +1,4 @@
-package com.example.cinequest.model.request;
+package com.example.cinequest.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

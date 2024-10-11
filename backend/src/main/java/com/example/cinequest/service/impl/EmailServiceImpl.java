@@ -2,8 +2,8 @@ package com.example.cinequest.service.impl;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.AllArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -12,12 +12,12 @@ import org.thymeleaf.context.Context;
 
 import com.example.cinequest.service.EmailService;
 
-@AllArgsConstructor
 @Service
 public class EmailServiceImpl implements EmailService {
-    private final JavaMailSender emailSender;
-
-    private final TemplateEngine templateEngine;
+    @Autowired
+    private JavaMailSender emailSender;
+    @Autowired
+    private TemplateEngine templateEngine;
 
     @Override
     public void sendVerificationEmail(String to, String subject, String text) throws MessagingException {

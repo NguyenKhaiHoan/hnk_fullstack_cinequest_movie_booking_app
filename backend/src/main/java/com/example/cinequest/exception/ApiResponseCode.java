@@ -12,13 +12,13 @@ public enum ApiResponseCode {
         SERVICE_UNAVAILABLE(3, 503, "Service unavailable: Please try again later."),
         REQUEST_LIMIT_EXCEEDED(4, 429, "Request limit exceeded: You have exceeded the allowed request limit."),
         METHOD_NOT_SUPPORTED(5, 405, "Method not supported: The requested method is not supported for this resource."),
+        RESOURCE_NOT_FOUND(6, 404, "The resource you requested could not be found."),
 
         // Mã chung
         REQUIRED_FIELD(1000, 400, "This field is required."),
         INVALID_FORMAT(1001, 400, "Invalid format: The input format is incorrect."),
         INVALID_PARAMETER(1003, 422, "Invalid parameter: Your request parameters are incorrect."),
-        RESOURCE_NOT_FOUND(1004, 404, "The resource you requested could not be found."),
-        INVALID_PAGE_NUMBER(1005, 400, "Page number must be greater than 0."),
+        INVALID_PAGE_NUMBER(1004, 400, "Page number must be greater than 0."),
 
         // Mã xác thực
         INVALID_EMAIL_FORMAT(2001, 400, "Invalid email format: Please provide a valid email address."),
@@ -56,7 +56,11 @@ public enum ApiResponseCode {
                         "Favorite movie already exists: The movie is already in your favorites."),
         FAVORITE_MOVIE_ADDED_SUCCESS(3003, 201, "Favorite movie added successfully."),
         FAVORITE_MOVIE_REMOVED_SUCCESS(3004, 200, "Favorite movie removed successfully."),
-        FAVORITE_MOVIE_UPDATED_SUCCESS(3005, 200, "Favorite movie updated successfully.");
+        FAVORITE_MOVIE_UPDATED_SUCCESS(3005, 200, "Favorite movie updated successfully."),
+
+        // Mã xử lý ảnh
+        IMAGE_COMPRESSION_ERROR(4001, 500, "Image compression failed: Unable to compress the image."),
+        IMAGE_DECOMPRESSION_ERROR(4002, 500, "Image decompression failed: Unable to decompress the image.");
 
         private final int statusCode;
         private final int httpStatusCode;

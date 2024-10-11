@@ -3,22 +3,21 @@ package com.example.cinequest.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.cinequest.dto.request.AddFavoriteRequest;
+import com.example.cinequest.dto.request.MovieListRequest;
 import com.example.cinequest.entity.Movie;
 import com.example.cinequest.exception.CinequestApiException;
 import com.example.cinequest.exception.ApiResponseCode;
-import com.example.cinequest.model.request.AddFavoriteRequest;
-import com.example.cinequest.model.request.MovieListRequest;
 import com.example.cinequest.repository.FavoriteMovieRepository;
 import com.example.cinequest.service.FavoriteMovieService;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 @Service
 public class FavoriteMovieServiceImpl implements FavoriteMovieService {
-    private final FavoriteMovieRepository favoriteMovieRepository;
+    @Autowired
+    private FavoriteMovieRepository favoriteMovieRepository;
 
     @Override
     public void addFavorite(AddFavoriteRequest request) throws CinequestApiException {

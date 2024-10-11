@@ -7,13 +7,8 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,17 +19,14 @@ import lombok.Setter;
 @Entity(name = "user")
 public class AppUser implements UserDetails {
     @Id
-    @JsonProperty("id")
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "email", unique = true, nullable = false)
-    @JsonProperty("email")
     private String email;
 
     @Column(name = "password", nullable = false)
-    @JsonProperty("password")
     private String password;
 
     @Column(name = "verification_code")
@@ -43,7 +35,7 @@ public class AppUser implements UserDetails {
     @Column(name = "verification_expiration")
     private LocalDateTime verificationCodeExpiresAt;
 
-    @Column(name = "enable")
+    @Column(name = "enabled")
     private boolean enabled;
 
     public AppUser(String email, String password) {
