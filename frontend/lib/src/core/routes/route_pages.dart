@@ -14,19 +14,17 @@ final class RouterPages {
 
   /// Khởi tạo router
   static GoRouter router = GoRouter(
-      debugLogDiagnostics: true,
-      navigatorKey: _rootNavigatorKey,
-      initialLocation: AppRoutes.splash.path,
-      redirect: _guard,
-      routes: []);
+    debugLogDiagnostics: true,
+    navigatorKey: _rootNavigatorKey,
+    initialLocation: AppRoutes.splash.path,
+    redirect: _guard,
+    routes: [],
+  );
 
-  ///
   static String _path = '';
 
-  ///
   static String get path => _path;
 
-  ///
   static void refreshPath() {
     _path = '';
   }

@@ -6,10 +6,7 @@ import 'package:flutter/material.dart';
 
 /// Định nghĩa các type của Button
 enum ButtonType {
-  /// Outlined Button
   outlined,
-
-  /// Elevated Button
   elevated,
 }
 

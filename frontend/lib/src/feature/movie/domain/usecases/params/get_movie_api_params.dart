@@ -1,9 +1,9 @@
 /// Params của các use case GetNowPlayingMovie, GetPopularMovie, ...
-class GetMoviesApiParams {
+class MovieListParams {
   /// Constructor
-  GetMoviesApiParams({
+  MovieListParams({
+    this.language = 'en-US',
     this.page = 1,
-    this.language = 'en',
   });
 
   final int page;

@@ -5,14 +5,13 @@ import 'package:cinequest/src/feature/movie/domain/repositories/movie_repository
 import 'package:cinequest/src/feature/movie/domain/usecases/params/get_movie_api_params.dart';
 
 /// Use case lấy dữ liệu danh sách movie đang được công chiếu
-class GetNowPlayingMoviesUseCase
-    extends FutureAsyncUseCase<List<Movie>, GetMoviesApiParams> {
+class GetNowPlayingMoviesUseCase extends UseCase<List<Movie>, MovieListParams> {
   /// Constructor
   GetNowPlayingMoviesUseCase(this._movieRepository);
   final MovieRepository _movieRepository;
 
   @override
-  FutureEither<List<Movie>> call({GetMoviesApiParams? params}) {
+  FutureEither<List<Movie>> call({MovieListParams? params}) {
     return _movieRepository.getNowPlayingMovies(params!);
   }
 }

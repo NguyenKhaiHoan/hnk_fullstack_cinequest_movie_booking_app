@@ -3,32 +3,25 @@ import 'package:cinequest/src/core/generics/mapper.dart';
 import 'package:cinequest/src/feature/movie/data/models/movie_model.dart';
 import 'package:cinequest/src/feature/movie/domain/entities/movie.dart';
 
-/// Mapper cho movie
-class MovieMapper implements Mapper<MovieModel, Movie> {
-  ///
-  factory MovieMapper() => _instance;
-
-  MovieMapper._();
-
-  static final MovieMapper _instance = MovieMapper._();
-
+/// Mapper
+class MovieMapper implements DataMapper<MovieModel, Movie> {
   @override
-  Movie modelToEntity(MovieModel dto) {
+  Movie modelToEntity(MovieModel model) {
     return Movie(
-      adult: dto.adult,
-      backdropPath: dto.backdropPath,
-      genreIds: dto.genreIds,
-      id: dto.id,
-      originalLanguage: dto.originalLanguage,
-      originalTitle: dto.originalTitle,
-      overview: dto.overview,
-      popularity: dto.popularity,
-      posterPath: dto.posterPath,
-      releaseDate: DateTime.parse(dto.releaseDate ?? ''),
-      title: dto.title,
-      video: dto.video,
-      voteAverage: dto.voteAverage,
-      voteCount: dto.voteCount,
+      adult: model.adult,
+      backdropPath: model.backdropPath,
+      genreIds: model.genreIds,
+      id: model.id,
+      originalLanguage: model.originalLanguage,
+      originalTitle: model.originalTitle,
+      overview: model.overview,
+      popularity: model.popularity,
+      posterPath: model.posterPath,
+      releaseDate: DateTime.parse(model.releaseDate ?? ''),
+      title: model.title,
+      video: model.video,
+      voteAverage: model.voteAverage,
+      voteCount: model.voteCount,
     );
   }
 

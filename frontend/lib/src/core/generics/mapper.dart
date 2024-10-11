@@ -1,6 +1,11 @@
-/// Base chung cho các mapper
-abstract class Mapper<D, E> {
-  E modelToEntity(D dto);
+/// Base chung cho các mapper trong Data
+abstract class DataMapper<M, E> {
+  E modelToEntity(M model);
 
-  D entityToModel(E entity);
+  M entityToModel(E entity);
+}
+
+/// Base chung cho các mapper trong Domain
+abstract class DomainMapper<R, P> {
+  R paramsToRequest(P params);
 }

@@ -7,14 +7,14 @@ part 'response.g.dart';
 
 /// Model
 @freezed
-class Response with _$Response {
+class ApiResponse with _$ApiResponse {
   /// Model
-  const factory Response({
+  const factory ApiResponse({
     @JsonKey(name: 'success') bool? success,
     @JsonKey(name: 'status_code') int? statusCode,
     @JsonKey(name: 'status_message') String? statusMessage,
-  }) = _Response;
+  }) = _ApiResponse;
 
-  factory Response.fromJson(Map<String, Object?> json) =>
-      _$ResponseFromJson(json);
+  factory ApiResponse.fromJson(Map<String, Object?> json) =>
+      _$ApiResponseFromJson(json);
 }
