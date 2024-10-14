@@ -1,7 +1,10 @@
 package com.example.cinequest.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -9,9 +12,9 @@ import lombok.*;
 @AllArgsConstructor
 @Entity(name = "user_detail")
 public class AppUserDetails {
-
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "username")
@@ -26,11 +29,9 @@ public class AppUserDetails {
     @Column(name = "bio", length = 200)
     private String bio;
 
-    @Column(name = "profile_photo_base64")
-    private String profilePhotoBase64;
+    @Column(name = "profile_photo")
+    private String profilePhoto;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "id")
-    private AppUser user;
+    @Column(name = "user_id")
+    private Long userId;
 }

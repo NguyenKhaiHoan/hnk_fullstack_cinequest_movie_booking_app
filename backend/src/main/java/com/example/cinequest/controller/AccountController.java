@@ -1,43 +1,45 @@
 package com.example.cinequest.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
+import com.example.cinequest.dto.repsonse.AppUserDetailsResponse;
 import com.example.cinequest.dto.repsonse.MovieListResponse;
 import com.example.cinequest.dto.repsonse.Response;
 import com.example.cinequest.dto.request.AddFavoriteRequest;
+import com.example.cinequest.dto.request.AddUserDetailsRequest;
 import com.example.cinequest.dto.request.MovieListRequest;
+import com.example.cinequest.entity.AppUser;
+import com.example.cinequest.entity.AppUserDetails;
 import com.example.cinequest.entity.Movie;
 import com.example.cinequest.exception.ApiResponseCode;
+import com.example.cinequest.service.AppUserDetailsService;
 import com.example.cinequest.service.FavoriteMovieService;
 import com.example.cinequest.service.ProfilePhotoService;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/account/")
 public class AccountController {
-
-    @Autowired
-    private FavoriteMovieService favoriteMovieService;
-    @Autowired
-    private ProfilePhotoService profilePhotoService;
+    private final FavoriteMovieService favoriteMovieService;
+    private final ProfilePhotoService profilePhotoService;
+    private final AppUserDetailsService appUserDetailsService;
 
     @PostMapping("/favorite")
     public ResponseEntity<Response> addFavorite(@RequestBody AddFavoriteRequest request) {
         favoriteMovieService.addFavorite(request);
-        final ApiResponseCode responseCode = ApiResponseCode.FAVORITE_MOVIE_ADDED_SUCCESS;
 
-        return ResponseEntity.ok(new Response(true, responseCode.getStatusCode(), responseCode.getStatusMessage()));
+        return ResponseEntity.ok(new Response(true,
+                ApiResponseCode.FAVORITE_MOVIE_ADDED_SUCCESS.getStatusCode(),
+                ApiResponseCode.FAVORITE_MOVIE_ADDED_SUCCESS.getStatusMessage()));
     }
 
     @GetMapping("/favorite/movies")
@@ -53,24 +55,40 @@ public class AccountController {
     }
 
     @GetMapping("")
-    public String getUserDetails(@RequestBody String entity) {
-        // TODO: process GET request
-        return entity;
+    public ResponseEntity<AppUserDetailsResponse> getUserDetails(HttpServletRequest httpServletRequest) {
+        AppUserDetails userDetails = appUserDetailsService.getUserDetails(httpServletRequest);
+        return ResponseEntity.ok(new AppUserDetailsResponse(userDetails.getUsername(), userDetails.getName(),
+                userDetails.getSurname(), userDetails.getBio(), userDetails.getProfilePhoto()));
     }
 
+    @Transactional
     @PostMapping("/save")
-    public String saveUserDetails(@RequestBody String entity) {
-        // TODO: process POST request
-        return entity;
+    public ResponseEntity<Response> addOrUpdateUserDetails(
+            @RequestParam("profile_photo") MultipartFile file,
+            @RequestParam("details") String detailsJson,
+            HttpServletRequest httpServletRequest) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        AddUserDetailsRequest request;
+
+        try {
+            request = objectMapper.readValue(detailsJson, AddUserDetailsRequest.class);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body(new Response(false, 400, "Invalid JSON format"));
+        }
+
+        AppUser user = profilePhotoService.uploadProfilePhotoToFileSystem(file, httpServletRequest);
+        appUserDetailsService.addOrUpdateUserDetails(request, user);
+
+        return ResponseEntity.ok(new Response(true,
+                ApiResponseCode.ACCOUNT_SETUP_SUCCESS.getStatusCode(),
+                ApiResponseCode.ACCOUNT_SETUP_SUCCESS.getStatusMessage()));
     }
 
-    @PostMapping("profile-photo/upload")
-    public ResponseEntity<Response> uploadProfilePhoto(@RequestParam("profile_photo") MultipartFile file,
-            HttpServletRequest request) {
-        profilePhotoService.uploadProfilePhoto(file, request);
-        final ApiResponseCode responseCode = ApiResponseCode.FAVORITE_MOVIE_ADDED_SUCCESS;
-
-        return ResponseEntity.ok(new Response(true, responseCode.getStatusCode(), responseCode.getStatusMessage()));
+    @GetMapping("/profile-photo")
+    public ResponseEntity<byte[]> downloadImageFromFileSystem(HttpServletRequest httpServletRequest) {
+        byte[] imageData = profilePhotoService.downloadProfilePhotoFromFileSystem(httpServletRequest);
+        return ResponseEntity.ok()
+                .contentType(MediaType.valueOf("image/png")).body(imageData);
     }
-
 }

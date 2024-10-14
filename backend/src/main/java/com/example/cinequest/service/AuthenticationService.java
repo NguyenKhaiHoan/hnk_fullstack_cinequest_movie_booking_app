@@ -9,7 +9,7 @@ import com.example.cinequest.entity.AppUser;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface AuthenticationService {
-    AppUser signup(SignUpRequest request);
+    void signUp(SignUpRequest request);
 
     AppUser login(LoginRequest request);
 

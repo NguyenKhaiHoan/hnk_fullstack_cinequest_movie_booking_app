@@ -69,7 +69,7 @@ public class JwtTokenProvider {
         return (userEmail.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    public boolean isRefreshTokenValid(String token, UserDetails userDetails) {
+    public boolean isRefreshTokenValid(String refreshToken, UserDetails userDetails) {
         // TODO
         return false;
     }

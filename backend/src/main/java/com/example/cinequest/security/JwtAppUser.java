@@ -1,44 +1,35 @@
 package com.example.cinequest.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.cinequest.exception.ApiResponseCode;
+import com.example.cinequest.exception.CineQuestApiException;
+import com.example.cinequest.model.JwtModel;
+import com.example.cinequest.repository.AppUserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
-import com.example.cinequest.exception.ApiResponseCode;
-import com.example.cinequest.exception.CinequestApiException;
-import com.example.cinequest.model.JwtModel;
-import com.example.cinequest.repository.AppUserRepository;
-
-import jakarta.servlet.http.HttpServletRequest;
-
+@AllArgsConstructor
 @Component
 public class JwtAppUser {
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private AppUserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final AppUserRepository userRepository;
 
-    public JwtModel getJwtModel(HttpServletRequest request) throws CinequestApiException {
+    public JwtModel getJwtModel(HttpServletRequest request) throws CineQuestApiException {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new CinequestApiException(false,
-                    ApiResponseCode.UNAUTHORIZED_ACCESS.getStatusCode(),
-                    ApiResponseCode.UNAUTHORIZED_ACCESS.getHttpStatusCode(),
-                    ApiResponseCode.UNAUTHORIZED_ACCESS.getStatusMessage());
+            throw new CineQuestApiException(false,
+                    ApiResponseCode.UNAUTHORIZED_ACCESS);
         }
 
         String token = authHeader.substring(7);
 
         String userEmail = jwtTokenProvider.extractUsername(token);
 
-        JwtModel jwtModel = new JwtModel(userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new CinequestApiException(false,
-                        ApiResponseCode.USER_NOT_FOUND.getStatusCode(),
-                        ApiResponseCode.USER_NOT_FOUND.getHttpStatusCode(),
-                        ApiResponseCode.USER_NOT_FOUND.getStatusMessage())),
+        return new JwtModel(userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new CineQuestApiException(false,
+                        ApiResponseCode.USER_NOT_FOUND)),
                 token);
-
-        return jwtModel;
     }
 }

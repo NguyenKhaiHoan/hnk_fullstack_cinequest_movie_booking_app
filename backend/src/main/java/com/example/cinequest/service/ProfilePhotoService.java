@@ -1,13 +1,15 @@
 package com.example.cinequest.service;
 
+import com.example.cinequest.entity.AppUser;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.cinequest.entity.ProfilePhoto;
-
-import jakarta.servlet.http.HttpServletRequest;
-
 public interface ProfilePhotoService {
-    ProfilePhoto uploadProfilePhoto(MultipartFile file, HttpServletRequest request);
+    AppUser uploadProfilePhoto(MultipartFile file, HttpServletRequest httpServletRequest);
 
-    byte[] getImage(HttpServletRequest request);
+    byte[] downloadProfilePhoto(HttpServletRequest httpServletRequest);
+
+    AppUser uploadProfilePhotoToFileSystem(MultipartFile file, HttpServletRequest httpServletRequest);
+
+    byte[] downloadProfilePhotoFromFileSystem(HttpServletRequest httpServletRequest);
 }
