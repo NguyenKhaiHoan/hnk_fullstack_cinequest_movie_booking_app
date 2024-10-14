@@ -1,15 +1,17 @@
 package com.example.cinequest.util;
 
+import com.example.cinequest.exception.ApiResponseCode;
+import com.example.cinequest.exception.CineQuestApiException;
+
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-import com.example.cinequest.exception.CinequestApiException;
-import com.example.cinequest.exception.ApiResponseCode;
-
 public class ImageUtil {
+    private ImageUtil() {
+    }
 
-    public static byte[] compressImage(byte[] data) throws CinequestApiException {
+    public static byte[] compressImage(byte[] data) throws CineQuestApiException {
         Deflater deflater = new Deflater();
         deflater.setLevel(Deflater.BEST_COMPRESSION);
         deflater.setInput(data);
@@ -24,14 +26,12 @@ public class ImageUtil {
         try {
             outputStream.close();
         } catch (Exception e) {
-            throw new CinequestApiException(false, ApiResponseCode.IMAGE_COMPRESSION_ERROR.getStatusCode(),
-                    ApiResponseCode.IMAGE_COMPRESSION_ERROR.getHttpStatusCode(),
-                    ApiResponseCode.IMAGE_COMPRESSION_ERROR.getStatusMessage());
+            throw new CineQuestApiException(false, ApiResponseCode.IMAGE_COMPRESSION_ERROR);
         }
         return outputStream.toByteArray();
     }
 
-    public static byte[] decompressImage(byte[] data) throws CinequestApiException {
+    public static byte[] decompressImage(byte[] data) throws CineQuestApiException {
         Inflater inflater = new Inflater();
         inflater.setInput(data);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
@@ -44,9 +44,7 @@ public class ImageUtil {
             }
             outputStream.close();
         } catch (Exception exception) {
-            throw new CinequestApiException(false, ApiResponseCode.IMAGE_DECOMPRESSION_ERROR.getStatusCode(),
-                    ApiResponseCode.IMAGE_DECOMPRESSION_ERROR.getHttpStatusCode(),
-                    ApiResponseCode.IMAGE_DECOMPRESSION_ERROR.getStatusMessage());
+            throw new CineQuestApiException(false, ApiResponseCode.IMAGE_DECOMPRESSION_ERROR);
         }
 
         return outputStream.toByteArray();

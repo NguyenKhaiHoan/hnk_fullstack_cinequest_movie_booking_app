@@ -10,62 +10,28 @@ import com.example.cinequest.dto.repsonse.Response;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(CinequestApiException.class)
-    public ResponseEntity<Response> handleCinequestApiException(CinequestApiException exception, WebRequest request) {
+    @ExceptionHandler(CineQuestApiException.class)
+    public ResponseEntity<Response> handleCineQuestApiException(CineQuestApiException exception, WebRequest request) {
         final Response response = new Response();
-        response.setStatusCode(exception.getStatusCode());
-        response.setStatusMessage(exception.getStatusMessage());
-        HttpStatus httpStatus;
-        switch (exception.getHttpStatusCode()) {
-            case 200:
-                httpStatus = HttpStatus.OK;
-                break;
-            case 201:
-                httpStatus = HttpStatus.CREATED;
-                break;
-            case 400:
-                httpStatus = HttpStatus.BAD_REQUEST;
-                break;
-            case 401:
-                httpStatus = HttpStatus.UNAUTHORIZED;
-                break;
-            case 403:
-                httpStatus = HttpStatus.FORBIDDEN;
-                break;
-            case 404:
-                httpStatus = HttpStatus.NOT_FOUND;
-                break;
-            case 405:
-                httpStatus = HttpStatus.METHOD_NOT_ALLOWED;
-                break;
-            case 406:
-                httpStatus = HttpStatus.NOT_ACCEPTABLE;
-                break;
-            case 422:
-                httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
-                break;
-            case 429:
-                httpStatus = HttpStatus.TOO_MANY_REQUESTS;
-                break;
-            case 500:
-                httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-                break;
-            case 501:
-                httpStatus = HttpStatus.NOT_IMPLEMENTED;
-                break;
-            case 502:
-                httpStatus = HttpStatus.BAD_GATEWAY;
-                break;
-            case 503:
-                httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
-                break;
-            case 504:
-                httpStatus = HttpStatus.GATEWAY_TIMEOUT;
-                break;
-            default:
-                httpStatus = HttpStatus.BAD_REQUEST;
-                break;
-        }
+        response.setStatusCode(exception.getApiResponseCode().getStatusCode());
+        response.setStatusMessage(exception.getApiResponseCode().getStatusMessage());
+        HttpStatus httpStatus = switch (exception.getApiResponseCode().getHttpStatusCode()) {
+            case 200 -> HttpStatus.OK;
+            case 201 -> HttpStatus.CREATED;
+            case 401 -> HttpStatus.UNAUTHORIZED;
+            case 403 -> HttpStatus.FORBIDDEN;
+            case 404 -> HttpStatus.NOT_FOUND;
+            case 405 -> HttpStatus.METHOD_NOT_ALLOWED;
+            case 406 -> HttpStatus.NOT_ACCEPTABLE;
+            case 422 -> HttpStatus.UNPROCESSABLE_ENTITY;
+            case 429 -> HttpStatus.TOO_MANY_REQUESTS;
+            case 500 -> HttpStatus.INTERNAL_SERVER_ERROR;
+            case 501 -> HttpStatus.NOT_IMPLEMENTED;
+            case 502 -> HttpStatus.BAD_GATEWAY;
+            case 503 -> HttpStatus.SERVICE_UNAVAILABLE;
+            case 504 -> HttpStatus.GATEWAY_TIMEOUT;
+            default -> HttpStatus.BAD_REQUEST;
+        };
         return new ResponseEntity<>(response, httpStatus);
     }
 }

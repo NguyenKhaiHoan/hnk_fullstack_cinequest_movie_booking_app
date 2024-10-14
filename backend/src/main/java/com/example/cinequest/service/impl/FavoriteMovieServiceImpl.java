@@ -1,26 +1,25 @@
 package com.example.cinequest.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.cinequest.dto.request.AddFavoriteRequest;
 import com.example.cinequest.dto.request.MovieListRequest;
 import com.example.cinequest.entity.Movie;
-import com.example.cinequest.exception.CinequestApiException;
 import com.example.cinequest.exception.ApiResponseCode;
+import com.example.cinequest.exception.CineQuestApiException;
 import com.example.cinequest.repository.FavoriteMovieRepository;
 import com.example.cinequest.service.FavoriteMovieService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@AllArgsConstructor
 @Service
 public class FavoriteMovieServiceImpl implements FavoriteMovieService {
-    @Autowired
     private FavoriteMovieRepository favoriteMovieRepository;
 
     @Override
-    public void addFavorite(AddFavoriteRequest request) throws CinequestApiException {
+    public void addFavorite(AddFavoriteRequest request) throws CineQuestApiException {
         final Movie movie = request.getMovie();
         final boolean favorite = request.isFavorite();
         final boolean exists = favoriteMovieRepository.existsById(movie.getId());
@@ -30,19 +29,14 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
                 favoriteMovieRepository.deleteById(movie.getId());
                 favoriteMovieRepository.save(movie);
 
-                final ApiResponseCode responseCode = ApiResponseCode.FAVORITE_MOVIE_UPDATED_SUCCESS;
-
-                throw new CinequestApiException(true, responseCode.getStatusCode(), responseCode.getHttpStatusCode(),
-                        responseCode.getStatusMessage());
+                throw new CineQuestApiException(true, ApiResponseCode.FAVORITE_MOVIE_UPDATED_SUCCESS);
             }
 
             favoriteMovieRepository.save(movie);
         } else {
             if (!exists) {
-                final ApiResponseCode responseCode = ApiResponseCode.FAVORITE_MOVIE_REMOVED_SUCCESS;
 
-                throw new CinequestApiException(true, responseCode.getStatusCode(), responseCode.getHttpStatusCode(),
-                        responseCode.getStatusMessage());
+                throw new CineQuestApiException(true, ApiResponseCode.FAVORITE_MOVIE_REMOVED_SUCCESS);
             }
 
             favoriteMovieRepository.delete(movie);
@@ -50,14 +44,11 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
     }
 
     @Override
-    public List<Movie> getFavorites(MovieListRequest request) throws CinequestApiException {
+    public List<Movie> getFavorites(MovieListRequest request) throws CineQuestApiException {
         int page = request.getPage();
 
         if (page < 1) {
-            final ApiResponseCode responseCode = ApiResponseCode.INVALID_PAGE_NUMBER;
-
-            throw new CinequestApiException(false, responseCode.getStatusCode(),
-                    responseCode.getHttpStatusCode(), responseCode.getStatusMessage());
+            throw new CineQuestApiException(false, ApiResponseCode.INVALID_PAGE_NUMBER);
         }
 
         List<Movie> movies = favoriteMovieRepository.findAll();

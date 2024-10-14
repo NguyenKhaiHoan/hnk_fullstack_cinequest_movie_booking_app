@@ -48,6 +48,7 @@ public enum ApiResponseCode {
                         "The email address is already registered. Please log in or use a different email."),
         RESET_PASSWORD_SUCCESS(2020, 200,
                         "Your password has been successfully updated. You can now log in with your new password."),
+        EMAIL_SENDING_FAILED(2021, 500, "Failed to send email: An error occurred while sending the email."),
 
         // Mã danh sách phim yêu thích
         FAVORITE_MOVIE_NOT_FOUND(3001, 404,
@@ -60,7 +61,13 @@ public enum ApiResponseCode {
 
         // Mã xử lý ảnh
         IMAGE_COMPRESSION_ERROR(4001, 500, "Image compression failed: Unable to compress the image."),
-        IMAGE_DECOMPRESSION_ERROR(4002, 500, "Image decompression failed: Unable to decompress the image.");
+        IMAGE_DECOMPRESSION_ERROR(4002, 500, "Image decompression failed: Unable to decompress the image."),
+
+        // Mã cập nhật tài khoản
+        ACCOUNT_SETUP_SUCCESS(5001, 200,
+                        "Your account setup is complete. You can now fully enjoy our services with your personalized account settings."),
+        ACCOUNT_UPDATE_SUCCESS(5002, 200,
+                        "Your account details have been successfully updated. The changes are now reflected in your profile.");
 
         private final int statusCode;
         private final int httpStatusCode;

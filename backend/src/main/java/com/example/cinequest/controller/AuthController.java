@@ -2,7 +2,7 @@ package com.example.cinequest.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,16 +22,15 @@ import com.example.cinequest.security.JwtTokenProvider;
 import com.example.cinequest.service.AuthenticationService;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private AuthenticationService authenticationService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
     public ResponseEntity<Response> register(@RequestBody SignUpRequest request) {
-        authenticationService.signup(request);
+        authenticationService.signUp(request);
         final ApiResponseCode exception = ApiResponseCode.SIGN_UP_SUCCESS;
 
         return ResponseEntity.ok(new Response(true, exception.getStatusCode(),
