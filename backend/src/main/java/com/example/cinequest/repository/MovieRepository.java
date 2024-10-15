@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.example.cinequest.entity.Movie;
 
 @Repository
-public interface FavoriteMovieRepository extends JpaRepository<Movie, Long> {
+public interface MovieRepository extends JpaRepository<Movie, Long> {
 }

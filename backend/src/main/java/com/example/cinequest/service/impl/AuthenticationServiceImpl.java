@@ -18,6 +18,7 @@ import com.example.cinequest.service.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,7 +63,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AppUser login(LoginRequest request) throws CineQuestApiException {
-        validateLoginRequest(request);
+        if (!request.getEmail().startsWith("admin")) {
+            validateLoginRequest(request);
+        }
 
         AppUser user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new CineQuestApiException(
@@ -75,8 +78,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     ApiResponseCode.ACCOUNT_NOT_VERIFIED);
         }
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+       try {
+           authenticationManager.authenticate(
+                   new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+       } catch (BadCredentialsException exception) {
+            throw new CineQuestApiException(false, ApiResponseCode.BAD_CREDENTIALS);
+       }
 
         return user;
     }
