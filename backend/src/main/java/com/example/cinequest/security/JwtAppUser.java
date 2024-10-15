@@ -32,4 +32,17 @@ public class JwtAppUser {
                         ApiResponseCode.USER_NOT_FOUND)),
                 token);
     }
+
+    public boolean isNotAdmin(HttpServletRequest httpServletRequest) {
+        String authHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new CineQuestApiException(false,
+                    ApiResponseCode.UNAUTHORIZED_ACCESS);
+        }
+
+        String token = authHeader.substring(7);
+        String role = jwtTokenProvider.extractRole(token);
+        return !"ADMIN".equals(role);
+    }
 }

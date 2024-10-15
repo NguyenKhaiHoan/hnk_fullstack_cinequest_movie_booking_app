@@ -36,6 +36,9 @@ public class AppUser implements UserDetails {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public AppUser(String email, String password) {
         this.email = email;
         this.password = password;

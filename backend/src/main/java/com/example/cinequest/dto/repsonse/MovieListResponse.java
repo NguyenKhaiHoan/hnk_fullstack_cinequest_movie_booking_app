@@ -1,5 +1,6 @@
 package com.example.cinequest.dto.repsonse;
 
+import com.example.cinequest.dto.MovieDTO;
 import com.example.cinequest.entity.Movie;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ public class MovieListResponse {
     private int page;
 
     @JsonProperty("results")
-    private List<Movie> results;
+    private List<MovieDTO> results;
 
     @JsonProperty("total_pages")
     private int totalPages;

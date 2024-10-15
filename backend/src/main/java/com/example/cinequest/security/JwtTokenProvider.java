@@ -1,5 +1,8 @@
 package com.example.cinequest.security;
 
+import com.example.cinequest.entity.AppUser;
+import com.example.cinequest.exception.ApiResponseCode;
+import com.example.cinequest.exception.CineQuestApiException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -33,12 +36,17 @@ public class JwtTokenProvider {
         return claimsResolver.apply(claims);
     }
 
+    public String extractRole(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("role", String.class);
+    }
+
     public String generateToken(UserDetails userDetails, boolean isAccessToken) {
         return isAccessToken ? generateAccessToken(new HashMap<>(), userDetails)
                 : generateRefreshToken(new HashMap<>(), userDetails);
     }
 
-    public String generateAccessToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateAccessToken(Map<String, Object> extraClaims,  UserDetails userDetails) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
@@ -53,7 +61,16 @@ public class JwtTokenProvider {
     private String buildToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails,
-            Long expiration) {
+            Long expiration) throws CineQuestApiException {
+
+        if (userDetails instanceof AppUser user) {
+            extraClaims.put("role", user.getRole().getName());
+        } else {
+            throw new CineQuestApiException(
+                    false, ApiResponseCode.INTERNAL_ERROR
+            );
+        }
+
         return Jwts
                 .builder()
                 .claims(extraClaims)
