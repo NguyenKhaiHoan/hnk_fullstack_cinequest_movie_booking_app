@@ -1,14 +1,13 @@
 package com.example.cinequest.service.impl;
 
 import com.example.cinequest.dto.MovieDTO;
-import com.example.cinequest.dto.request.AddFavoriteRequest;
 import com.example.cinequest.dto.request.AddMovieRequest;
 import com.example.cinequest.dto.request.MovieListRequest;
 import com.example.cinequest.entity.Movie;
 import com.example.cinequest.exception.ApiResponseCode;
 import com.example.cinequest.exception.CineQuestApiException;
 import com.example.cinequest.mapper.MovieMapper;
-import com.example.cinequest.repository.FavoriteMovieRepository;
+import com.example.cinequest.repository.MovieRepository;
 import com.example.cinequest.security.JwtAppUser;
 import com.example.cinequest.service.MovieService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class MovieServiceImpl implements MovieService {
-    private final FavoriteMovieRepository favoriteMovieRepository;
+    private final MovieRepository movieRepository;
     private final MovieMapper movieMapper;
     private final JwtAppUser jwtAppUser;
 
@@ -35,11 +34,11 @@ public class MovieServiceImpl implements MovieService {
         MovieDTO movieDTO = request.getMovie();
         Movie movie = MovieMapper.mapToEntity(movieDTO);
 
-        final boolean exists = favoriteMovieRepository.existsById(movie.getId());
+        final boolean exists = movieRepository.existsById(movie.getId());
 
         if (operation.equals("add") || operation.equals("update")) {
             if (exists) {
-                Movie existedMovie = favoriteMovieRepository.findById(movie.getId()).orElse(new Movie());
+                Movie existedMovie = movieRepository.findById(movie.getId()).orElse(new Movie());
                 existedMovie
                         .setAdult(movie.isAdult());existedMovie
                         .setBackdropPath(movie.getBackdropPath());existedMovie
@@ -54,15 +53,15 @@ public class MovieServiceImpl implements MovieService {
                         .setVideo(movie.isVideo());existedMovie
                         .setVoteAverage(movie.getVoteAverage());existedMovie
                         .setVoteCount(movie.getVoteCount());
-                favoriteMovieRepository.save(existedMovie);
+                movieRepository.save(existedMovie);
                 return;
             }
-            favoriteMovieRepository.save(movie);
+            movieRepository.save(movie);
         } else {
             if (!exists) {
                 throw new CineQuestApiException(true, ApiResponseCode.FAVORITE_MOVIE_NOT_FOUND);
             }
-            favoriteMovieRepository.delete(movie);
+            movieRepository.delete(movie);
         }
     }
 
@@ -79,7 +78,7 @@ public class MovieServiceImpl implements MovieService {
             throw new CineQuestApiException(false, ApiResponseCode.INVALID_PAGE_NUMBER);
         }
 
-        List<Movie> movies = favoriteMovieRepository.findAll();
+        List<Movie> movies = movieRepository.findAll();
 
         if (movies.isEmpty()) {
             return new ArrayList<>();
@@ -103,6 +102,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public int getMoviesSize() {
-        return (int) favoriteMovieRepository.count();
+        return (int) movieRepository.count();
     }
 }

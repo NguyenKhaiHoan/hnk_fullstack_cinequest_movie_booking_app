@@ -46,8 +46,8 @@ public class AccountController {
     public ResponseEntity<Response> addMovie(@RequestBody AddMovieRequest request, HttpServletRequest httpServletRequest) {
         movieService.addMovie(request, "add", httpServletRequest);
         return ResponseEntity.ok(new Response(true,
-                ApiResponseCode.FAVORITE_MOVIE_ADDED_SUCCESS.getStatusCode(),
-                ApiResponseCode.FAVORITE_MOVIE_ADDED_SUCCESS.getStatusMessage()));
+                ApiResponseCode.MOVIE_ADDED_SUCCESS.getStatusCode(),
+                ApiResponseCode.MOVIE_ADDED_SUCCESS.getStatusMessage()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -55,8 +55,8 @@ public class AccountController {
     public ResponseEntity<Response> updateMovie(@RequestBody AddMovieRequest request , HttpServletRequest httpServletRequest) {
         movieService.addMovie(request, "update", httpServletRequest);
         return ResponseEntity.ok(new Response(true,
-                ApiResponseCode.FAVORITE_MOVIE_UPDATED_SUCCESS.getStatusCode(),
-                ApiResponseCode.FAVORITE_MOVIE_UPDATED_SUCCESS.getStatusMessage()));
+                ApiResponseCode.MOVIE_UPDATED_SUCCESS.getStatusCode(),
+                ApiResponseCode.MOVIE_UPDATED_SUCCESS.getStatusMessage()));
         
     }
 
@@ -65,8 +65,8 @@ public class AccountController {
     public ResponseEntity<Response> removeFavorite(@RequestBody AddMovieRequest request, HttpServletRequest httpServletRequest) {
         movieService.addMovie(request, "remove", httpServletRequest);
         return ResponseEntity.ok(new Response(true,
-                ApiResponseCode.FAVORITE_MOVIE_REMOVED_SUCCESS.getStatusCode(),
-                ApiResponseCode.FAVORITE_MOVIE_REMOVED_SUCCESS.getStatusMessage()));
+                ApiResponseCode.MOVIE_REMOVED_SUCCESS.getStatusCode(),
+                ApiResponseCode.MOVIE_REMOVED_SUCCESS.getStatusMessage()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

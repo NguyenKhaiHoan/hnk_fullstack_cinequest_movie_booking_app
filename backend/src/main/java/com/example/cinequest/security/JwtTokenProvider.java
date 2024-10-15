@@ -88,7 +88,7 @@ public class JwtTokenProvider {
 
     public boolean isRefreshTokenValid(String refreshToken, UserDetails userDetails) {
         // TODO
-        return false;
+        return true;
     }
 
     private boolean isTokenExpired(String token) {
