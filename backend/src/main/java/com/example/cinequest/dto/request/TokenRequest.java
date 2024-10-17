@@ -10,10 +10,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LoginRequest {
-    @JsonProperty("email")
-    String email;
-
-    @JsonProperty("password")
-    String password;
+public class TokenRequest {
+    @JsonProperty("token")
+    String token;
 }

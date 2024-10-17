@@ -1,21 +1,20 @@
 package com.example.cinequest.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity(name = "user_detail")
-public class AppUserDetails {
+public class UserDetails {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(name = "username")
     private String username;
@@ -31,7 +30,4 @@ public class AppUserDetails {
 
     @Column(name = "profile_photo")
     private String profilePhoto;
-
-    @Column(name = "user_id")
-    private Long userId;
 }

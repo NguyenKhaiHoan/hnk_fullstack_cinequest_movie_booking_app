@@ -1,25 +1,21 @@
 package com.example.cinequest.service;
 
-import com.example.cinequest.dto.request.ForgotPasswordRequest;
-import com.example.cinequest.dto.request.LoginRequest;
-import com.example.cinequest.dto.request.SignUpRequest;
-import com.example.cinequest.dto.request.VerifyUserRequest;
-import com.example.cinequest.entity.AppUser;
-
-import jakarta.servlet.http.HttpServletRequest;
+import com.example.cinequest.dto.repsonse.Response;
+import com.example.cinequest.dto.repsonse.TokenResponse;
+import com.example.cinequest.dto.request.*;
 
 public interface AuthenticationService {
-    void signUp(SignUpRequest request);
+    Response signUp(SignUpRequest request);
 
-    AppUser login(LoginRequest request);
+    TokenResponse login(LoginRequest request);
 
-    void verify(VerifyUserRequest request);
+    TokenResponse verify(VerifyUserRequest request);
 
-    void resendVerificationEmail(String email);
+    Response resendVerificationEmail(String email);
 
-    AppUser refreshToken(HttpServletRequest request);
+    TokenResponse refreshToken(TokenRequest request);
 
-    void saveToken(String refreshToken, String email);
+    Response forgotPassword(ForgotPasswordRequest request);
 
-    void forgotPassword(ForgotPasswordRequest request);
+    Response introspect(TokenRequest request);
 }

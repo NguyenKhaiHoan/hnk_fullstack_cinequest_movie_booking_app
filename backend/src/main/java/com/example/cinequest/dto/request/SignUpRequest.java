@@ -2,18 +2,21 @@ package com.example.cinequest.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SignUpRequest {
     @JsonProperty("email")
-    private String email;
+    String email;
 
     @JsonProperty("password")
-    private String password;
+    String password;
 
     @JsonProperty("confirm_password")
-    private String confirmPassword;
+    String confirmPassword;
 }
