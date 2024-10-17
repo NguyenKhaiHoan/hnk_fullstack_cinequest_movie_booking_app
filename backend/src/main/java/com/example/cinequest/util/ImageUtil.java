@@ -1,17 +1,16 @@
 package com.example.cinequest.util;
 
-import com.example.cinequest.exception.ApiResponseCode;
-import com.example.cinequest.exception.CineQuestApiException;
-
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-public class ImageUtil {
-    private ImageUtil() {
-    }
+import com.example.cinequest.exception.ApiResponseCode;
+import com.example.cinequest.exception.CineQuestApiException;
 
-    public static byte[] compressImage(byte[] data) throws CineQuestApiException {
+public class ImageUtil {
+    private ImageUtil() {}
+
+    public static byte[] compressImage(byte[] data) {
         Deflater deflater = new Deflater();
         deflater.setLevel(Deflater.BEST_COMPRESSION);
         deflater.setInput(data);
@@ -31,7 +30,7 @@ public class ImageUtil {
         return outputStream.toByteArray();
     }
 
-    public static byte[] decompressImage(byte[] data) throws CineQuestApiException {
+    public static byte[] decompressImage(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);

@@ -1,13 +1,23 @@
 package com.example.cinequest.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
-@Getter
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public enum Role {
-    USER("USER"),
-    ADMIN("ADMIN");
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity(name = "role")
+public class Role {
+    @Id
+    @Column(name = "name")
+    String name;
 
-    private final String name;
+    @Column(name = "description")
+    String description;
 }

@@ -1,15 +1,14 @@
 package com.example.cinequest.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Getter
+@EqualsAndHashCode(callSuper = true)
+@Data
 @AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CineQuestApiException extends RuntimeException {
-    private final boolean success;
-    private final ApiResponseCode responseCode;
-
-    public ApiResponseCode getApiResponseCode() {
-        return responseCode;
-    }
+    boolean success;
+    ApiResponseCode apiResponseCode;
 }

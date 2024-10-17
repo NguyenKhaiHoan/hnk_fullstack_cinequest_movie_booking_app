@@ -1,8 +1,7 @@
 package com.example.cinequest.util;
 
 public class FileUtil {
-    private FileUtil() {
-    }
+    private FileUtil() {}
 
     public static String getFileExtension(String fileName) {
         int lastIndexOfDot = fileName.lastIndexOf(".");

@@ -2,15 +2,18 @@ package com.example.cinequest.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ForgotPasswordRequest {
     @JsonProperty("email")
-    private String email;
+    String email;
 
     @JsonProperty("new_password")
-    private String newPassword;
+    String newPassword;
 }
