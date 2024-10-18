@@ -1,6 +1,7 @@
 package com.example.cinequest.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -36,6 +37,11 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = movieRepository.findById(request.getId()).orElse(new Movie());
 
         movieMapper.updateMovie(movie, request);
+
+        if (movie.getUserIds() == null) {
+            movie.setUserIds(new HashSet<>());
+        }
+
         movie.getUserIds().add(userId);
         movieRepository.save(movie);
 
@@ -55,7 +61,11 @@ public class MovieServiceImpl implements MovieService {
 
         movie.getUserIds().remove(userId);
 
-        movieRepository.save(movie);
+        if (movie.getUserIds().isEmpty()) {
+            movieRepository.deleteById(movieId);
+        } else {
+            movieRepository.save(movie);
+        }
 
         return new Response(
                 true,
