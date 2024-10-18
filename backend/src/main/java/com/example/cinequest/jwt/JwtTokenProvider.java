@@ -10,12 +10,14 @@ import java.util.StringJoiner;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.example.cinequest.entity.User;
 import com.example.cinequest.exception.ApiResponseCode;
 import com.example.cinequest.exception.CineQuestApiException;
+import com.example.cinequest.repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -49,7 +51,7 @@ public class JwtTokenProvider {
                     .subject(user.getEmail())
                     .issuer("https://github.com/NguyenKhaiHoan")
                     .issueTime(new Date())
-                    .expirationTime(Date.from(Instant.now().plus(jwtExpirationTime, ChronoUnit.SECONDS)))
+                    .expirationTime(Date.from(Instant.now().plus(jwtExpirationTime, ChronoUnit.HOURS)))
                     .jwtID(UUID.randomUUID().toString())
                     .claim("scope", buildScope(user))
                     .build();
@@ -61,15 +63,12 @@ public class JwtTokenProvider {
 
             JWSObject jwsObject = new JWSObject(header, payload);
 
-            try {
-                jwsObject.sign(new MACSigner(jwtSecretKey.getBytes()));
-                return JwtModel.builder()
-                        .token(jwsObject.serialize())
-                        .tokenExpiresAt(tokenExpiresAt)
-                        .build();
-            } catch (JOSEException exception) {
-                throw new CineQuestApiException(false, ApiResponseCode.JWT_TOKEN_CREATION_FAILED);
-            }
+            jwsObject.sign(new MACSigner(jwtSecretKey.getBytes()));
+
+            return JwtModel.builder()
+                    .token(jwsObject.serialize())
+                    .tokenExpiresAt(tokenExpiresAt)
+                    .build();
         } catch (Exception exception) {
             throw new CineQuestApiException(false, ApiResponseCode.JWT_TOKEN_CREATION_FAILED);
         }
@@ -86,7 +85,7 @@ public class JwtTokenProvider {
                             .getJWTClaimsSet()
                             .getIssueTime()
                             .toInstant()
-                            .plus(jwtRefreshableTime, ChronoUnit.SECONDS))
+                            .plus(jwtRefreshableTime, ChronoUnit.HOURS))
                     : signedJWT.getJWTClaimsSet().getExpirationTime();
 
             boolean verified = signedJWT.verify(verifier);
@@ -115,5 +114,28 @@ public class JwtTokenProvider {
         }
 
         return stringJoiner.toString();
+    }
+
+    public User validateSelfRequestById(String userId, UserRepository userRepository) {
+        return getUser(userId, userRepository);
+    }
+
+    private User getUser(String userId, UserRepository userRepository) {
+        var context = SecurityContextHolder.getContext();
+        String email = context.getAuthentication().getName();
+
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.ACCOUNT_NOT_REGISTERED));
+
+        if (!user.getId().equals(userId)) {
+            throw new CineQuestApiException(false, ApiResponseCode.UNAUTHORIZED_ACCESS);
+        }
+
+        return user;
+    }
+
+    public User validateSelfRequestByEmail(String userEmail, UserRepository userRepository) {
+        return getUser(userEmail, userRepository);
     }
 }

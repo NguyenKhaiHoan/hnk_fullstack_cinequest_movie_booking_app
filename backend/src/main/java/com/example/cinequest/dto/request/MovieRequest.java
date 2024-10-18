@@ -1,17 +1,18 @@
-package com.example.cinequest.dto;
+package com.example.cinequest.dto.request;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-public class MovieDTO {
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class MovieRequest {
     @JsonProperty("id")
     private Long id;
 
