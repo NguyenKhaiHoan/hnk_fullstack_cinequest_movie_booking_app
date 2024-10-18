@@ -4,9 +4,9 @@
 
 (Old version using Firebase for backend): [CineQuest - Movie Ticket Booking App - Clean Architecture & BLoC](https://github.com/NguyenKhaiHoan/hnk_cinequest_movie)
 
-**CineQuest** is a **Movie Ticket Booking** application built with **Clean Architecture** principles and utilizes **BLoC** for state management on the frontend. The project features a structured, modular architecture that ensures scalability, testability, and maintainability, making it easy to extend functionality in the future.
+CineQuest is a **Movie Ticket Booking** application built with **Clean Architecture** principles and utilizes **BLoC** for state management on the frontend. The project features a structured, modular architecture that ensures scalability, testability, and maintainability, making it easy to extend functionality.
 
-The app is developed using **Flutter** for the frontend and **Java Spring Boot** for the backend. The backend handles the core business logic and integrates with **TheMovieDB** API for movie data, while the frontend interacts with the backend via APIs for authentication and movie functionalities. **SQLite** is used for local data storage on the client-side, and **Get_it** for dependency injection.
+The app is developed using **Flutter** for the frontend and **Java Spring Boot** for the backend. The backend handles the core business logic of the app, including authentication with **JWT**, and stores data related to movies, cinemas, and tickets. The frontend interacts with the backend via APIs, which are developed and call **TheMovieDB** API to fetch real movie data. **SQLite**, **Flutter Secure Storage** is used for local data storage on the client-side, and **Get_it** is used for dependency injection.
 
 ---
 
@@ -19,6 +19,12 @@ The app is developed using **Flutter** for the frontend and **Java Spring Boot**
   - **User verification** via a code sent to the user's email after registration or before a password reset.
   - User can **resend verification code** if the user does not receive the email.
   - Users can recover their account with email-based password reset.
+
+- **Account Management**:
+  - **Account Setup**: After registration, users can set up their account with username, name, surname, bio and profile photo.
+  - **Account Details**: Fetch detailed user information account.
+  - **Account Update**: Users can update their account details information.
+
 - **Favorite Movies**:
   - Each user can create and manage a personalized **list of favorite movies**.
   - The favorites are stored in the backend with user-specific lists, ensuring that each user's favorite movies are distinct.
