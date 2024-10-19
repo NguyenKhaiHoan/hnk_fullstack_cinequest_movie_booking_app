@@ -74,7 +74,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MovieListResponse getMovies(String language, int page, String userId) {
+    public MovieListResponse getMovies(String language, int page, int limit, String userId) {
         jwtTokenProvider.validateSelfRequestById(userId, userRepository);
 
         if (page < 1) {
@@ -87,7 +87,6 @@ public class MovieServiceImpl implements MovieService {
             return new MovieListResponse(1, new ArrayList<>(), 1, 0);
         }
 
-        final int limit = 20;
         final int totalResults = movies.size();
         final int totalPages = (int) Math.ceil((double) totalResults / limit);
 

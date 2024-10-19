@@ -9,5 +9,5 @@ public interface MovieService {
 
     Response deleteFavorite(Long movieId, String userId);
 
-    MovieListResponse getMovies(String language, int page, String userId);
+    MovieListResponse getMovies(String language, int page, int limit, String userId);
 }
