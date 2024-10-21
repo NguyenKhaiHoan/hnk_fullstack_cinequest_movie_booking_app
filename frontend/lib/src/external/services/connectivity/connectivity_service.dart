@@ -1,6 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-/// Connectivity service
 class ConnectivityService {
   final Connectivity _connectivity = Connectivity();
 

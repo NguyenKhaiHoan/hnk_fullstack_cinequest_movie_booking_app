@@ -2,11 +2,9 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-/// Sqlite service
 class SqliteService {
   static Database? _database;
 
-  /// Khởi tạo database
   static Future<void> initializeDatabase(
     String dbName,
     Future<void> Function(Database, int)? createDatabase,

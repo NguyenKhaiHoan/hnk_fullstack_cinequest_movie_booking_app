@@ -11,7 +11,6 @@ import 'package:cinequest/src/core/utils/app_util.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:flutter/material.dart';
 
-/// Các util dành cho BottomSheet
 class BottomSheetUtil {
   BottomSheetUtil._();
 

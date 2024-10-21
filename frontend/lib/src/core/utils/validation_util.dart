@@ -1,6 +1,5 @@
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 
-/// Các util dành cho Validation
 class ValidationUtil {
   ValidationUtil._();
 

@@ -3,13 +3,7 @@ import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/svg_icon.dart';
 import 'package:flutter/material.dart';
 
-/// Icon button tròn có border sử dụng trong App
 class CustomCircleButton extends StatelessWidget {
-  /// Constructor
-  ///
-  /// - [colorFilter] : Đổi màu cho icon ảnh svg (optional)
-  /// - [notNeedColorFilter] : Không cần đổi màu icon ảnh svg
-  /// (mặc định là `false`)
   const CustomCircleButton({
     required this.iconPath,
     super.key,

@@ -1,11 +1,9 @@
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Shared preferences service
 class SharedPreferencesService {
   static SharedPreferences? _prefs;
 
-  /// Initialize storage
   static Future<void> initializeStorage() async {
     _prefs = await SharedPreferences.getInstance();
   }

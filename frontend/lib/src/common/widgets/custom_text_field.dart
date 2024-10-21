@@ -7,13 +7,7 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// TextField được sử dụng chung trong App
 class CustomTextField extends StatelessWidget {
-  /// Constructor
-  ///
-  /// - [checkCharacterCounter] : Kiểm tra cần đếm số ký tự trong text field
-  /// hay không
-  /// - [counter] : Số ký tự có trong text field
   const CustomTextField({
     required this.label,
     required this.controller,

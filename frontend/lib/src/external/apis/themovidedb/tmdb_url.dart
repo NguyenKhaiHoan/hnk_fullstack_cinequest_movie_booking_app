@@ -1,4 +1,3 @@
-/// Các url được sử dụng trong TheMovieDb
 class TMDBUrl {
   TMDBUrl._();
 

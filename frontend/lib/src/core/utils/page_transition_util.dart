@@ -2,7 +2,6 @@ import 'package:cinequest/src/core/routes/route_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Các util dành cho PageTransition
 class PageTransitionUtil {
   PageTransitionUtil._();
 

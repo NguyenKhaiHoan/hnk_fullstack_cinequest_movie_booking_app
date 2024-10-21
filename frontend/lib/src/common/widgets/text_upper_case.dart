@@ -1,9 +1,7 @@
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
-/// Text được viết hoa được sử dụng trong toàn bộ App
 class TextUpperCase extends StatelessWidget {
-  /// Constructor
   const TextUpperCase({
     required this.text,
     super.key,

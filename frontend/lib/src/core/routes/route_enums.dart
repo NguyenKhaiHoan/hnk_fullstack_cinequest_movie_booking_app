@@ -1,4 +1,4 @@
-/// Địng nghĩa các tuyến đường trong App
+// Địng nghĩa các tuyến đường trong App
 enum AppRoutes {
   welcome('/welcome'),
   splash('/'),
@@ -12,12 +12,9 @@ enum AppRoutes {
   setting('/setting');
 
   const AppRoutes(this.path);
-
-  /// Đường dẫn
   final String path;
 }
 
-/// Định nghĩa các hướng khi điều hướng page
 enum PageTransitionDirection {
   left,
   up,
