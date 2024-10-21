@@ -1,7 +1,7 @@
 class CineQuestUrl {
   CineQuestUrl._();
 
-  static const baseUrl = 'http://10.0.2.2:8080/';
+  static const baseUrl = 'http://10.10.166.149:8080/'; // Ipconfig Wifi Ipv4
 
   static const loginUrl = '/auth/login';
   static const signUpUrl = '/auth/sign-up';
