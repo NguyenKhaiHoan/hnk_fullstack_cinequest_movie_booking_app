@@ -18,13 +18,19 @@ abstract class CineQuestApi {
   factory CineQuestApi(Dio dio) = _CineQuestApi;
 
   @POST(CineQuestUrl.loginUrl)
-  Future<TokenResponse> login({@Body() required LoginRequest request});
+  Future<TokenResponse> login({
+    @Body() required LoginRequest request,
+  });
 
   @POST(CineQuestUrl.signUpUrl)
-  Future<void> signUp({@Body() required SignUpRequest request});
+  Future<void> signUp({
+    @Body() required SignUpRequest request,
+  });
 
   @POST(CineQuestUrl.verifyUrl)
-  Future<TokenResponse> verify({@Body() required VerifyUserRequest request});
+  Future<TokenResponse> verify({
+    @Body() required VerifyUserRequest request,
+  });
 
   @GET(CineQuestUrl.getUserUrl)
   Future<UserModel> getUser();

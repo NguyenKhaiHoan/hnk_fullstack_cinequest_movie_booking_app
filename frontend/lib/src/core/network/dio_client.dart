@@ -23,7 +23,6 @@ class DioClient {
       )
       ..interceptors.add(
         DioInterceptor(
-          dio: _dio,
           secureStorageService: _secureStorageService,
         ),
       );
