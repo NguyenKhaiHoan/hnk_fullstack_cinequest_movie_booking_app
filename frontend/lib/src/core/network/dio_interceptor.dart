@@ -5,12 +5,17 @@ import 'package:dio/dio.dart';
 
 class DioInterceptor extends Interceptor {
   DioInterceptor({
-    required Dio dio,
     required SecureStorageService secureStorageService,
-  })  : _dio = dio,
-        _secureStorageService = secureStorageService;
+  }) : _secureStorageService = secureStorageService;
 
-  final Dio _dio;
+  final Dio _dio = Dio(
+    BaseOptions(
+      sendTimeout: const Duration(milliseconds: 15000),
+      connectTimeout: const Duration(milliseconds: 15000),
+      receiveTimeout: const Duration(milliseconds: 15000),
+    ),
+  );
+
   final SecureStorageService _secureStorageService;
 
   @override
