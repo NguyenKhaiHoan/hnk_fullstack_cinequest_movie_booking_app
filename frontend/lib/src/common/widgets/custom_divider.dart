@@ -2,12 +2,7 @@ import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
 
-/// Divider sử dụng chung trong App
 class CustomDivider extends StatelessWidget {
-  /// Constructor
-  ///
-  /// - [text] : Text nằm giữa trong divider (optional)
-  /// - [height] : Độ cao của divider (optional)
   const CustomDivider({super.key, this.text, this.height});
 
   final String? text;

@@ -9,11 +9,7 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Appbar dùng chung cho các màn hình xác thực
 class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
-  /// Constructor
-  ///
-  /// - [title] : Title nằm bên phải AppBar
   const AuthAppBar({
     required this.title,
     super.key,

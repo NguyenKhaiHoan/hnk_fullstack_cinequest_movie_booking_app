@@ -1,7 +1,7 @@
-/// Secure Storage
+// Secure Storage
 const String authKey = 'auth';
 
-/// Sqlite
+// Sqlite
 const String favouriteMoviesTableKey = 'favorite_movies';
 const String colId = 'id';
 const String colAdult = 'adult';

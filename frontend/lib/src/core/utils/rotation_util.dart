@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-/// Các util dành cho Rotation
 class RotationUtil {
   RotationUtil._();
 

@@ -4,19 +4,12 @@ import 'package:cinequest/src/common/widgets/svg_icon.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
-/// Định nghĩa các type của Button
 enum ButtonType {
   outlined,
   elevated,
 }
 
-/// Buttom chung cho toàn bộ App
 class CustomButton extends StatelessWidget {
-  /// Constructor
-  ///
-  /// - [colorFilter] : Đổi màu cho icon ảnh svg (optional)
-  /// - [notNeedColorFilter] : Không cần đổi màu icon ảnh svg
-  /// (mặc định là `false`)
   const CustomButton({
     required this.buttonType,
     super.key,

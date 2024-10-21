@@ -1,11 +1,7 @@
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
 
-/// Padding chung trái hoặc phải cho các thành phần leading, action trong AppBar
 class PaddingAppBar extends StatelessWidget {
-  /// Contructor
-  ///
-  /// - [isLeft] : Kiểm tra cần padding trái hoặc phải
   const PaddingAppBar({
     required this.isLeft,
     required this.child,

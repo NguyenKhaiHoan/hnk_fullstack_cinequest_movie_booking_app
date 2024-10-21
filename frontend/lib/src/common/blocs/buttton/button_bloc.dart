@@ -7,9 +7,7 @@ part 'button_bloc.freezed.dart';
 part 'button_event.dart';
 part 'button_state.dart';
 
-/// Quản lý trạng thái của Button khi thực hiện các use case
 class ButtonBloc extends Bloc<ButtonEvent, ButtonState> {
-  /// Constructor
   ButtonBloc() : super(const ButtonState.initial()) {
     on<ButtonEvent>((events, emit) async {
       await events.map(

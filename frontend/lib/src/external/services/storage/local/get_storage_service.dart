@@ -1,11 +1,9 @@
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:get_storage/get_storage.dart';
 
-/// Get storage service
 class GetStorageService {
   static GetStorage? _storage;
 
-  /// Khởi tạo storage
   static Future<void> initializeStorage(String id) async {
     await GetStorage.init(id);
     _storage = GetStorage(id);

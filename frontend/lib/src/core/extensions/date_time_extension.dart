@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-/// DateTime extension
+// DateTime extension
 extension DateTimeExtension on DateTime {
   String formatToMMMDD() {
     return DateFormat('MMM d').format(this);

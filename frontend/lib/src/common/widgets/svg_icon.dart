@@ -3,13 +3,7 @@ import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-/// Icon ảnh svg sử dụng chung trong App
 class SvgIcon extends StatelessWidget {
-  /// Constructor
-  ///
-  /// - [colorFilter] : Đổi màu cho icon ảnh svg (optional)
-  /// - [notNeedColorFilter] : Không cần đổi màu icon ảnh svg
-  /// (mặc định là `false`)
   const SvgIcon({
     required this.iconPath,
     super.key,

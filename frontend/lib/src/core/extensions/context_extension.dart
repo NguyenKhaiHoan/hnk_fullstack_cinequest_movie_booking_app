@@ -1,14 +1,14 @@
 import 'package:cinequest/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
 
-/// Theme extension
+// Theme extension
 extension ThemeExtension on BuildContext {
   ThemeData get theme => Theme.of(this);
 
   TextTheme get textTheme => theme.textTheme;
 }
 
-/// MediaQuery extension
+// MediaQuery extension
 extension MediaQueryExtension on BuildContext {
   Size get screenSize => MediaQuery.of(this).size;
 
@@ -17,7 +17,7 @@ extension MediaQueryExtension on BuildContext {
   double get screenHeight => screenSize.height;
 }
 
-/// SnackBar extension
+// SnackBar extension
 extension SnackbarExtension on BuildContext {
   void showSnackbar(BuildContext context, String message) {
     ScaffoldMessenger.of(this).showSnackBar(
