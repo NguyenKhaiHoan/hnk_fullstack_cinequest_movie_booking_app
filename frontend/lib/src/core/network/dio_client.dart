@@ -15,8 +15,8 @@ class DioClient {
       ..options.headers = {
         HttpHeaders.contentTypeHeader: ContentType.json.mimeType,
       }
-      ..options.connectTimeout = const Duration(milliseconds: 15000)
-      ..options.receiveTimeout = const Duration(milliseconds: 15000)
+      ..options.connectTimeout = const Duration(milliseconds: 60000)
+      ..options.receiveTimeout = const Duration(milliseconds: 60000)
       ..options.responseType = ResponseType.json
       ..interceptors.add(
         PrettyDioLogger(),

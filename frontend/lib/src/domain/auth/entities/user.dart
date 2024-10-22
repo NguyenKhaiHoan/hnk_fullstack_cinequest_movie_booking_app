@@ -8,6 +8,7 @@ class User extends Equatable {
     required this.roles,
     required this.id,
   });
+
   final String id;
   final String email;
   final bool enabled;

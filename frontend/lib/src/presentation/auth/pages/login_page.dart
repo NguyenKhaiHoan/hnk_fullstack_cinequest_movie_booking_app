@@ -1,7 +1,7 @@
 import 'package:cinequest/src/common/blocs/app/app_bloc.dart';
 import 'package:cinequest/src/common/blocs/buttton/button_bloc.dart';
 import 'package:cinequest/src/core/di/injection_container.dart';
-import 'package:cinequest/src/core/extensions/context_extension.dart';
+import 'package:cinequest/src/core/utils/toast_util.dart';
 import 'package:cinequest/src/domain/auth/usecases/login_usecase.dart';
 import 'package:cinequest/src/domain/auth/usecases/params/login_params.dart';
 import 'package:cinequest/src/presentation/auth/blocs/login/login_bloc.dart';

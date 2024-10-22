@@ -5,6 +5,7 @@ import 'package:cinequest/src/common/widgets/auth_app_bar.dart';
 import 'package:cinequest/src/common/widgets/custom_button.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/core/utils/toast_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

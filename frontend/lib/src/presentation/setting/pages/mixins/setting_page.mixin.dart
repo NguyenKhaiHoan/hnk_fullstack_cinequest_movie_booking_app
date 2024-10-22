@@ -12,7 +12,7 @@ mixin SettingPageMixin on State<SettingPage> {
 
   void _listener(BuildContext context, ButtonState state) {
     state.whenOrNull(
-      failure: (failure) => context.showSnackbar(context, failure.message),
+      failure: (failure) => ToastUtil.showToastError(context, failure.message),
       success: () => context.read<AppBloc>().add(const AppEvent.started()),
     );
   }

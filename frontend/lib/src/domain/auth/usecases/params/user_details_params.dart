@@ -8,6 +8,7 @@ class UserDetailsParams extends Equatable {
     required this.bio,
     required this.profilePhoto,
   });
+
   final String username;
   final String name;
   final String surname;

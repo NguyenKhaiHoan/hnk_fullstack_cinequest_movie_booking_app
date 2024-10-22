@@ -1,6 +1,7 @@
 import 'package:cinequest/src/common/blocs/app/app_bloc.dart';
 import 'package:cinequest/src/core/routes/route_enums.dart';
 import 'package:cinequest/src/core/utils/page_transition_util.dart';
+import 'package:cinequest/src/presentation/auth/pages/account_setup_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/login_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/sign_up_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/splash_page.dart';
@@ -60,6 +61,14 @@ final class RouterPages {
         builder: (context, state) => const SignUpPage(),
         pageBuilder: PageTransitionUtil.customPageBuilder(
           child: const SignUpPage(),
+        ),
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: AppRoutes.accountSetup.path,
+        builder: (context, state) => const AccountSetupPage(),
+        pageBuilder: PageTransitionUtil.customPageBuilder(
+          child: const AccountSetupPage(),
         ),
       ),
       StatefulShellRoute.indexedStack(
@@ -145,8 +154,9 @@ final class RouterPages {
 
     // Nếu chưa setup account thì trả về AccountSetupPage trong trường hợp
     // mở lại ứng dụng khi mới đăng ký xong chưa kịp setup
-    if (appAuthState == const AppState.accountNotSetup()) {
-      return _path += AppRoutes.accountSetup.path;
+    if (appAuthState == const AppState.accountNotSetup() &&
+        !_path.contains(AppRoutes.signUp.path)) {
+      return AppRoutes.accountSetup.path;
     }
     // Nếu đã đăng nhập mà path hiện tại chưa chứa path của HomePage
     // thì trả về path của home page
