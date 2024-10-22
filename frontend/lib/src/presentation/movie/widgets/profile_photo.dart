@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
@@ -7,9 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/blocs/app/app_bloc.dart';
 
-/// Ảnh hồ sơ
 class ProfilePhoto extends StatelessWidget {
-  /// Constructor
   const ProfilePhoto({super.key});
 
   @override
@@ -43,7 +43,12 @@ class ProfilePhoto extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: NetworkImage(userDetails.profilePhoto!),
+                image: MemoryImage(
+                  base64Decode(
+                    userDetails.profilePhoto!
+                        .replaceFirst('data:image/jpeg;base64,', ''),
+                  ),
+                ),
                 fit: BoxFit.cover,
               ),
             ),

@@ -63,8 +63,10 @@ class DioInterceptor extends Interceptor {
             handler.next(err);
           }
         }
+        handler.next(err);
+      } else {
+        handler.next(err);
       }
-      handler.next(err);
     } else {
       handler.next(err);
     }
