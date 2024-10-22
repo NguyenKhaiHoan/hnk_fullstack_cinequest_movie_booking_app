@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:cinequest/src/common/constants/app_keys.dart';
+import 'package:cinequest/src/core/errors/exception/network_exception.dart';
+import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/data/auth/models/responses/token_response.dart';
 import 'package:cinequest/src/external/apis/cinequest/cinequest_url.dart';
 import 'package:cinequest/src/external/services/storage/local/secure_storage_service.dart';
@@ -24,8 +29,9 @@ class DioInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     final accessToken =
-        await _secureStorageService.getData('ACCESS_TOKEN') ?? '';
-    if (accessToken != '') {
+        await _secureStorageService.getData(AppKeys.accessToken);
+    log('------------- access token: $accessToken');
+    if (accessToken != null) {
       options.headers.addAll({
         'Authorization': 'Bearer $accessToken',
       });
@@ -39,13 +45,26 @@ class DioInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     if (err.response?.statusCode == 401) {
-      try {
-        await refreshToken();
-        final response = await _retry(err.requestOptions);
-        handler.resolve(response);
-      } catch (e) {
-        handler.next(err);
+      final accessToken =
+          await _secureStorageService.getData(AppKeys.accessToken);
+      final accessExpiration =
+          await _secureStorageService.getData(AppKeys.accessExpiration);
+      log('------------- access token: $accessToken');
+      log('------------- access expiration: $accessExpiration');
+
+      if (accessToken != null && accessExpiration != null) {
+        final expirationDate = DateTime.parse(accessExpiration);
+        if (expirationDate.isBefore(DateTime.now())) {
+          try {
+            await refreshToken();
+            final response = await _retry(err.requestOptions);
+            handler.resolve(response);
+          } catch (e) {
+            handler.next(err);
+          }
+        }
       }
+      handler.next(err);
     } else {
       handler.next(err);
     }
@@ -53,7 +72,7 @@ class DioInterceptor extends Interceptor {
 
   Future<void> refreshToken() async {
     final accessToken =
-        await _secureStorageService.getData('REFRESH_TOKEN') ?? '';
+        await _secureStorageService.getData(AppKeys.accessToken);
     try {
       final response = await _dio.post<TokenResponse>(
         CineQuestUrl.baseUrl + CineQuestUrl.refreshTokenUrl.substring(1),
@@ -61,23 +80,30 @@ class DioInterceptor extends Interceptor {
       );
       if (response.statusCode == 200) {
         await _secureStorageService.saveData(
-          'ACCESS_TOKEN',
+          AppKeys.accessToken,
           response.data!.accessToken,
         );
+        log('------------- access token (after refresh): ${response.data!.accessToken}');
         await _secureStorageService.saveData(
-          'ACCESS_EXPIRATION',
+          AppKeys.accessExpiration,
           response.data!.accessTokenExpiresAt,
         );
+        log('------------- access expiration (after refresh): ${response.data!.accessTokenExpiresAt}');
       } else {
-        throw Exception('Không thể làm mới token');
+        throw DioException(
+          error: response.statusMessage,
+          response: response,
+          requestOptions: response.requestOptions,
+        );
       }
     } on DioException catch (e) {
-      throw Exception('Không thể làm mới token: ${e.message}');
+      throw Failure(message: NetworkException.fromDioException(e).message);
     }
   }
 
   Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
-    final accessToken = await _secureStorageService.getData('ACCESS_TOKEN');
+    final accessToken =
+        await _secureStorageService.getData(AppKeys.accessToken);
     final options = Options(
       method: requestOptions.method,
       headers: {
