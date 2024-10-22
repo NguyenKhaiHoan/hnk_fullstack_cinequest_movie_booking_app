@@ -46,6 +46,8 @@ class AuthRepositoryImpl extends AuthRepository {
       final result = await _authRemoteDataSource.login(request);
       final response = _tokenMapper.toEntity(result);
 
+      // Làm mới lại toàn bộ tuyến được được lưu lại trong app
+      RouterPages.refreshPath();
       return Right(response);
     } on Failure catch (e) {
       return Left(e);

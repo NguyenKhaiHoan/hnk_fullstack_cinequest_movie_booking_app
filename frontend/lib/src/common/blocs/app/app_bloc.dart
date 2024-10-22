@@ -1,3 +1,4 @@
+import 'package:cinequest/src/common/constants/app_keys.dart';
 import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
 import 'package:cinequest/src/domain/auth/entities/user_details.dart';
@@ -35,9 +36,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     _AppStartedEvent event,
     Emitter<AppState> emit,
   ) async {
-    final token = await _secureStorageService.getData('token') ?? '';
-    // Xét nếu token là rỗng tức app chưa được đăng nhập
-    if (token != '') {
+    final token = await _secureStorageService.getData(AppKeys.accessToken);
+    // Xét nếu token là null tức app chưa được đăng nhập
+    if (token != null) {
       // Nếu user khác null tức đã đăng nhập thì lấy data của user
       final user = await _getUserUseCase.call();
 

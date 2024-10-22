@@ -150,7 +150,7 @@ final class RouterPages {
     }
     // Nếu đã đăng nhập mà path hiện tại chưa chứa path của HomePage
     // thì trả về path của home page
-    else if (appAuthState.maybeWhen(
+    else if (appAuthState.maybeMap(
           authenticated: (value) => true,
           orElse: () => false,
         ) &&
