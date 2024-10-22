@@ -35,7 +35,7 @@ abstract class CineQuestApi {
   @GET(CineQuestUrl.getUserUrl)
   Future<UserModel> getUser();
 
-  @POST(CineQuestUrl.getUserDetailsUrl)
+  @GET(CineQuestUrl.getUserDetailsUrl)
   Future<UserDetailsModel> getUserDetails({
     @Path('user_id') required String userId,
   });

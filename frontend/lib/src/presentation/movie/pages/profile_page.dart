@@ -4,6 +4,7 @@ import 'package:cinequest/src/common/widgets/app_bar_bottom_divider.dart';
 import 'package:cinequest/src/common/widgets/custom_circle_button.dart';
 import 'package:cinequest/src/common/widgets/padding_app_bar.dart';
 import 'package:cinequest/src/core/routes/route_enums.dart';
+import 'package:cinequest/src/presentation/movie/widgets/profile_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -41,7 +42,12 @@ class _ProfilePageState extends State<ProfilePage> with ProfilePageMixin {
       ),
       body: const SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: AppSizes.defaultSpace),
-        child: Column(),
+        child: Column(
+          children: [
+            gapH48,
+            ProfilePhoto(),
+          ],
+        ),
       ),
     );
   }

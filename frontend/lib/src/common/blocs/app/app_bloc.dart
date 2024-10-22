@@ -50,7 +50,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         (data) async {
           // Nếu có data user tức đã đăng ký rồi thì sẽ bắt đầu lấy thông tin
           // chi tiết của người dùng
-          final userDetails = await _getUserDetailsUseCase.call();
+          final userDetails =
+              await _getUserDetailsUseCase.call(params: data.id);
 
           userDetails.fold((failure) {
             // Lỗi do tài khoản đăng ký chưa được setup

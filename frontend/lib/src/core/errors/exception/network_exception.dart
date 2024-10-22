@@ -25,10 +25,10 @@ class NetworkException extends Equatable {
       case DioExceptionType.badCertificate:
         message = 'Invalid certificate received from the server'.hardcoded;
       case DioExceptionType.badResponse:
-        final dto = ApiResponse.fromJson(
+        final response = ApiResponse.fromJson(
           dioException.response?.data as Map<String, dynamic>,
         );
-        message = dto.statusMessage ??
+        message = response.statusMessage ??
             'Invalid response from the API server'.hardcoded;
       case DioExceptionType.unknown:
         message = 'An unknown error occurred'.hardcoded;
