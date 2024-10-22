@@ -10,7 +10,6 @@ import java.util.StringJoiner;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -82,10 +81,10 @@ public class JwtTokenProvider {
 
             Date expiryTime = (isRefresh)
                     ? Date.from(signedJWT
-                            .getJWTClaimsSet()
-                            .getIssueTime()
-                            .toInstant()
-                            .plus(jwtRefreshableTime, ChronoUnit.HOURS))
+                    .getJWTClaimsSet()
+                    .getIssueTime()
+                    .toInstant()
+                    .plus(jwtRefreshableTime, ChronoUnit.HOURS))
                     : signedJWT.getJWTClaimsSet().getExpirationTime();
 
             boolean verified = signedJWT.verify(verifier);
@@ -117,15 +116,12 @@ public class JwtTokenProvider {
     }
 
     public User validateSelfRequestById(String userId, UserRepository userRepository) {
-        return getUser(userId, userRepository);
+        return getUserById(userId, userRepository);
     }
 
-    private User getUser(String userId, UserRepository userRepository) {
-        var context = SecurityContextHolder.getContext();
-        String email = context.getAuthentication().getName();
-
+    private User getUserById(String userId, UserRepository userRepository) {
         User user = userRepository
-                .findByEmail(email)
+                .findById(userId)
                 .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.ACCOUNT_NOT_REGISTERED));
 
         if (!user.getId().equals(userId)) {
@@ -135,7 +131,19 @@ public class JwtTokenProvider {
         return user;
     }
 
+    private User getUserByEmail(String email, UserRepository userRepository) {
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.ACCOUNT_NOT_REGISTERED));
+
+        if (!user.getEmail().equals(email)) {
+            throw new CineQuestApiException(false, ApiResponseCode.UNAUTHORIZED_ACCESS);
+        }
+
+        return user;
+    }
+
     public User validateSelfRequestByEmail(String userEmail, UserRepository userRepository) {
-        return getUser(userEmail, userRepository);
+        return getUserByEmail(userEmail, userRepository);
     }
 }
