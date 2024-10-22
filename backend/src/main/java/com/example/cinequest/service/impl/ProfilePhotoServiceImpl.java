@@ -1,10 +1,14 @@
 package com.example.cinequest.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Base64;
 import java.util.Objects;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +29,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -63,7 +68,6 @@ public class ProfilePhotoServiceImpl implements ProfilePhotoService {
 
     @Override
     public UserDetails uploadProfilePhotoToFileSystem(MultipartFile file, String email) {
-
         User user = userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.USER_NOT_FOUND));
@@ -105,7 +109,6 @@ public class ProfilePhotoServiceImpl implements ProfilePhotoService {
 
     @Override
     public byte[] downloadProfilePhotoFromFileSystem(String userId) {
-
         UserDetails userDetails = userDetailsRepository
                 .findById(userId)
                 .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.USER_NOT_FOUND));
@@ -118,5 +121,30 @@ public class ProfilePhotoServiceImpl implements ProfilePhotoService {
             throw new CineQuestApiException(false, ApiResponseCode.INTERNAL_ERROR);
         }
         return images;
+    }
+
+    @Override
+    public String encodeProfilePhoto(String path) {
+        File file = new File(path);
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new CineQuestApiException(false, ApiResponseCode.RESOURCE_NOT_FOUND);
+        }
+
+        byte[] imageBytes = new byte[(int) file.length()];
+        try {
+            int result = fileInputStream.read(imageBytes);
+            if (result > 0) {
+                log.info(String.valueOf(result));
+            }
+            String base64Image = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytes);
+            fileInputStream.close();
+
+            return base64Image;
+        } catch (IOException e) {
+            throw new CineQuestApiException(false, ApiResponseCode.INTERNAL_ERROR);
+        }
     }
 }

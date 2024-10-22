@@ -77,8 +77,11 @@ public class UserDetailsService {
     public UserDetailsResponse getUserDetails(String userId) {
         jwtTokenProvider.validateSelfRequestById(userId, userRepository);
 
-        return userDetailsMapper.toUserDetailsResponse(userDetailsRepository
+        UserDetailsResponse response = userDetailsMapper.toUserDetailsResponse(userDetailsRepository
                 .findById(userId)
                 .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.USER_NOT_FOUND)));
+
+        response.setProfilePhoto(profilePhotoService.encodeProfilePhoto(response.getProfilePhoto()));
+        return response;
     }
 }
