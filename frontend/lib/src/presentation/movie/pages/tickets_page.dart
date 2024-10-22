@@ -5,9 +5,7 @@ import 'package:cinequest/src/core/extensions/date_time_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
-/// Trang Tickets
 class TicketsPage extends StatelessWidget {
-  /// Constructor
   const TicketsPage({super.key});
 
   @override

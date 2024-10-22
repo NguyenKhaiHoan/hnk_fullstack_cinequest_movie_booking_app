@@ -9,9 +9,7 @@ import 'package:flutter/material.dart';
 
 part '_mixins/home_page.mixin.dart';
 
-/// Trang Home
 class HomePage extends StatelessWidget {
-  /// Constructor
   const HomePage({super.key});
 
   @override
