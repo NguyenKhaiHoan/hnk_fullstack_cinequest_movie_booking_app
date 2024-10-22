@@ -55,6 +55,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           AppKeys.accessToken,
           result.accessToken,
         );
+        await _secureStorageService.saveData(
+          AppKeys.accessExpiration,
+          result.accessTokenExpiresAt,
+        );
         log('------------- access token: ${result.accessToken}');
         log('------------- access expiration: ${result.accessTokenExpiresAt}');
         return result;
