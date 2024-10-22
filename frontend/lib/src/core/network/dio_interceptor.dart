@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cinequest/src/common/constants/app_keys.dart';
 import 'package:cinequest/src/core/errors/exception/network_exception.dart';
 import 'package:cinequest/src/core/errors/failure.dart';
+import 'package:cinequest/src/core/routes/route_pages.dart';
 import 'package:cinequest/src/data/auth/models/responses/token_response.dart';
 import 'package:cinequest/src/external/apis/cinequest/cinequest_url.dart';
 import 'package:cinequest/src/external/services/storage/local/secure_storage_service.dart';
@@ -60,10 +61,16 @@ class DioInterceptor extends Interceptor {
             final response = await _retry(err.requestOptions);
             handler.resolve(response);
           } catch (e) {
-            handler.next(err);
+            await _secureStorageService.remove(
+              AppKeys.accessToken,
+            );
+            await _secureStorageService.remove(
+              AppKeys.accessExpiration,
+            );
+            RouterPages.refreshPath();
+            RouterPages.router.refresh();
           }
         }
-        handler.next(err);
       } else {
         handler.next(err);
       }
@@ -76,21 +83,27 @@ class DioInterceptor extends Interceptor {
     final accessToken =
         await _secureStorageService.getData(AppKeys.accessToken);
     try {
-      final response = await _dio.post<TokenResponse>(
-        CineQuestUrl.baseUrl + CineQuestUrl.refreshTokenUrl.substring(1),
+      final refreshTokenUrl =
+          CineQuestUrl.baseUrl + CineQuestUrl.refreshTokenUrl.substring(1);
+      final response = await _dio.post<Map<String, dynamic>>(
+        refreshTokenUrl,
         data: {'token': accessToken},
       );
-      if (response.statusCode == 200) {
+
+      if (response.statusCode == 200 && response.data != null) {
+        final tokenResponse = TokenResponse.fromJson(
+          response.data!,
+        ); // Convert the response
         await _secureStorageService.saveData(
           AppKeys.accessToken,
-          response.data!.accessToken,
+          tokenResponse.accessToken,
         );
-        log('------------- access token (after refresh): ${response.data!.accessToken}');
         await _secureStorageService.saveData(
           AppKeys.accessExpiration,
-          response.data!.accessTokenExpiresAt,
+          tokenResponse.accessTokenExpiresAt,
         );
-        log('------------- access expiration (after refresh): ${response.data!.accessTokenExpiresAt}');
+        log('------------- access token (after refresh): ${tokenResponse.accessToken}');
+        log('------------- access expiration (after refresh): ${tokenResponse.accessTokenExpiresAt}');
       } else {
         throw DioException(
           error: response.statusMessage,

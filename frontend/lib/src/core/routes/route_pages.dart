@@ -3,6 +3,7 @@ import 'package:cinequest/src/core/routes/route_enums.dart';
 import 'package:cinequest/src/core/utils/page_transition_util.dart';
 import 'package:cinequest/src/presentation/auth/pages/account_setup_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/login_page.dart';
+import 'package:cinequest/src/presentation/auth/pages/reset_password_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/sign_up_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/splash_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/welcome_page.dart';
@@ -69,6 +70,14 @@ final class RouterPages {
         builder: (context, state) => const AccountSetupPage(),
         pageBuilder: PageTransitionUtil.customPageBuilder(
           child: const AccountSetupPage(),
+        ),
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: AppRoutes.resetPassword.path,
+        builder: (context, state) => const ResetPasswordPage(),
+        pageBuilder: PageTransitionUtil.customPageBuilder(
+          child: const ResetPasswordPage(),
         ),
       ),
       StatefulShellRoute.indexedStack(
