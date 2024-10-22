@@ -1,5 +1,6 @@
 package com.example.cinequest.service;
 
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.cinequest.entity.User;
@@ -13,4 +14,6 @@ public interface ProfilePhotoService {
     UserDetails uploadProfilePhotoToFileSystem(MultipartFile file, String email);
 
     byte[] downloadProfilePhotoFromFileSystem(String userId);
+
+    String encodeProfilePhoto(String path);
 }
