@@ -9,6 +9,7 @@ class GetUserDetailsUseCase extends UseCase<UserDetails, String> {
 
   @override
   FutureEither<UserDetails> call({String? params}) {
-    return _userRepository.getUserDetails(params!);
+    final request = params;
+    return _userRepository.getUserDetails(request!);
   }
 }

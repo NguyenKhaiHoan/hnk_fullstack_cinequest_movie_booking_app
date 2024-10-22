@@ -5,6 +5,7 @@ class Token extends Equatable {
     required this.accessToken,
     required this.accessTokenExpiresAt,
   });
+
   final String accessToken;
   final DateTime accessTokenExpiresAt;
 

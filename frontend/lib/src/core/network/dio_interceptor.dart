@@ -15,9 +15,9 @@ class DioInterceptor extends Interceptor {
 
   final Dio _dio = Dio(
     BaseOptions(
-      sendTimeout: const Duration(milliseconds: 15000),
-      connectTimeout: const Duration(milliseconds: 15000),
-      receiveTimeout: const Duration(milliseconds: 15000),
+      sendTimeout: const Duration(milliseconds: 60000),
+      connectTimeout: const Duration(milliseconds: 60000),
+      receiveTimeout: const Duration(milliseconds: 60000),
     ),
   );
 

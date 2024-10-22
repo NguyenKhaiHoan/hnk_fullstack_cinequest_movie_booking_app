@@ -2,14 +2,15 @@ import 'package:equatable/equatable.dart';
 
 class UserDetails extends Equatable {
   const UserDetails({
-    required this.id,
+    this.id,
     this.username,
     this.name,
     this.surname,
     this.bio,
     this.profilePhoto,
   });
-  final String id;
+
+  final String? id;
   final String? username;
   final String? name;
   final String? surname;

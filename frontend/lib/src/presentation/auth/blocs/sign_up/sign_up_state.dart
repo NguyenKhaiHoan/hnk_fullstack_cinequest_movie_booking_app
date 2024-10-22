@@ -17,6 +17,6 @@ class SignUpState with _$SignUpState {
         confirmPassword: '',
         verificationCode: '',
         isSignUpFormValid: false,
-        isVerificationCodeFormValid: true,
+        isVerificationCodeFormValid: false,
       );
 }

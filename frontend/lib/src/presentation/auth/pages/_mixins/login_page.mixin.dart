@@ -37,7 +37,7 @@ mixin _PageMixin on State<_Page> {
 
   void _listener(BuildContext context, ButtonState state) {
     state.whenOrNull(
-      failure: (failure) => context.showSnackbar(context, failure.message),
+      failure: (failure) => ToastUtil.showToastError(context, failure.message),
       success: () {
         // Nếu đăng nhập thành công thì chạy event này để cập nhật lại
         // trạng thái xác thực của app và sử dụng điều hướng của go router

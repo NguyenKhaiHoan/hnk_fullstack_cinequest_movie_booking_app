@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cinequest/src/core/network/model/response.dart';
 import 'package:cinequest/src/data/auth/models/requests/login_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/sign_up_request.dart';
@@ -38,6 +40,12 @@ abstract class CineQuestApi {
   @GET(CineQuestUrl.getUserDetailsUrl)
   Future<UserDetailsModel> getUserDetails({
     @Path('user_id') required String userId,
+  });
+
+  @POST(CineQuestUrl.setupAccountUrl)
+  Future<UserDetailsModel> setupAccount({
+    @Part(name: 'profile_photo') required File file,
+    @Part(name: 'user_details') required String request,
   });
 
   @GET(CineQuestUrl.getFavoritesUrl)
