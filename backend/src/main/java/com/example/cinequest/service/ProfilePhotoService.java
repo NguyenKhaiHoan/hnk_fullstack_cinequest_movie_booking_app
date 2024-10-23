@@ -1,6 +1,5 @@
 package com.example.cinequest.service;
 
-import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.cinequest.entity.User;

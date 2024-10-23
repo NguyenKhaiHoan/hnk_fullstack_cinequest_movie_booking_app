@@ -5,10 +5,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.UUID;
 
-import com.example.cinequest.entity.UserDetails;
-import com.example.cinequest.repository.UserDetailsRepository;
-import com.example.cinequest.util.GenerateUtil;
-import com.example.cinequest.util.ValidateUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,9 +21,12 @@ import com.example.cinequest.exception.CineQuestApiException;
 import com.example.cinequest.jwt.JwtModel;
 import com.example.cinequest.jwt.JwtTokenProvider;
 import com.example.cinequest.repository.RoleRepository;
+import com.example.cinequest.repository.UserDetailsRepository;
 import com.example.cinequest.repository.UserRepository;
 import com.example.cinequest.service.AuthenticationService;
 import com.example.cinequest.service.EmailService;
+import com.example.cinequest.util.GenerateUtil;
+import com.example.cinequest.util.ValidateUtil;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -168,8 +167,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Response forgotPassword(ForgotPasswordRequest request) {
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(()
-                -> new CineQuestApiException(false, ApiResponseCode.ACCOUNT_NOT_REGISTERED));
+        User user = userRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.ACCOUNT_NOT_REGISTERED));
 
         user.setResetPasswordFormId(UUID.randomUUID().toString());
         user.setResetPasswordFormExpiresAt(LocalDateTime.now().plusMinutes(5));
@@ -216,18 +216,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Context context = new Context();
         context.setVariable("verificationCode", user.getVerificationCode());
 
-        emailService.sendVerificationEmailWithHtmlTemplate(
-                user.getEmail(), subject, "verification-email", context);
+        emailService.sendVerificationEmailWithHtmlTemplate(user.getEmail(), subject, "verification-email", context);
     }
 
     private void sendResetPasswordEmail(User user) {
         String subject = "Reset Password";
         Context context = new Context();
 
-        context.setVariable("resetPasswordLink",  Constants.SERVER_BASE_URL + "/reset-password/" + user.getResetPasswordFormId());
+        context.setVariable(
+                "resetPasswordLink", Constants.SERVER_BASE_URL + "/reset-password/" + user.getResetPasswordFormId());
 
-        emailService.sendVerificationEmailWithHtmlTemplate(
-                user.getEmail(), subject, "reset-password-email", context);
+        emailService.sendVerificationEmailWithHtmlTemplate(user.getEmail(), subject, "reset-password-email", context);
     }
-
 }

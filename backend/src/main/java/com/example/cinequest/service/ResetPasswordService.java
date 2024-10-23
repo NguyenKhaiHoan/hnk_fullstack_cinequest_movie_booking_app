@@ -1,19 +1,19 @@
 package com.example.cinequest.service;
 
-import com.example.cinequest.dto.repsonse.Response;
-import com.example.cinequest.entity.User;
-import com.example.cinequest.exception.ApiResponseCode;
-import com.example.cinequest.exception.CineQuestApiException;
-import com.example.cinequest.repository.UserRepository;
-import com.example.cinequest.util.ValidateUtil;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import java.time.LocalDateTime;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import com.example.cinequest.entity.User;
+import com.example.cinequest.exception.ApiResponseCode;
+import com.example.cinequest.exception.CineQuestApiException;
+import com.example.cinequest.repository.UserRepository;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Service
 @RequiredArgsConstructor
@@ -34,9 +34,9 @@ public class ResetPasswordService {
     }
 
     public User isExpiredFormResetPassword(String resetPasswordFormId) {
-        User user = userRepository.findByResetPasswordFormId(resetPasswordFormId).orElseThrow(
-                () -> new CineQuestApiException(false, ApiResponseCode.RESOURCE_NOT_FOUND)
-        );
+        User user = userRepository
+                .findByResetPasswordFormId(resetPasswordFormId)
+                .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.RESOURCE_NOT_FOUND));
 
         if (user.getResetPasswordFormExpiresAt().isBefore(LocalDateTime.now())) {
             throw new CineQuestApiException(false, ApiResponseCode.RESOURCE_NOT_FOUND);

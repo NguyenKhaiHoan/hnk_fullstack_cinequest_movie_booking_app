@@ -1,12 +1,12 @@
 package com.example.cinequest.util;
 
+import java.util.regex.Pattern;
+
 import com.example.cinequest.dto.request.LoginRequest;
 import com.example.cinequest.dto.request.ResetPasswordRequest;
 import com.example.cinequest.dto.request.SignUpRequest;
 import com.example.cinequest.exception.ApiResponseCode;
 import com.example.cinequest.exception.CineQuestApiException;
-
-import java.util.regex.Pattern;
 
 public class ValidateUtil {
     private ValidateUtil() {}
@@ -34,8 +34,7 @@ public class ValidateUtil {
     public static void validateResetPasswordRequest(ResetPasswordRequest request) {
         validatePassword(request.getNewPassword());
         validatePassword(request.getConfirmPassword());
-        validatePasswordConfirm(request.getNewPassword(),
-                request.getConfirmPassword());
+        validatePasswordConfirm(request.getNewPassword(), request.getConfirmPassword());
     }
 
     public static void validatePassword(String password) {

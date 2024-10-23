@@ -81,10 +81,10 @@ public class JwtTokenProvider {
 
             Date expiryTime = (isRefresh)
                     ? Date.from(signedJWT
-                    .getJWTClaimsSet()
-                    .getIssueTime()
-                    .toInstant()
-                    .plus(jwtRefreshableTime, ChronoUnit.HOURS))
+                            .getJWTClaimsSet()
+                            .getIssueTime()
+                            .toInstant()
+                            .plus(jwtRefreshableTime, ChronoUnit.HOURS))
                     : signedJWT.getJWTClaimsSet().getExpirationTime();
 
             boolean verified = signedJWT.verify(verifier);
