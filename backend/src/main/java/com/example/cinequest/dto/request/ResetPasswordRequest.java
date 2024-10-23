@@ -10,7 +10,13 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ForgotPasswordRequest {
-    @JsonProperty("email")
-    String email;
+public class ResetPasswordRequest {
+    @JsonProperty("current_password")
+    String currentPassword;
+
+    @JsonProperty("new_password")
+    String newPassword;
+
+    @JsonProperty("confirm_password")
+    String confirmPassword;
 }

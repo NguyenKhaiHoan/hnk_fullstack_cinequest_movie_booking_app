@@ -11,5 +11,7 @@ import com.example.cinequest.entity.User;
 public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByEmail(String email);
 
+    Optional<User> findByResetPasswordFormId(String resetPasswordFormId);
+
     boolean existsByEmail(String email);
 }
