@@ -3,9 +3,12 @@ package com.example.cinequest.service.impl;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Random;
-import java.util.regex.Pattern;
+import java.util.UUID;
 
+import com.example.cinequest.entity.UserDetails;
+import com.example.cinequest.repository.UserDetailsRepository;
+import com.example.cinequest.util.GenerateUtil;
+import com.example.cinequest.util.ValidateUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,10 +41,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     EmailService emailService;
     JwtTokenProvider jwtTokenProvider;
     RoleRepository roleRepository;
+    UserDetailsRepository userDetailsRepository;
 
     @Override
     public Response signUp(SignUpRequest request) {
-        validateSignUpRequest(request);
+        ValidateUtil.validateSignUpRequest(request);
 
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new CineQuestApiException(false, ApiResponseCode.EMAIL_ALREADY_REGISTERED);
@@ -49,7 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         User user = new User(request.getEmail(), passwordEncoder.encode(request.getPassword()));
 
-        user.setVerificationCode(generateVerificationCode());
+        user.setVerificationCode(GenerateUtil.generateVerificationCode());
         user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(5));
         user.setEnabled(false);
 
@@ -61,7 +65,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userRepository.save(user);
 
         sendVerificationEmailWithHtmlTemplate(user);
-
         return new Response(
                 true,
                 ApiResponseCode.SIGN_UP_SUCCESS.getStatusCode(),
@@ -71,7 +74,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public TokenResponse login(LoginRequest request) {
         if (!request.getEmail().startsWith("admin")) {
-            validateLoginRequest(request);
+            ValidateUtil.validateLoginRequest(request);
         }
 
         User user = userRepository
@@ -96,7 +99,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public TokenResponse verify(VerifyUserRequest request) {
-        validateEmail(request.getEmail());
+        ValidateUtil.validateEmail(request.getEmail());
 
         User user = userRepository
                 .findByEmail(request.getEmail())
@@ -123,7 +126,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Response resendVerificationEmail(String email) {
-        validateEmail(email);
+        ValidateUtil.validateEmail(email);
 
         User user = userRepository
                 .findByEmail(email)
@@ -133,9 +136,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new CineQuestApiException(false, ApiResponseCode.ACCOUNT_ALREADY_VERIFIED);
         }
 
-        user.setVerificationCode(generateVerificationCode());
+        user.setVerificationCode(GenerateUtil.generateVerificationCode());
         user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(5));
-        sendVerificationEmail(user);
+
+        resendVerificationEmail(user);
         userRepository.save(user);
 
         return new Response(
@@ -164,20 +168,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Response forgotPassword(ForgotPasswordRequest request) {
-        validateForgotPasswordRequest(request);
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(()
+                -> new CineQuestApiException(false, ApiResponseCode.ACCOUNT_NOT_REGISTERED));
 
-        User user = userRepository
-                .findByEmail(request.getEmail())
-                .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.ACCOUNT_NOT_REGISTERED));
+        user.setResetPasswordFormId(UUID.randomUUID().toString());
+        user.setResetPasswordFormExpiresAt(LocalDateTime.now().plusMinutes(5));
 
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        sendResetPasswordEmail(user);
         userRepository.save(user);
 
         return new Response(
                 true,
-                ApiResponseCode.RESET_PASSWORD_SUCCESS.getStatusCode(),
-                ApiResponseCode.RESET_PASSWORD_SUCCESS.getStatusMessage());
+                ApiResponseCode.EMAIL_RESET_PASSWORD_SENT.getStatusCode(),
+                ApiResponseCode.EMAIL_RESET_PASSWORD_SENT.getStatusMessage());
     }
 
     @Override
@@ -199,13 +202,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         : ApiResponseCode.INVALID_JWT_TOKEN.getStatusMessage());
     }
 
-    private void sendVerificationEmail(User user) {
+    private void resendVerificationEmail(User user) {
         String subject = "Email Verification";
-        String text =
-                "Welcome to Cinequest - Movie Booking App!\nPlease enter the verification code below to continue: "
-                        + user.getVerificationCode();
+        Context context = new Context();
+        context.setVariable("verificationCode", user.getVerificationCode());
 
-        emailService.sendVerificationEmail(user.getEmail(), subject, text);
+        emailService.sendVerificationEmailWithHtmlTemplate(
+                user.getEmail(), subject, "resend-verification-email", context);
     }
 
     private void sendVerificationEmailWithHtmlTemplate(User user) {
@@ -214,52 +217,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         context.setVariable("verificationCode", user.getVerificationCode());
 
         emailService.sendVerificationEmailWithHtmlTemplate(
-                user.getEmail(), subject, "verification-email-template", context);
+                user.getEmail(), subject, "verification-email", context);
     }
 
-    private String generateVerificationCode() {
-        Random random = new Random();
-        int rValue = random.nextInt(999999);
-        return String.format("%06d", rValue);
+    private void sendResetPasswordEmail(User user) {
+        String subject = "Reset Password";
+        Context context = new Context();
+
+        context.setVariable("resetPasswordLink",  Constants.SERVER_BASE_URL + "/reset-password/" + user.getResetPasswordFormId());
+
+        emailService.sendVerificationEmailWithHtmlTemplate(
+                user.getEmail(), subject, "reset-password-email", context);
     }
 
-    private void validateEmail(String email) {
-        final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-        if (!Pattern.matches(EMAIL_REGEX, email)) {
-            throw new CineQuestApiException(false, ApiResponseCode.INVALID_EMAIL_FORMAT);
-        }
-    }
-
-    private void validateSignUpRequest(SignUpRequest request) {
-        validateEmail(request.getEmail());
-        validatePassword(request.getPassword());
-        if (!request.getPassword().equals(request.getConfirmPassword())) {
-            throw new CineQuestApiException(false, ApiResponseCode.PASSWORDS_DO_NOT_MATCH);
-        }
-    }
-
-    private void validateLoginRequest(LoginRequest request) {
-        validateEmail(request.getEmail());
-        validatePassword(request.getPassword());
-    }
-
-    private void validateForgotPasswordRequest(ForgotPasswordRequest request) {
-        validateEmail(request.getEmail());
-        validatePassword(request.getNewPassword());
-    }
-
-    private void validatePassword(String password) {
-        if (password.length() < 8) {
-            throw new CineQuestApiException(false, ApiResponseCode.PASSWORD_TOO_SHORT);
-        }
-        if (!password.matches(".*[A-Z].*")) {
-            throw new CineQuestApiException(false, ApiResponseCode.PASSWORD_MISSING_UPPERCASE);
-        }
-        if (!password.matches(".*\\d.*")) {
-            throw new CineQuestApiException(false, ApiResponseCode.PASSWORD_MISSING_NUMBER);
-        }
-        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
-            throw new CineQuestApiException(false, ApiResponseCode.PASSWORD_MISSING_SPECIAL);
-        }
-    }
 }

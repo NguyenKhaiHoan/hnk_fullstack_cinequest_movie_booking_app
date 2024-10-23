@@ -52,7 +52,9 @@ public enum ApiResponseCode {
     BAD_CREDENTIALS(2022, 401, "Bad credentials: The username or password you entered is incorrect."),
     ADMIN_ONLY(2023, 403, "Access denied: This functionality is restricted to admins only."),
     JWT_TOKEN_CREATION_FAILED(2024, 500, "Unable to generate token. Please try again later."),
-    VALID_JWT_TOKEN(2008, 401, "Valid JWT token: The token provided is valid."),
+    VALID_JWT_TOKEN(2025, 401, "Valid JWT token: The token provided is valid."),
+    EMAIL_RESET_PASSWORD_SENT(2026, 200, "A link to reset password is sent via you email"),
+    FORM_RESET_PASSWORD_EXPIRED(2027, 400, "A form to reset password is expired. Please try a new form again"),
 
     // Mã danh sách phim yêu thích
     MOVIE_NOT_FOUND(3001, 404, "Movie not found: The movie you are trying to access does not exist."),

@@ -35,6 +35,12 @@ public class User {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @Column(name = "reset_password_form_id")
+    private String resetPasswordFormId;
+
+    @Column(name = "reset_password_form_expiration")
+    private LocalDateTime resetPasswordFormExpiresAt;
+
     @ManyToMany(fetch = FetchType.EAGER)
     Set<Role> roles;
 
