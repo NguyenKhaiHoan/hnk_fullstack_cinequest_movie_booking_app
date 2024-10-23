@@ -31,7 +31,8 @@ The app is developed using **Flutter** for the frontend and **Java Spring Boot**
 
 ### Implemented Frontend Features:
 
-_Currently Updating..._
+- Auth: login, signUp, refresh token (using dio interceptor), forgot password
+- Account: setup account
 
 ### Upcoming Features:
 
