@@ -3,7 +3,7 @@ import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/toast_util.dart';
 import 'package:cinequest/src/domain/auth/usecases/forgot_password_usecase.dart';
-import 'package:cinequest/src/domain/auth/usecases/params/forgot_password_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/email_params.dart';
 import 'package:cinequest/src/presentation/auth/blocs/reset_password/reset_password_bloc.dart';
 import 'package:cinequest/src/presentation/auth/widgets/reset_password/rp_reset_password_view.dart';
 import 'package:cinequest/src/presentation/auth/widgets/reset_password/rp_verification_link.dart';
@@ -53,6 +53,7 @@ class _PageState extends State<_Page> with _PageMixin {
               emailTextEditingController: _emailTextEditingController,
               onSend: _send,
               onEmailChanged: _changeEmail,
+              isLoading: state == const ButtonState.loading(),
             );
           },
         ),
@@ -69,6 +70,7 @@ class _PageState extends State<_Page> with _PageMixin {
                   email: email,
                   onBack: _back,
                   onResend: _resend,
+                  isLoading: state == const ButtonState.loading(),
                 );
               },
             );

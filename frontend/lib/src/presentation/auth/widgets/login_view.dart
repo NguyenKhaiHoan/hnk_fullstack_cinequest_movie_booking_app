@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-/// View của Login nhập email và password
 class LoginView extends StatelessWidget {
   const LoginView({
     required this.formKey,

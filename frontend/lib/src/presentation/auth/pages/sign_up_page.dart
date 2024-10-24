@@ -1,9 +1,13 @@
 import 'package:cinequest/src/common/blocs/buttton/button_bloc.dart';
+import 'package:cinequest/src/common/blocs/timer/ticker.dart';
+import 'package:cinequest/src/common/blocs/timer/timer_bloc.dart';
 import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/core/routes/route_enums.dart';
 import 'package:cinequest/src/core/utils/toast_util.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/email_params.dart';
 import 'package:cinequest/src/domain/auth/usecases/params/sign_up_params.dart';
 import 'package:cinequest/src/domain/auth/usecases/params/verify_user_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/resend_code_usecase.dart';
 import 'package:cinequest/src/domain/auth/usecases/sign_up_usecase.dart';
 import 'package:cinequest/src/domain/auth/usecases/verify_user_usecase.dart';
 import 'package:cinequest/src/presentation/auth/blocs/sign_up/sign_up_bloc.dart';
@@ -27,6 +31,9 @@ class SignUpPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ButtonBloc(),
+        ),
+        BlocProvider(
+          create: (context) => TimerBloc(ticker: const Ticker()),
         ),
       ],
       child: const _Page(),
@@ -66,6 +73,7 @@ class _PageState extends State<_Page> with _PageMixin {
           verificationCodeTextEditingController:
               _verificationCodeTextEditingController,
           onBack: _back,
+          onResend: _resend,
           onCodeVerificated: _verificateCode,
           onVerificationCodeChanged: _changeVerificationCode,
         ),
