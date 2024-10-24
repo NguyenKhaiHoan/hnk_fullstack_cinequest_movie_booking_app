@@ -1,0 +1,58 @@
+{
+    "movie_id": 365177,
+    "date": "2024-08-07",
+    "theaters": [
+        {
+            "theater_id": 1,
+            "showtimes": [
+                {
+                    "time": "2024-08-07T14:00:00",
+                    "price": 8.99,
+                    "hall": {
+                        "hall_id": 101,
+                        "hall_name": "Hall 1"
+                    }
+                },
+                {
+                    "time": "2024-08-07T17:00:00",
+                    "price": 10.99,
+                    "hall": {
+                        "hall_id": 105,
+                        "hall_name": "Hall 5"
+                    }
+                },
+                {
+                    "time": "2024-08-07T20:00:00",
+                    "price": 12.99,
+                    "hall": {
+                        "hall_id": 102,
+                        "hall_name": "Hall 2"
+                    }
+                }
+            ]
+        },
+        {
+            "theater_id": 2,
+            "theater_name": "Anhor Cinema",
+            "location": "Tashkent st Labzak 12",
+            "showtimes": [
+                {
+                    "time": "2024-08-07T16:00:00",
+                    "price": 7.99,
+                    "hall": {
+                        "hall_id": 201,
+                        "hall_name": "Hall 1"
+                    }
+                },
+                {
+                    "time": "2024-08-07T19:00:00",
+                    "price": 9.49,
+                    "hall": {
+                        "hall_id": 203,
+                        "hall_name": "Hall 3"
+                    }
+                }
+            ]
+        }
+    ]
+}
