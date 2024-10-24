@@ -17,6 +17,7 @@ class RPResetPasswordView extends StatelessWidget {
     super.key,
     this.onEmailChanged,
   });
+
   final GlobalKey<FormState> resetPasswordFormKey;
   final TextEditingController emailTextEditingController;
   final void Function(String)? onEmailChanged;

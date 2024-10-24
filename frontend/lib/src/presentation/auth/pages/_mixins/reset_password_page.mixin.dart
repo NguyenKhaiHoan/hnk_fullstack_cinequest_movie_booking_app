@@ -33,18 +33,29 @@ mixin _PageMixin on State<_Page> {
         );
   }
 
-  void _listener(BuildContext context, ButtonState state) {
+  void _listenerSendEmail(BuildContext context, ButtonState state) {
     state.whenOrNull(
       failure: (failure) => ToastUtil.showToastError(context, failure.message),
-      success: () async => _pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      ),
+      success: () async => _next(),
+    );
+  }
+
+  void _listenerResendEmail(BuildContext context, ButtonState state) {
+    state.whenOrNull(
+      failure: (failure) => ToastUtil.showToastError(context, failure.message),
+      success: () async => _back(),
     );
   }
 
   void _back() {
     _pageController.previousPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _next() {
+    _pageController.nextPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
