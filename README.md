@@ -31,8 +31,8 @@ The app is developed using **Flutter** for the frontend and **Java Spring Boot**
 
 ### Implemented Frontend Features:
 
-- Auth: login, signUp, refresh token (using dio interceptor), forgot password
-- Account: setup account
+- **Auth**: login, signUp, refresh token (using dio interceptor), forgot password (send link reset password via user email), verify user with entering verification code via email, resend verification code, resend link reset password
+- **Account**: setup account
 
 ### Upcoming Features:
 
@@ -46,9 +46,13 @@ The app is developed using **Flutter** for the frontend and **Java Spring Boot**
 
 ---
 
-## Demo Screenshots
+## Demo Videos, Screenshots
 
-_Currently Updating..._
+### Auth + Setup Account
+
+![demo_auth_1](frontend/assets/demos/demo_auth_1.gif)
+
+![demo_auth_2](frontend/assets/demos/demo_auth_2.gif)
 
 ---
 
