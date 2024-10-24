@@ -3,6 +3,7 @@ import 'package:cinequest/src/core/generics/type_def.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
 import 'package:cinequest/src/data/auth/datasources/_mapper/token_mapper.dart';
 import 'package:cinequest/src/data/auth/datasources/auth_remote_datasource.dart';
+import 'package:cinequest/src/data/auth/models/requests/forgot_password_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/login_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/sign_up_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/verify_user_request.dart';
@@ -66,6 +67,16 @@ class AuthRepositoryImpl extends AuthRepository {
       final response = _tokenMapper.toEntity(result);
 
       return Right(response);
+    } on Failure catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  FutureEither<void> forgotPassword(ForgotPasswordRequest request) async {
+    try {
+      await _authRemoteDataSource.forgotPassword(request);
+      return const Right(null);
     } on Failure catch (e) {
       return Left(e);
     }

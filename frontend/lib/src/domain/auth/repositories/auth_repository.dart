@@ -1,4 +1,5 @@
 import 'package:cinequest/src/core/generics/type_def.dart';
+import 'package:cinequest/src/data/auth/models/requests/forgot_password_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/login_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/sign_up_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/verify_user_request.dart';
@@ -9,4 +10,5 @@ abstract class AuthRepository {
   FutureEither<Token> login(LoginRequest request);
   FutureEither<void> logOut();
   FutureEither<Token> verifyUser(VerifyUserRequest request);
+  FutureEither<void> forgotPassword(ForgotPasswordRequest request);
 }

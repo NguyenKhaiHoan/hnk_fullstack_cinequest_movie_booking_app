@@ -4,7 +4,7 @@ mixin SettingPageMixin on State<SettingPage> {
   void _signOut(BuildContext context) {
     // context.read<ButtonBloc>().add(
     //       ButtonEvent.execute(
-    //         useCase: sl<SignOutUseCase>(),
+    //         useCase: sl<LogOutUseCase>(),
     //         params: NoParams(),
     //       ),
     //     );
