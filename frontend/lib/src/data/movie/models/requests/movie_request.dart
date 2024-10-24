@@ -22,7 +22,6 @@ class MovieRequest with _$MovieRequest {
     @JsonKey(name: 'vote_count') int? voteCount,
   }) = _MovieRequest;
 
-  // fromJson
   factory MovieRequest.fromJson(Map<String, dynamic> json) =>
       _$MovieRequestFromJson(json);
 }
