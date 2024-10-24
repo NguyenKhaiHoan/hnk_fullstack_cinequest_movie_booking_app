@@ -81,4 +81,4 @@ All frontend and backend code has been written from scratch by me. No other asse
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under a custom license for personal use only. See the [LICENSE](LICENSE) file for details.
