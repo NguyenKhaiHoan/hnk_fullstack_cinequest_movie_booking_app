@@ -12,9 +12,9 @@ import com.example.cinequest.exception.CineQuestApiException;
 import com.example.cinequest.repository.UserRepository;
 import com.example.cinequest.service.ResetPasswordService;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 
 @Service
 @RequiredArgsConstructor

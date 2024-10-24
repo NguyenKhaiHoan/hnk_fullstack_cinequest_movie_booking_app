@@ -21,7 +21,6 @@ import com.example.cinequest.exception.CineQuestApiException;
 import com.example.cinequest.jwt.JwtModel;
 import com.example.cinequest.jwt.JwtTokenProvider;
 import com.example.cinequest.repository.RoleRepository;
-import com.example.cinequest.repository.UserDetailsRepository;
 import com.example.cinequest.repository.UserRepository;
 import com.example.cinequest.service.AuthenticationService;
 import com.example.cinequest.service.EmailService;
@@ -40,7 +39,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     EmailService emailService;
     JwtTokenProvider jwtTokenProvider;
     RoleRepository roleRepository;
-    UserDetailsRepository userDetailsRepository;
 
     @Override
     public Response signUp(SignUpRequest request) {
