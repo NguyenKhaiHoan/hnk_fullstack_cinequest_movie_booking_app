@@ -58,9 +58,16 @@ The app is developed using **Flutter** for the frontend and **Java Spring Boot**
 
 ## References
 
-### UI Inspiration
+### UI Inspiration and Assets
 
-- [Behance - CineQuest](https://www.behance.net/gallery/173303277/CineQuest?tracking_source=search_projects_appreciations|movie+ui+mobile+app&l=510)
+The UI design and layout of this project were inspired by the work of [Behance - CineQuest](https://www.behance.net/gallery/173303277/CineQuest?tracking_source=search_projects_appreciations|movie+ui+mobile+app&l=510). 
+
+- Almost **icons** used in this project were sourced from [Phosphor Icons](https://phosphoricons.com/).
+- The **app icon** and **welcome screen background image** were cut from the original design.
+
+> **Disclaimer**: All assets are utilized solely for **personal learning purposes**. This project is not intended for commercial use, and I do not claim ownership over the original design elements. All rights to the original design belong to their respective owners.
+
+All frontend and backend code has been written from scratch by me. No other assets were copied directly from the referenced UI design.
 
 ### Project
 
