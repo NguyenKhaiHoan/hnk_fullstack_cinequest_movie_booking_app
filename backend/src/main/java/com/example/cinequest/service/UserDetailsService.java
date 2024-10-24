@@ -1,6 +1,7 @@
 package com.example.cinequest.service;
 
 import org.springframework.web.multipart.MultipartFile;
+
 import com.example.cinequest.dto.repsonse.Response;
 import com.example.cinequest.dto.repsonse.UserDetailsResponse;
 import com.example.cinequest.dto.request.UserDetailsRequest;

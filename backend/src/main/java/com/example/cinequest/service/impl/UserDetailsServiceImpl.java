@@ -19,9 +19,9 @@ import com.example.cinequest.repository.UserRepository;
 import com.example.cinequest.service.ProfilePhotoService;
 import com.example.cinequest.service.UserDetailsService;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 
 @Service
 @RequiredArgsConstructor
