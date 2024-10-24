@@ -17,8 +17,15 @@ class ResetPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ResetPasswordBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ResetPasswordBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ButtonBloc(),
+        ),
+      ],
       child: const _Page(),
     );
   }
@@ -39,7 +46,7 @@ class _PageState extends State<_Page> with _PageMixin {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         BlocConsumer<ButtonBloc, ButtonState>(
-          listener: _listener,
+          listener: _listenerSendEmail,
           builder: (context, state) {
             return RPResetPasswordView(
               resetPasswordFormKey: _resetPasswordFormKey,
@@ -51,13 +58,19 @@ class _PageState extends State<_Page> with _PageMixin {
         ),
         BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
           builder: (context, state) {
-            return RPVerificationLinkView(
-              title: 'Check your Inbox'.hardcoded,
-              subtitle:
-                  'We have sent a link to ${state.email} with instructions to reset your password',
-              email: state.email,
-              onBack: _back,
-              onResend: _resend,
+            final email = state.email;
+            return BlocConsumer<ButtonBloc, ButtonState>(
+              listener: _listenerResendEmail,
+              builder: (context, state) {
+                return RPVerificationLinkView(
+                  title: 'Check your Inbox'.hardcoded,
+                  subtitle:
+                      'We have sent a link to $email with instructions to reset your password',
+                  email: email,
+                  onBack: _back,
+                  onResend: _resend,
+                );
+              },
             );
           },
         ),
