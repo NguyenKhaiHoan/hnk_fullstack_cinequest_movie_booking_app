@@ -15,12 +15,14 @@ The app is developed using **Flutter** for the frontend and **Java Spring Boot**
 ### Implemented Backend Features:
 
 - **Authentication**:
+
   - User **login** and **registration** with validation.
   - **User verification** via a code sent to the user's email after registration or before a password reset.
   - User can **resend verification code** if the user does not receive the email.
   - Users can recover their account with email-based password reset.
 
 - **Account Management**:
+
   - **Account Setup**: After registration, users can set up their account with username, name, surname, bio and profile photo.
   - **Account Details**: Fetch detailed user information account.
   - **Account Update**: Users can update their account details information.
@@ -31,7 +33,7 @@ The app is developed using **Flutter** for the frontend and **Java Spring Boot**
 
 ### Implemented Frontend Features:
 
-- Auth: login, signUp, refresh token (using dio interceptor), forgot password
+- Auth: login, signUp, refresh token (using dio interceptor), forgot password (send link reset password via user email), verify user with entering verification code via email, resend verification code, resend link reset password
 - Account: setup account
 
 ### Upcoming Features:
@@ -46,9 +48,13 @@ The app is developed using **Flutter** for the frontend and **Java Spring Boot**
 
 ---
 
-## Demo Screenshots
+## Demo Videos, Screenshots
 
-_Currently Updating..._
+### Auth + Setup Account
+
+![demo_auth_1](frontend/assets/demos/demo_auth_1.gif)
+
+![demo_auth_2](frontend/assets/demos/demo_auth_2.gif)
 
 ---
 
