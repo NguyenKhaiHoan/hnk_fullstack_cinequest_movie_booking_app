@@ -9,6 +9,7 @@ import 'package:cinequest/src/domain/auth/usecases/forgot_password_usecase.dart'
 import 'package:cinequest/src/domain/auth/usecases/get_user_details_usecase.dart';
 import 'package:cinequest/src/domain/auth/usecases/get_user_usecase.dart';
 import 'package:cinequest/src/domain/auth/usecases/login_usecase.dart';
+import 'package:cinequest/src/domain/auth/usecases/resend_code_usecase.dart';
 import 'package:cinequest/src/domain/auth/usecases/setup_account_usecase.dart';
 import 'package:cinequest/src/domain/auth/usecases/sign_up_usecase.dart';
 import 'package:cinequest/src/domain/auth/usecases/verify_user_usecase.dart';
@@ -63,6 +64,11 @@ class DomainDependency {
       )
       ..registerLazySingleton<ForgotPasswordUseCase>(
         () => ForgotPasswordUseCase(
+          sl<AuthRepository>(),
+        ),
+      )
+      ..registerLazySingleton<ResendCodeUseCase>(
+        () => ResendCodeUseCase(
           sl<AuthRepository>(),
         ),
       );

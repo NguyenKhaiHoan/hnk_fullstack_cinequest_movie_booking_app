@@ -52,6 +52,7 @@ mixin _PageMixin on State<_Page> {
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
+        context.read<TimerBloc>().add(const TimerEvent.started(duration: 60));
       },
       failure: (failure) => ToastUtil.showToastError(context, failure.message),
     );
@@ -62,6 +63,18 @@ mixin _PageMixin on State<_Page> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
+  }
+
+  void _resend() {
+    context.read<ButtonBloc>().add(
+          ButtonEvent.execute(
+            useCase: sl<ResendCodeUseCase>(),
+            params: EmailParams(
+              email: _emailTextEditingController.text.trim(),
+            ),
+          ),
+        );
+    context.read<TimerBloc>().add(const TimerEvent.reset());
   }
 
   Future<void> _verificateCode() async {

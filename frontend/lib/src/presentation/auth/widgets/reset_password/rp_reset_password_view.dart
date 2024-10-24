@@ -14,6 +14,7 @@ class RPResetPasswordView extends StatelessWidget {
     required this.resetPasswordFormKey,
     required this.emailTextEditingController,
     required this.onSend,
+    required this.isLoading,
     super.key,
     this.onEmailChanged,
   });
@@ -22,6 +23,7 @@ class RPResetPasswordView extends StatelessWidget {
   final TextEditingController emailTextEditingController;
   final void Function(String)? onEmailChanged;
   final void Function() onSend;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +81,7 @@ class RPResetPasswordView extends StatelessWidget {
             ),
             buttonType: ButtonType.elevated,
             onPressed: onSend,
+            isLoading: isLoading,
           )
         : CustomButton(
             width: 170,

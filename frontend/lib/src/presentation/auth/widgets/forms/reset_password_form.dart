@@ -6,9 +6,7 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
-/// Form của ResetPasswordPage
 class ResetPasswordForm extends StatelessWidget {
-  /// Constructor
   const ResetPasswordForm({
     required this.title,
     required this.subtitle,

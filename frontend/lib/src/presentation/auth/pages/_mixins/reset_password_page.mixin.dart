@@ -26,7 +26,7 @@ mixin _PageMixin on State<_Page> {
     context.read<ButtonBloc>().add(
           ButtonEvent.execute(
             useCase: sl<ForgotPasswordUseCase>(),
-            params: ForgotPasswordParams(
+            params: EmailParams(
               email: _emailTextEditingController.text.trim(),
             ),
           ),
@@ -65,7 +65,7 @@ mixin _PageMixin on State<_Page> {
     context.read<ButtonBloc>().add(
           ButtonEvent.execute(
             useCase: sl<ForgotPasswordUseCase>(),
-            params: ForgotPasswordParams(
+            params: EmailParams(
               email: _emailTextEditingController.text.trim(),
             ),
           ),

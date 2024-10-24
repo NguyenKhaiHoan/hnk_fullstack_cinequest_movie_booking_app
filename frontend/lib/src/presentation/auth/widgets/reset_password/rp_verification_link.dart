@@ -16,6 +16,7 @@ class RPVerificationLinkView extends StatelessWidget {
     required this.email,
     required this.onBack,
     required this.onResend,
+    required this.isLoading,
     super.key,
   });
 
@@ -24,6 +25,7 @@ class RPVerificationLinkView extends StatelessWidget {
   final String email;
   final void Function() onBack;
   final void Function() onResend;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +67,7 @@ class RPVerificationLinkView extends StatelessWidget {
       textColor: AppColors.black,
       buttonType: ButtonType.elevated,
       onPressed: onResend,
+      isLoading: isLoading,
     );
   }
 

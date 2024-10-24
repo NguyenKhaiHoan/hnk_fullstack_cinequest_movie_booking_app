@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cinequest/src/core/network/model/response.dart';
-import 'package:cinequest/src/data/auth/models/requests/forgot_password_request.dart';
+import 'package:cinequest/src/data/auth/models/requests/email_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/login_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/sign_up_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/verify_user_request.dart';
@@ -35,6 +35,11 @@ abstract class CineQuestApi {
     @Body() required VerifyUserRequest request,
   });
 
+  @POST(CineQuestUrl.resendCodeUrl)
+  Future<void> resendCode({
+    @Body() required EmailRequest request,
+  });
+
   @GET(CineQuestUrl.getUserUrl)
   Future<UserModel> getUser();
 
@@ -45,7 +50,7 @@ abstract class CineQuestApi {
 
   @POST(CineQuestUrl.forgotPasswordUrl)
   Future<void> forgotPassword({
-    @Body() required ForgotPasswordRequest request,
+    @Body() required EmailRequest request,
   });
 
   @POST(CineQuestUrl.setupAccountUrl)
