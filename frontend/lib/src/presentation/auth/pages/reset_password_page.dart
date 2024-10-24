@@ -1,4 +1,9 @@
+import 'package:cinequest/src/common/blocs/buttton/button_bloc.dart';
+import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/core/utils/toast_util.dart';
+import 'package:cinequest/src/domain/auth/usecases/forgot_password_usecase.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/forgot_password_params.dart';
 import 'package:cinequest/src/presentation/auth/blocs/reset_password/reset_password_bloc.dart';
 import 'package:cinequest/src/presentation/auth/widgets/reset_password/rp_reset_password_view.dart';
 import 'package:cinequest/src/presentation/auth/widgets/reset_password/rp_verification_link.dart';
@@ -33,11 +38,16 @@ class _PageState extends State<_Page> with _PageMixin {
       controller: _pageController,
       physics: const NeverScrollableScrollPhysics(),
       children: [
-        RPResetPasswordView(
-          resetPasswordFormKey: _resetPasswordFormKey,
-          emailTextEditingController: _emailTextEditingController,
-          onSend: _send,
-          onEmailChanged: _changeEmail,
+        BlocConsumer<ButtonBloc, ButtonState>(
+          listener: _listener,
+          builder: (context, state) {
+            return RPResetPasswordView(
+              resetPasswordFormKey: _resetPasswordFormKey,
+              emailTextEditingController: _emailTextEditingController,
+              onSend: _send,
+              onEmailChanged: _changeEmail,
+            );
+          },
         ),
         BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
           builder: (context, state) {

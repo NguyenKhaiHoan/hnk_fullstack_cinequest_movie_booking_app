@@ -5,6 +5,7 @@ import 'package:cinequest/src/core/errors/exception/network_exception.dart';
 import 'package:cinequest/src/core/errors/exception/no_internet_exception.dart';
 import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/core/utils/connectivity_util.dart';
+import 'package:cinequest/src/data/auth/models/requests/forgot_password_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/login_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/sign_up_request.dart';
 import 'package:cinequest/src/data/auth/models/requests/verify_user_request.dart';
@@ -18,6 +19,7 @@ abstract class AuthRemoteDataSource {
   Future<TokenResponse> login(LoginRequest request);
   Future<void> logOut();
   Future<TokenResponse> verifyUser(VerifyUserRequest request);
+  Future<void> forgotPassword(ForgotPasswordRequest request);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -87,6 +89,22 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (await ConnectivityUtil.checkConnectivity()) {
       try {
         return await _cineQuestApi.verify(request: request);
+      } on DioException catch (e) {
+        throw Failure(
+          message: NetworkException.fromDioException(e).message,
+          exception: e,
+        );
+      }
+    } else {
+      throw Failure(message: NoInternetException.fromException().message);
+    }
+  }
+
+  @override
+  Future<void> forgotPassword(ForgotPasswordRequest request) async {
+    if (await ConnectivityUtil.checkConnectivity()) {
+      try {
+        return await _cineQuestApi.forgotPassword(request: request);
       } on DioException catch (e) {
         throw Failure(
           message: NetworkException.fromDioException(e).message,
