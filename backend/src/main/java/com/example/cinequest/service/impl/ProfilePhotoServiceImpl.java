@@ -91,11 +91,7 @@ public class ProfilePhotoServiceImpl implements ProfilePhotoService {
 
             UserDetails userDetails = userDetailsRepository
                     .findById(user.getId())
-                    .orElseGet(() -> {
-                        UserDetails newUserDetails = new UserDetails();
-                        newUserDetails.setId(user.getId());
-                        return newUserDetails;
-                    });
+                    .orElseGet(() -> UserDetails.builder().id(user.getId()).build());
 
             userDetails.setProfilePhoto(filePath);
 
@@ -111,7 +107,8 @@ public class ProfilePhotoServiceImpl implements ProfilePhotoService {
     public byte[] downloadProfilePhotoFromFileSystem(String userId) {
         UserDetails userDetails = userDetailsRepository
                 .findById(userId)
-                .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.USER_NOT_FOUND));
+                .orElseThrow(() -> new CineQuestApiException(false, ApiResponseCode.ACCOUNT_NOT_REGISTERED));
+
         String path = userDetails.getProfilePhoto();
         byte[] images;
 
