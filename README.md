@@ -75,9 +75,9 @@ git clone https://github.com/NguyenKhaiHoan/hnk_fullstack_cinequest_movie_bookin
 
 2. Set up environment variables:
 
-Create a .env file in both the backend and frontend directories.
+Create a `.env` file in both the backend and frontend directories.
 
-Add the following configurations to the backend/.env file, replacing placeholders with your actual values:
+Add the following configurations to the `backend/.env` file, replacing placeholders with your actual values:
 
 - Database configuration (replace with your MySQL details)
 
@@ -96,7 +96,7 @@ SUPPORT_EMAIL=your_support_email@example.com
 APP_PASSWORD=your_email_app_password
 ```
 
-- Create a .env file in the frontend directory and add the following configuration:
+- Create a `.env` file in the frontend directory and add the following configuration:
 
 ```
 THEMOVIEDB_API_KEY=your_themoviedb_api_key
@@ -115,9 +115,7 @@ mvn spring-boot:run
 
 4. Running the App
 
-Make sure the backend server is running.
-
-In the frontend directory, run:
+Ensure the backend server is running. Then, in the frontend directory, run:
 
 ```bash
 flutter clean
@@ -147,9 +145,17 @@ docker run --name mysql-8.0.40 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d --net
 
 The `-e MYSQL_ROOT_PASSWORD=root` sets the root password for MySQL. You can change it to a more secure password as needed.
 
-- Stop/Start/Remove MySQL:
+- Create Schema for CineQuest:
 
-If you need to stop, start or remove the MySQL container, you can use the following commands:
+Use MySQL Workbench or the MySQL Command Line Client to create the schema by running the following SQL command:
+
+```bash
+CREATE SCHEMA `cinequest` ;
+```
+
+- Start/Stop or Remove MySQL:
+
+If you need to start/stop or remove the MySQL container, you can use the following commands:
 
 ```bash
 docker stop mysql-8.0.40
