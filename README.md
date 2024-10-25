@@ -136,7 +136,7 @@ docker pull mysql:8.0.40-debian
 
 - Create a Docker Network and Run MySQL Container:
 
-Enable your command line interface and run the following commands:
+Open your command line interface and run the following commands. You can also use another port if desired (e.g., 3307):
 
 ```bash
 docker network create cinequest-network
@@ -170,6 +170,17 @@ If you want to remove the Docker network after you're done, use the following co
 ```bash
 docker network rm cinequest-network
 ```
+
+6. Returning use MySQL in localhost
+
+> [!NOTE]  
+> Please remove the MySQL container and network if they are using the same port (3306) as your local MySQL installation.
+
+Windows: Check MySQL Service
+
+- Open the Start menu and type "Services".
+- Look for the `MySQL` service in the list. If it is not running, you can right-click it and select `Start`.
+- The default port for MySQL on localhost is 3306.
 
 ---
 
