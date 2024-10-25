@@ -61,11 +61,9 @@ The demo is located in the [demo](frontend/assets/demos/) folder
 
 ### Prerequisites:
 
-Flutter (stable channel): https://docs.flutter.dev/get-started/install
-
-Java (JDK 21): https://www.oracle.com/java/technologies/downloads/#java21
-
-IDE: VSCode (Android Studio), Intellij
+- Flutter (stable channel): https://docs.flutter.dev/get-started/install
+- Java (JDK 21): https://www.oracle.com/java/technologies/downloads/#java21
+- IDE: VSCode (Android Studio), Intellij
 
 ### Steps:
 
