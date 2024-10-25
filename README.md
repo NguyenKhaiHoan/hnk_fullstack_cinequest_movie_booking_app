@@ -145,7 +145,7 @@ docker network create cinequest-network
 docker run --name mysql-8.0.40 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d --network cinequest-network mysql:8.0.40-debian
 ```
 
-The -e MYSQL_ROOT_PASSWORD=root sets the root password for MySQL. You can change it to a more secure password as needed.
+The `-e MYSQL_ROOT_PASSWORD=root` sets the root password for MySQL. You can change it to a more secure password as needed.
 
 - Stop/Start MySQL:
 
@@ -154,6 +154,14 @@ If you need to stop or start the MySQL container, you can use the following comm
 ```bash
 docker stop mysql-8.0.40
 docker start mysql-8.0.40
+```
+
+- Remove the Docker Network:
+
+If you want to remove the Docker network after you're done, use the following command:
+
+```bash
+docker network rm cinequest-network
 ```
 
 ---
