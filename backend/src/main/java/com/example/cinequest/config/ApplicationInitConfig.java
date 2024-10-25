@@ -54,15 +54,15 @@ public class ApplicationInitConfig {
                         .enabled(true)
                         .roles(roles)
                         .build();
+                userRepository.save(admin);
 
                 UserDetails adminDetails = UserDetails.builder()
+                        .id(admin.getId())
                         .username("admin")
                         .name("Admin")
                         .surname("CineQuest")
                         .bio("Admin of CineQuest")
                         .build();
-
-                userRepository.save(admin);
                 userDetailsRepository.save(adminDetails);
             }
         };

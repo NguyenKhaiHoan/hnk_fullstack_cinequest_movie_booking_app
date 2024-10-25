@@ -71,7 +71,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private UserDetails updateUserDetails(UserDetailsRequest request, String userId) {
-        UserDetails userDetails = userDetailsRepository.findById(userId).orElse(new UserDetails());
+        UserDetails userDetails = userDetailsRepository
+                .findById(userId)
+                .orElseGet(() -> UserDetails.builder().id(userId).build());
 
         userDetailsMapper.updateUserDetails(userDetails, request);
 
