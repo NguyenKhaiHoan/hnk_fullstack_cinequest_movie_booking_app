@@ -147,13 +147,14 @@ docker run --name mysql-8.0.40 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d --net
 
 The `-e MYSQL_ROOT_PASSWORD=root` sets the root password for MySQL. You can change it to a more secure password as needed.
 
-- Stop/Start MySQL:
+- Stop/Start/Remove MySQL:
 
-If you need to stop or start the MySQL container, you can use the following commands:
+If you need to stop, start or remove the MySQL container, you can use the following commands:
 
 ```bash
 docker stop mysql-8.0.40
 docker start mysql-8.0.40
+docker rm mysql-8.0.40
 ```
 
 - Remove the Docker Network:
