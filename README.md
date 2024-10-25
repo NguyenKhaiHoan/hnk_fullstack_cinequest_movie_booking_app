@@ -82,7 +82,7 @@ Add the following configurations to the `backend/.env` file, replacing placehold
 - Database configuration (replace with your MySQL details)
 
 ```
-SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/cinequest
+SPRING_DATASOURCE_URL=your_url (e.g., jdbc:mysql://localhost:3306/cinequest)
 SPRING_DATASOURCE_USERNAME=your_username
 SPRING_DATASOURCE_PASSWORD=your_password
 
