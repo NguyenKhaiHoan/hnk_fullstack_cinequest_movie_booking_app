@@ -114,7 +114,8 @@ mvn spring-boot:run
 ```
 
 4. Running the App
-   Make sure the backend server is running.
+
+Make sure the backend server is running.
 
 In the frontend directory, run:
 
@@ -126,6 +127,34 @@ flutter run
 ```
 
 This will launch the CineQuest app on your connected device or emulator.
+
+5. Using MySQL in Docker
+
+- Pull Docker MySQL image (version: 8.0.40-debian)
+
+```bash
+docker pull mysql:8.0.40-debian
+```
+
+- Create a Docker Network and Run MySQL Container:
+
+Enable your command line interface and run the following commands:
+
+```bash
+docker network create cinequest-network
+docker run --name mysql-8.0.40 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d --network cinequest-network mysql:8.0.40-debian
+```
+
+The -e MYSQL_ROOT_PASSWORD=root sets the root password for MySQL. You can change it to a more secure password as needed.
+
+- Stop/Start MySQL:
+
+If you need to stop or start the MySQL container, you can use the following commands:
+
+```bash
+docker stop mysql-8.0.40
+docker start mysql-8.0.40
+```
 
 ---
 
