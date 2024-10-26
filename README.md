@@ -82,9 +82,12 @@ Add the following configurations to the `backend/.env` file, replacing placehold
 - Database configuration (replace with your MySQL details)
 
 ```
-SPRING_DATASOURCE_URL=your_url (e.g., jdbc:mysql://localhost:3306/cinequest)
+SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/cinequest
 SPRING_DATASOURCE_USERNAME=your_username
 SPRING_DATASOURCE_PASSWORD=your_password
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # JWT secret key
 JWT_SECRET_KEY=your_secret_key
@@ -104,7 +107,21 @@ THEMOVIEDB_API_KEY=your_themoviedb_api_key
 
 Obtain your API key from https://www.themoviedb.org/.
 
-3. Start the backend server:
+3. Start the backend server (localhost):
+
+ indows: Check MySQL Service
+
+- Open the `Start` menu and type "Services".
+- Look for the `MySQL` service in the list. If it is not running, you can right-click it and select `Start`.
+- The default port for MySQL on localhost is 3306.
+
+- Create Schema for CineQuest:
+
+Use MySQL Workbench or the MySQL Command Line Client to create the schema by running the following SQL command:
+
+```bash
+CREATE SCHEMA `cinequest` ;
+```
 
 Navigate to the backend directory and run:
 
@@ -126,9 +143,11 @@ flutter run
 
 This will launch the CineQuest app on your connected device or emulator.
 
-5. Using MySQL in Docker
+5. Deploy backend in Docker
 
-- Pull Docker MySQL image (version: 8.0.40-debian)
+- Pull Docker MySQL Image (version: 8.0.40-debian)
+
+Open your terminal and run the following command to pull the MySQL Docker image:
 
 ```bash
 docker pull mysql:8.0.40-debian
@@ -136,51 +155,88 @@ docker pull mysql:8.0.40-debian
 
 - Create a Docker Network and Run MySQL Container:
 
-Open your command line interface and run the following commands. You can also use another port if desired (e.g., 3307):
+Run the following commands to create a Docker network and start the MySQL container. You can change the port if desired:
 
 ```bash
 docker network create cinequest-network
-docker run --name mysql-8.0.40 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d --network cinequest-network mysql:8.0.40-debian
+docker run --name mysql-8.0.40 -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root -d --network cinequest-network mysql:8.0.40-debian
 ```
 
-The `-e MYSQL_ROOT_PASSWORD=root` sets the root password for MySQL. You can change it to a more secure password as needed.
+> [!NOTE]  
+> The `-e MYSQL_ROOT_PASSWORD=root` sets the root password for MySQL. You can change it to a more secure password as needed.
 
 - Create Schema for CineQuest:
 
 Use MySQL Workbench or the MySQL Command Line Client to create the schema by running the following SQL command:
 
-```bash
+```sql
 CREATE SCHEMA `cinequest` ;
 ```
 
-- Start/Stop or Remove MySQL:
+- Start MySQL:
 
-If you need to start/stop or remove the MySQL container, you can use the following commands:
+You can run the command to start MySQL:
+
+```bash
+docker start mysql-8.0.40
+```
+
+- Create new Profile
+
+Create a new file named `application-docker.properties` with the following configuration:
+
+```
+# Configure database connection (for Docker)
+spring.datasource.url=jdbc:mysql://mysql-8.0.40:3306/cinequest
+spring.datasource.username=root
+spring.datasource.password=root
+```
+
+- Create DockerFile
+
+Create a `Dockerfile` with the following content:
+
+```
+# Start with a Maven image that includes JDK 21
+FROM maven:3.9.9-amazoncorretto-21 AS build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY target/cinequest-0.0.1-SNAPSHOT.jar app.jar
+
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
+
+# Command to run the application with the Docker profile
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=docker", "app.jar"]
+```
+
+- Build and Run the Application
+
+Run the following commands to build and start the application:
+
+```bash
+mvn package
+docker build -t cinequest-service:0.0.1 .
+docker run --name cinequest-service -p 8080:8080 -d --network cinequest-network -e SPRING_PROFILES_ACTIVE=prod cinequest-service:0.0.1
+```
+
+- Clean up:
+
+If you need to stop or remove the MySQL container, you can use the following commands:
 
 ```bash
 docker stop mysql-8.0.40
-docker start mysql-8.0.40
 docker rm mysql-8.0.40
 ```
-
-- Remove the Docker Network:
 
 If you want to remove the Docker network after you're done, use the following command:
 
 ```bash
 docker network rm cinequest-network
 ```
-
-6. Returning use MySQL in localhost
-
-> [!NOTE]  
-> Please remove the MySQL container and network if they are using the same port (3306) as your local MySQL installation.
-
-Windows: Check MySQL Service
-
-- Open the Start menu and type "Services".
-- Look for the `MySQL` service in the list. If it is not running, you can right-click it and select `Start`.
-- The default port for MySQL on localhost is 3306.
 
 ---
 
