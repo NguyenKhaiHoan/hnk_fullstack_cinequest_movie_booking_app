@@ -82,20 +82,18 @@ Add the following configurations to the `backend/.env` file, replacing placehold
 - Database configuration (replace with your MySQL details)
 
 ```
+# Database configuration
 SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/cinequest
 SPRING_DATASOURCE_USERNAME=your_username
 SPRING_DATASOURCE_PASSWORD=your_password
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # JWT secret key
-JWT_SECRET_KEY=your_secret_key
-JWT_EXPIRATION_TIME=your_expiration_time (hour)
-JWT_REFRESHABLE-TIME=your_refreshable_time (hour)
+JWT_SECRET_KEY=your_key
+JWT_EXPIRATION_TIME=1 (hour)
+JWT_REFRESHABLE_TIME=72 (hour)
 
 # Mail properties
-SUPPORT_EMAIL=your_support_email@example.com
+SUPPORT_EMAIL=your_email
 APP_PASSWORD=your_email_app_password
 ```
 
@@ -173,7 +171,7 @@ Use MySQL Workbench or the MySQL Command Line Client to create the schema by run
 CREATE SCHEMA `cinequest` ;
 ```
 
-- Start MySQL:
+- Start MySQL (Optional):
 
 You can run the command to start MySQL:
 
@@ -220,7 +218,7 @@ Run the following commands to build and start the application:
 ```bash
 mvn package
 docker build -t cinequest-service:0.0.1 .
-docker run --name cinequest-service -p 8080:8080 -d --network cinequest-network -e SPRING_PROFILES_ACTIVE=prod cinequest-service:0.0.1
+docker run --name cinequest-service -p 8080:8080 -d --network cinequest-network -e SPRING_PROFILES_ACTIVE=docker cinequest-service:0.0.1
 ```
 
 - Clean up:
