@@ -33,3 +33,7 @@ target/
 ### VS Code ###
 .vscode/
 *.env
+src/main/resources/application-docker.properties
+# Create new profile to build app jar to run backend when coding in branch frontend
+# Command: mvn clean package "-Dspring.profiles.active=localhost"
+src/main/resources/application-localhost.properties
