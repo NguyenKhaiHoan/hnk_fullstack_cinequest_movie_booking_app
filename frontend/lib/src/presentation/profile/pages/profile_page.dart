@@ -4,20 +4,29 @@ import 'package:cinequest/src/common/widgets/app_bar_bottom_divider.dart';
 import 'package:cinequest/src/common/widgets/custom_circle_button.dart';
 import 'package:cinequest/src/common/widgets/padding_app_bar.dart';
 import 'package:cinequest/src/core/routes/route_enums.dart';
-import 'package:cinequest/src/presentation/movie/widgets/profile_photo.dart';
+import 'package:cinequest/src/presentation/profile/widgets/profile_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 part '_mixins/profile_page.mixin.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  Widget build(BuildContext context) {
+    return const _Page();
+  }
 }
 
-class _ProfilePageState extends State<ProfilePage> with ProfilePageMixin {
+class _Page extends StatefulWidget {
+  const _Page();
+
+  @override
+  State<_Page> createState() => _PageState();
+}
+
+class _PageState extends State<_Page> with _PageMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

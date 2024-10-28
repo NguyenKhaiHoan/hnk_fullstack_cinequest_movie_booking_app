@@ -1,6 +1,5 @@
 part of '../navigation_page.dart';
 
-/// Mixin của NavigationPage để xử lý logic UI
 mixin NavigationPageMixin on State<NavigationPage> {
   @override
   void initState() {

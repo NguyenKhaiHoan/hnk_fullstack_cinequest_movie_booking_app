@@ -5,7 +5,7 @@ import 'package:cinequest/src/data/auth/datasources/_mappers/user_mapper.dart';
 import 'package:cinequest/src/data/auth/datasources/user_remote_datasource.dart';
 import 'package:cinequest/src/data/auth/models/requests/setup_account_request.dart';
 import 'package:cinequest/src/domain/auth/entities/user.dart';
-import 'package:cinequest/src/domain/auth/entities/user_details.dart';
+import 'package:cinequest/src/common/entities/user_details.dart';
 import 'package:cinequest/src/domain/auth/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
 

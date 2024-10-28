@@ -6,9 +6,9 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:cinequest/src/domain/movie/entities/movie.dart';
 import 'package:cinequest/src/external/apis/themovidedb/tmdb_url.dart';
-import 'package:cinequest/src/presentation/movie/blocs/popular_movie/popular_movie_bloc.dart';
-import 'package:cinequest/src/presentation/movie/widgets/carousel_home_view.dart';
-import 'package:cinequest/src/presentation/movie/widgets/carrousel_box.dart';
+import 'package:cinequest/src/presentation/home/blocs/popular_movie/popular_movie_bloc.dart';
+import 'package:cinequest/src/presentation/home/widgets/carousel_home_view.dart';
+import 'package:cinequest/src/presentation/home/widgets/carrousel_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

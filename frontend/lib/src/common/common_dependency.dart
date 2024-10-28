@@ -1,25 +1,33 @@
 import 'package:cinequest/src/common/blocs/app/app_bloc.dart';
 import 'package:cinequest/src/common/blocs/connectivity/connectivity_bloc.dart';
+import 'package:cinequest/src/common/service/location_stream_service.dart';
+import 'package:cinequest/src/common/service/user_details_stream_service.dart';
 import 'package:cinequest/src/core/di/injection_container.dart';
-import 'package:cinequest/src/domain/auth/usecases/get_user_details_usecase.dart';
-import 'package:cinequest/src/domain/auth/usecases/get_user_usecase.dart';
-import 'package:cinequest/src/external/services/connectivity/connectivity_service.dart';
-import 'package:cinequest/src/external/services/storage/local/secure_storage_service.dart';
 
 class CommonDependency {
   CommonDependency._();
 
   static void init() {
     sl
+      ..registerLazySingleton<LocationStreamService>(
+        LocationStreamService.new,
+      )
+      ..registerLazySingleton<UserDetailsStreamService>(
+        UserDetailsStreamService.new,
+      )
       ..registerFactory<AppBloc>(
         () => AppBloc(
-          getUserUseCase: sl<GetUserUseCase>(),
-          getUserDetailsUseCase: sl<GetUserDetailsUseCase>(),
-          secureStorageService: sl<SecureStorageService>(),
+          locationStreamService: sl(),
+          locationService: sl(),
+          getStorageService: sl(),
+          userDetailsStreamService: sl(),
+          getUserUseCase: sl(),
+          getUserDetailsUseCase: sl(),
+          secureStorageService: sl(),
         ),
       )
       ..registerFactory<ConnectivityBloc>(
-        () => ConnectivityBloc(connectivityService: sl<ConnectivityService>()),
+        () => ConnectivityBloc(connectivityService: sl()),
       );
   }
 }

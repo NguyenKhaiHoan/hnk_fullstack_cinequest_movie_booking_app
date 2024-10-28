@@ -69,7 +69,6 @@ class LoginView extends StatelessWidget {
 
 /// Body
 class _Body extends StatelessWidget {
-  /// Constructor
   const _Body({
     required this.loginKey,
     required this.emailTextEditingController,

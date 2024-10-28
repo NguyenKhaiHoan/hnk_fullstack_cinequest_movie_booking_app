@@ -3,6 +3,7 @@ import 'package:cinequest/src/core/network/dio_client.dart';
 import 'package:cinequest/src/external/apis/cinequest/cinequest_api.dart';
 import 'package:cinequest/src/external/apis/themovidedb/tmdb_api.dart';
 import 'package:cinequest/src/external/services/connectivity/connectivity_service.dart';
+import 'package:cinequest/src/external/services/location/location_service.dart';
 import 'package:cinequest/src/external/services/storage/local/get_storage_service.dart';
 import 'package:cinequest/src/external/services/storage/local/secure_storage_service.dart';
 import 'package:cinequest/src/external/services/storage/local/shared_preferences_service.dart';
@@ -30,6 +31,7 @@ class ExternalDependency {
       ..registerLazySingleton<CineQuestApi>(
         () => CineQuestApi(sl<DioClient>().dio),
       )
-      ..registerLazySingleton<ConnectivityService>(ConnectivityService.new);
+      ..registerLazySingleton<ConnectivityService>(ConnectivityService.new)
+      ..registerLazySingleton<LocationService>(LocationService.new);
   }
 }

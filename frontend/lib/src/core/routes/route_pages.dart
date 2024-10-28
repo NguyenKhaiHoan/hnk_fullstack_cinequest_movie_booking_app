@@ -7,11 +7,11 @@ import 'package:cinequest/src/presentation/auth/pages/reset_password_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/sign_up_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/splash_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/welcome_page.dart';
-import 'package:cinequest/src/presentation/movie/pages/home_page.dart';
-import 'package:cinequest/src/presentation/movie/pages/profile_page.dart';
-import 'package:cinequest/src/presentation/movie/pages/tickets_page.dart';
-import 'package:cinequest/src/presentation/navigation/blocs/pages/navigation_page.dart';
+import 'package:cinequest/src/presentation/home/pages/home_page.dart';
+import 'package:cinequest/src/presentation/navigation/pages/navigation_page.dart';
+import 'package:cinequest/src/presentation/profile/pages/profile_page.dart';
 import 'package:cinequest/src/presentation/setting/pages/setting_page.dart';
+import 'package:cinequest/src/presentation/ticket/pages/ticket_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -169,10 +169,7 @@ final class RouterPages {
     }
     // Nếu đã đăng nhập mà path hiện tại chưa chứa path của HomePage
     // thì trả về path của home page
-    else if (appAuthState.maybeMap(
-          authenticated: (value) => true,
-          orElse: () => false,
-        ) &&
+    else if (appAuthState == const AppState.authenticated() &&
         !_path.contains(AppRoutes.home.path)) {
       return AppRoutes.home.path;
     }

@@ -1,6 +1,6 @@
 import 'package:cinequest/src/core/generics/mapper.dart';
 import 'package:cinequest/src/data/auth/models/user_details_model.dart';
-import 'package:cinequest/src/domain/auth/entities/user_details.dart';
+import 'package:cinequest/src/common/entities/user_details.dart';
 
 class UserDetailsMapper implements DataMapper<UserDetailsModel, UserDetails> {
   factory UserDetailsMapper() => _instance;
