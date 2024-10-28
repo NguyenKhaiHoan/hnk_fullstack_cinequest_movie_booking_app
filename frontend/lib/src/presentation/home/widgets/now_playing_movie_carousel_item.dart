@@ -5,7 +5,7 @@ import 'package:cinequest/src/common/widgets/custom_button.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/domain/movie/entities/movie.dart';
 import 'package:cinequest/src/external/apis/themovidedb/tmdb_url.dart';
-import 'package:cinequest/src/presentation/movie/widgets/favorite_button.dart';
+import 'package:cinequest/src/presentation/home/widgets/favorite_button.dart';
 import 'package:flutter/material.dart';
 
 class NowPlayingMovieCarouselItem extends StatelessWidget {

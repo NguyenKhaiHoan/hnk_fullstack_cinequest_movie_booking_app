@@ -1,17 +1,17 @@
+import 'package:cinequest/src/common/blocs/location/location_bloc.dart';
+import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/core/routes/route_enums.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
 import 'package:cinequest/src/core/utils/bottom_sheet_util.dart';
 import 'package:cinequest/src/presentation/navigation/blocs/bottom_nav_bloc.dart';
-import 'package:cinequest/src/presentation/navigation/blocs/widgets/bottom_navigation_bar.dart';
+import 'package:cinequest/src/presentation/navigation/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 part '_mixins/navigation_page.mixin.dart';
 
-/// Trang điều hướng
 class NavigationPage extends StatefulWidget {
-  /// Constructor
   const NavigationPage({required this.child, super.key});
 
   final StatefulNavigationShell child;
@@ -23,8 +23,16 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BottomNavBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => BottomNavBloc(),
+        ),
+        BlocProvider(
+          create: (context) => LocationBloc(locationStreamService: sl())
+            ..add(const LocationEvent.updated()),
+        ),
+      ],
       child: Scaffold(
         extendBodyBehindAppBar: true,
         body: widget.child,

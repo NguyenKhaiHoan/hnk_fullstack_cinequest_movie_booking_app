@@ -32,6 +32,10 @@ class _CineQuestMovieState extends State<CineQuestMovie>
         ),
         BlocProvider(
           create: (context) => AppBloc(
+            getStorageService: sl(),
+            locationService: sl(),
+            locationStreamService: sl(),
+            userDetailsStreamService: sl(),
             getUserUseCase: sl(),
             getUserDetailsUseCase: sl(),
             secureStorageService: sl(),

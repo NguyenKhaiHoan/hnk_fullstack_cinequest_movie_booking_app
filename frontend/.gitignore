@@ -46,6 +46,7 @@ app.*.map.json
 *.g.dart
 *.freezed.dart
 *.gen.dart
+*.gitignore
 
 # Bỏ qua các tệp localization
 lib/src/core/localization/intl/messages_all.dart

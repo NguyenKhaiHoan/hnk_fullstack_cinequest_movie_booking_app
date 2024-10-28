@@ -1,6 +1,5 @@
 part of '../login_page.dart';
 
-/// Mixin của LoginPage xử lý logic UI
 mixin _PageMixin on State<_Page> {
   late TextEditingController _emailTextEditingController;
   late TextEditingController _setPasswordTextEditingController;

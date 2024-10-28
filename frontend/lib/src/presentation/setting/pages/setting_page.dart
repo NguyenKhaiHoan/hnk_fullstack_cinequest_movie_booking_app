@@ -11,9 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'mixins/setting_page.mixin.dart';
 
-/// Trang Setting
 class SettingPage extends StatefulWidget {
-  /// Constructor
   const SettingPage({super.key});
 
   @override

@@ -7,10 +7,10 @@ import 'package:cinequest/src/core/extensions/date_time_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:cinequest/src/domain/movie/entities/movie.dart';
-import 'package:cinequest/src/presentation/movie/blocs/now_playing_movie/now_playing_movie_bloc.dart';
-import 'package:cinequest/src/presentation/movie/widgets/carousel_home_view.dart';
-import 'package:cinequest/src/presentation/movie/widgets/carrousel_box.dart';
-import 'package:cinequest/src/presentation/movie/widgets/now_playing_movie_carousel_item.dart';
+import 'package:cinequest/src/presentation/home/blocs/now_playing_movie/now_playing_movie_bloc.dart';
+import 'package:cinequest/src/presentation/home/widgets/carousel_home_view.dart';
+import 'package:cinequest/src/presentation/home/widgets/carrousel_box.dart';
+import 'package:cinequest/src/presentation/home/widgets/now_playing_movie_carousel_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

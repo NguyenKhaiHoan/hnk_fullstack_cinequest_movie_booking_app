@@ -11,7 +11,6 @@ part 'popular_movie_state.dart';
 
 /// Quản lý trạng thái lấy dữ liệu danh sách movie phổ biến
 class PopularMovieBloc extends Bloc<PopularMovieEvent, PopularMovieState> {
-  /// Constructor
   PopularMovieBloc(this._useCase) : super(const PopularMovieState.loading()) {
     on<PopularMovieEvent>((events, emit) async {
       await events.map(get: (event) => _onGet(event, emit));
