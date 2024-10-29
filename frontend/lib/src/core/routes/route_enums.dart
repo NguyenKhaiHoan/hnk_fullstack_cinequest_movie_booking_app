@@ -10,6 +10,8 @@ enum AppRoutes {
   resetPassword('/resetPassword'),
   ticket('/ticket'),
   home('/home'),
+  selectLocation('/selectLocation'),
+  searchMovie('/searchMovie'),
   profile('/profile'),
   setting('/setting');
 

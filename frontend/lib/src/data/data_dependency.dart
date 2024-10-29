@@ -1,6 +1,7 @@
 import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/data/auth/datasources/auth_remote_datasource.dart';
 import 'package:cinequest/src/data/auth/datasources/user_remote_datasource.dart';
+import 'package:cinequest/src/data/location/datasources/city_local_datasource.dart';
 import 'package:cinequest/src/data/movie/datasources/movie_remote_datasource.dart';
 import 'package:cinequest/src/external/apis/cinequest/cinequest_api.dart';
 import 'package:cinequest/src/external/apis/themovidedb/tmdb_api.dart';
@@ -24,6 +25,10 @@ class DataDependency {
         ),
       )
       ..registerLazySingleton<MovieRemoteDataSource>(
-          () => MovieRemoteDataSourceImpl(tmdbApi: sl<TMDBApi>()));
+        () => MovieRemoteDataSourceImpl(tmdbApi: sl<TMDBApi>()),
+      )
+      ..registerLazySingleton<CityLocalDataSource>(
+        CityLocalDataSourceImpl.new,
+      );
   }
 }
