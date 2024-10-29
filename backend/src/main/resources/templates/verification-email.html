@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CineQuest Movie Booking App - Verification</title>
+    <link rel="icon" href="/images/cinequest-light-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="text-center mb-4">
+            <h1>Welcome to CineQuest Movie Booking App</h1>
+        </div>
+        <section>
+            <h2>Verification Code</h2>
+            <p>Use the following code to complete your account creation:</p>
+            <div class="box">
+                <span class="code" th:text="${verificationCode}">[Verification Code]</span>
+            </div>
+            <p class="item">This code will expire in 5 minutes.</p>
+        </section>
+        <div class="about-section">
+            <h3>About CineQuest</h3>
+            <p>CineQuest is a movie ticket booking app designed to simulate the movie booking experience. The backend is built using Java and Spring Boot, ensuring robust performance and scalability. The frontend is developed with Dart and Flutter, offering a smooth and responsive user interface.</p>
+            <p>The mobile UI design draws inspiration from <a href="https://www.behance.net/gallery/173303277/CineQuest?tracking_source=search_projects_appreciations|movie+ui+mobile+app&l=510" target="_blank">Behance - Cinequest</a> to create an engaging user experience. Additionally, Cinequest leverages the <a href="https://www.themoviedb.org/" target="_blank">TheMovieDb (TMDB) API</a> to retrieve movie data, enhancing the app with real-time movie information. </p>
+            <p>This app is developed solely for learning and personal development purposes.</p>
+        </div>
+        <div class="developer-info">
+            <span>Nguyen Khai Hoan</span>
+            <div>
+                <a href="https://github.com/NguyenKhaiHoan/hnk_fullstack_cinequest_movie_booking_app">GitHub</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
