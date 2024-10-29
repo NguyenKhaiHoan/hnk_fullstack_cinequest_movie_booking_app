@@ -81,6 +81,7 @@ class _PageState extends State<_Page> with _PageMixin {
         child: BlocBuilder<LocationBloc, LocationState>(
           builder: (context, state) {
             return state.when(
+              initial: () => _buildMessage('Initial'),
               loading: () => const CircularProgressIndicator(
                 color: AppColors.white,
               ),

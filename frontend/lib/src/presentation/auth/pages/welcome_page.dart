@@ -1,11 +1,10 @@
-import 'package:cinequest/gen/assets.gen.dart';
+import 'package:cinequest/src/common/constants/app_constant.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:cinequest/src/presentation/auth/widgets/bottom_welcome.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -40,8 +39,8 @@ class WelcomePage extends StatelessWidget {
   }
 
   Widget _buildBackground() {
-    return SvgPicture.asset(
-      AppAssets.images.backgroundWelcome.path,
+    return Image.asset(
+      AppConstant.backgroundWelcomeImagePath,
       width: UiUtil.deviceWidth,
       fit: BoxFit.cover,
     );

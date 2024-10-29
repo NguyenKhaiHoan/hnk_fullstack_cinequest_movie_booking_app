@@ -4,6 +4,8 @@ enum AppRoutes {
   splash('/'),
   login('/login'),
   signUp('/signUp'),
+  findingLocation('/findingLocation'),
+  invalidLocation('/invalidLocation'),
   accountSetup('/accountSetup'),
   resetPassword('/resetPassword'),
   ticket('/ticket'),

@@ -1,8 +1,9 @@
-import 'package:cinequest/src/common/constants/app_keys.dart';
+import 'package:cinequest/src/common/constants/app_constant.dart';
 import 'package:cinequest/src/common/service/location_stream_service.dart';
 import 'package:cinequest/src/common/service/user_details_stream_service.dart';
 import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
+import 'package:cinequest/src/core/utils/location_util.dart';
 import 'package:cinequest/src/domain/auth/usecases/get_user_details_usecase.dart';
 import 'package:cinequest/src/domain/auth/usecases/get_user_usecase.dart';
 import 'package:cinequest/src/external/services/location/location_service.dart';
@@ -52,7 +53,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     _AppStartedEvent event,
     Emitter<AppState> emit,
   ) async {
-    final token = await _secureStorageService.getData(AppKeys.accessToken);
+    final token = await _secureStorageService.getData(AppConstant.accessToken);
     // Xét nếu token là null tức app chưa được đăng nhập
     if (token != null) {
       // Nếu user khác null tức đã đăng nhập thì lấy data của user
@@ -75,18 +76,25 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             // Lỗi do tài khoản đăng ký chưa được setup
             emit(const AppState.accountNotSetup());
           }, (data) async {
-            var latitude = _getStorageService.getData<double>(AppKeys.latitude);
+            emit(const AppState.findingLocation());
+            var latitude =
+                _getStorageService.getData<double>(AppConstant.latitude);
             var longitude =
-                _getStorageService.getData<double>(AppKeys.longitude);
+                _getStorageService.getData<double>(AppConstant.longitude);
             if (latitude == null && longitude == null) {
               final position = await _locationService.getGeoLocationPosition();
               latitude = position.latitude;
               longitude = position.longitude;
             }
-            final newLocation = LatLng(latitude!, longitude!);
-            _locationStreamService.updateLocation(newLocation);
-            _userDetailsStreamService.updateUserDetails(data);
-            emit(const AppState.authenticated());
+            final location = LatLng(latitude!, longitude!);
+            final locations = await LocationUtil.getAddressFromLatLng(location);
+            if (!locations[2].contains('Hà Nội')) {
+              emit(const AppState.invalidLocation());
+            } else {
+              _locationStreamService.updateLocation(location);
+              _userDetailsStreamService.updateUserDetails(data);
+              emit(const AppState.authenticated());
+            }
           });
         },
       );
