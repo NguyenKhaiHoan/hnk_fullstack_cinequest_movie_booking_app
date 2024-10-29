@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:cinequest/src/common/constants/app_keys.dart';
+import 'package:cinequest/src/common/constants/app_constant.dart';
 import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/external/services/storage/local/get_storage_service.dart';
 import 'package:geolocator/geolocator.dart';
@@ -32,11 +32,11 @@ class LocationService {
     final currentPosition = await Geolocator.getCurrentPosition();
 
     await sl<GetStorageService>().saveData(
-      AppKeys.latitude,
+      AppConstant.latitude,
       currentPosition.latitude,
     );
     await sl<GetStorageService>().saveData(
-      AppKeys.longitude,
+      AppConstant.longitude,
       currentPosition.longitude,
     );
 

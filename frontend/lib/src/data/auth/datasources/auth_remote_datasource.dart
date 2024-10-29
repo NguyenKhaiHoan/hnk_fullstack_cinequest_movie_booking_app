@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:cinequest/src/common/constants/app_keys.dart';
+import 'package:cinequest/src/common/constants/app_constant.dart';
 import 'package:cinequest/src/core/errors/exception/network_exception.dart';
 import 'package:cinequest/src/core/errors/exception/no_internet_exception.dart';
 import 'package:cinequest/src/core/errors/failure.dart';
@@ -55,11 +55,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       try {
         final result = await _cineQuestApi.login(request: request);
         await _secureStorageService.saveData(
-          AppKeys.accessToken,
+          AppConstant.accessToken,
           result.accessToken,
         );
         await _secureStorageService.saveData(
-          AppKeys.accessExpiration,
+          AppConstant.accessExpiration,
           result.accessTokenExpiresAt,
         );
         log('------------- access token: ${result.accessToken}');
@@ -91,11 +91,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       try {
         final result = await _cineQuestApi.verify(request: request);
         await _secureStorageService.saveData(
-          AppKeys.accessToken,
+          AppConstant.accessToken,
           result.accessToken,
         );
         await _secureStorageService.saveData(
-          AppKeys.accessExpiration,
+          AppConstant.accessExpiration,
           result.accessTokenExpiresAt,
         );
         log('------------- access token: ${result.accessToken}');

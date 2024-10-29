@@ -12,7 +12,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   LocationBloc({
     required LocationStreamService locationStreamService,
   })  : _locationStreamService = locationStreamService,
-        super(const LocationState.loading()) {
+        super(const LocationState.initial()) {
     on<LocationEvent>((event, emit) async {
       await event.map(updated: (e) async => onUpdated(e, emit));
     });
@@ -21,10 +21,10 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final LocationStreamService _locationStreamService;
 
   Future<void> onUpdated(
-      _LocationUpdatedEvent e, Emitter<LocationState> emit) async {
-    if (state != const LocationState.loading()) {
-      emit(const LocationState.loading());
-    }
+    _LocationUpdatedEvent e,
+    Emitter<LocationState> emit,
+  ) async {
+    emit(const LocationState.loading());
     final latLng = _locationStreamService.currentLocation;
     try {
       if (latLng == null) {}

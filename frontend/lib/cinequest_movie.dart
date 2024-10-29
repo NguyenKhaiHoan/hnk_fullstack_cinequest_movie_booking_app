@@ -5,6 +5,8 @@ import 'package:cinequest/src/core/routes/route_pages.dart';
 import 'package:cinequest/src/core/themes/app_themes.dart';
 import 'package:cinequest/src/core/utils/toast_util.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
+import 'package:cinequest/src/presentation/location/presentation/pages/finding_location_page.dart';
+import 'package:cinequest/src/presentation/location/presentation/pages/invalid_location_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
@@ -61,7 +63,11 @@ class _CineQuestMovieState extends State<CineQuestMovie>
                 ],
                 child: BlocBuilder<AppBloc, AppState>(
                   builder: (context, state) {
-                    return child!;
+                    return state.maybeWhen(
+                      findingLocation: () => const FindingLocationPage(),
+                      invalidLocation: () => const InvalidLocationPage(),
+                      orElse: () => child!,
+                    );
                   },
                 ),
               ),
