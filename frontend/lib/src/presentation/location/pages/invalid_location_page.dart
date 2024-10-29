@@ -9,7 +9,7 @@ import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:cinequest/src/external/services/location/location_service.dart';
-import 'package:cinequest/src/presentation/location/presentation/widgets/reset_location_button.dart';
+import 'package:cinequest/src/presentation/location/widgets/reset_location_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';

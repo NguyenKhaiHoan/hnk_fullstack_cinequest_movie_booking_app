@@ -11,6 +11,7 @@ class AppBarBottomDivider extends StatelessWidget
     this.leading,
     this.actions,
     this.onBackTap,
+    this.hasBottom,
   });
 
   final Widget? leading;
@@ -18,6 +19,7 @@ class AppBarBottomDivider extends StatelessWidget
   final List<Widget>? actions;
   final void Function()? onBackTap;
   final double? appBarHeight;
+  final bool? hasBottom;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,9 @@ class AppBarBottomDivider extends StatelessWidget
       leadingWidth: leadingWidth,
       leading: leading,
       actions: actions,
-      bottom: const PreferredSize(
-        preferredSize: Size.fromHeight(0),
-        child: CustomDivider(),
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(0),
+        child: hasBottom ?? true ? const CustomDivider() : const SizedBox(),
       ),
     );
   }

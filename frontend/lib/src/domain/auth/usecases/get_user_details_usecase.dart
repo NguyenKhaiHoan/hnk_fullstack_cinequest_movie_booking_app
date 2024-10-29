@@ -1,6 +1,6 @@
+import 'package:cinequest/src/common/entities/user_details.dart';
 import 'package:cinequest/src/core/generics/type_def.dart';
 import 'package:cinequest/src/core/generics/usecase.dart';
-import 'package:cinequest/src/common/entities/user_details.dart';
 import 'package:cinequest/src/domain/auth/repositories/user_repository.dart';
 
 class GetUserDetailsUseCase extends UseCase<UserDetails, String> {
@@ -9,7 +9,7 @@ class GetUserDetailsUseCase extends UseCase<UserDetails, String> {
 
   @override
   FutureEither<UserDetails> call({String? params}) {
-    final request = params;
-    return _userRepository.getUserDetails(request!);
+    final request = params!;
+    return _userRepository.getUserDetails(request);
   }
 }

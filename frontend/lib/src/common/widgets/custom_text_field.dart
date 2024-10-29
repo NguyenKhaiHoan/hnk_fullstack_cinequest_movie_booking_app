@@ -18,6 +18,7 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.checkCharacterCounter = false,
     this.counter = 0,
+    this.prefixIconPath,
   });
 
   final String label;
@@ -28,6 +29,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool checkCharacterCounter;
   final int counter;
+  final String? prefixIconPath;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,18 @@ class CustomTextField extends StatelessWidget {
                                 .copyWith(color: AppColors.dimGray),
                           ),
                         ],
+                      ),
+                    )
+                  : null,
+              prefix: prefixIconPath != null
+                  ? Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: SvgIcon(
+                        iconPath: prefixIconPath!,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.dimGray,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     )
                   : null,

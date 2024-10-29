@@ -9,14 +9,14 @@ import 'package:cinequest/src/common/widgets/svg_icon.dart';
 import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/core/routes/route_enums.dart';
 import 'package:cinequest/src/domain/movie/usecases/get_now_playing_movies_usecase.dart';
 import 'package:cinequest/src/domain/movie/usecases/get_popular_movie_usecase.dart';
 import 'package:cinequest/src/presentation/home/blocs/now_playing_movie/now_playing_movie_bloc.dart';
 import 'package:cinequest/src/presentation/home/blocs/popular_movie/popular_movie_bloc.dart';
-import 'package:cinequest/src/presentation/home/widgets/carousel_now_playing_movie.dart';
-import 'package:cinequest/src/presentation/home/widgets/carousel_popular_movie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 part '_mixins/home_page.mixin.dart';
 
@@ -62,10 +62,10 @@ class _PageState extends State<_Page> with _PageMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            gapH48,
-            CarouselNowPlayingMovie(),
-            gapH48,
-            CarouselPopularMovie(),
+            // gapH48,
+            // CarouselNowPlayingMovie(),
+            // gapH48,
+            // CarouselPopularMovie(),
           ],
         ),
       ),
@@ -78,18 +78,21 @@ class _PageState extends State<_Page> with _PageMixin {
       leading: PaddingAppBar(
         isLeft: true,
         alignment: Alignment.centerLeft,
-        child: BlocBuilder<LocationBloc, LocationState>(
-          builder: (context, state) {
-            return state.when(
-              initial: () => _buildMessage('Initial'),
-              loading: () => const CircularProgressIndicator(
-                color: AppColors.white,
-              ),
-              failed: (failure) => _buildMessage(failure?.message ?? 'Error'),
-              success: (location) =>
-                  _buildLocationString(location?.split(', ')[2] ?? 'Viet Nam'),
-            );
-          },
+        child: GestureDetector(
+          onTap: _selectLocation,
+          child: BlocBuilder<LocationBloc, LocationState>(
+            builder: (context, state) {
+              return state.when(
+                initial: () => _buildMessage('Loading...'),
+                loading: () => const CircularProgressIndicator(
+                  color: AppColors.white,
+                ),
+                failed: (failure) => _buildMessage(failure?.message ?? 'Error'),
+                success: (location) => _buildLocationString(
+                    location?.split(', ')[2] ?? 'Viet Nam'),
+              );
+            },
+          ),
         ),
       ),
       actions: [

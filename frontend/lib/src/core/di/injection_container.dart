@@ -9,6 +9,6 @@ final sl = GetIt.instance;
 Future<void> initDependencies() async {
   ExternalDependency.init();
   DataDependency.init();
-  CommonDependency.init();
   DomainDependency.init();
+  CommonDependency.init();
 }

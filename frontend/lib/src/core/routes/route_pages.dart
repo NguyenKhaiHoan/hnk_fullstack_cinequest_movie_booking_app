@@ -8,8 +8,9 @@ import 'package:cinequest/src/presentation/auth/pages/sign_up_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/splash_page.dart';
 import 'package:cinequest/src/presentation/auth/pages/welcome_page.dart';
 import 'package:cinequest/src/presentation/home/pages/home_page.dart';
-import 'package:cinequest/src/presentation/location/presentation/pages/finding_location_page.dart';
-import 'package:cinequest/src/presentation/location/presentation/pages/invalid_location_page.dart';
+import 'package:cinequest/src/presentation/location/pages/finding_location_page.dart';
+import 'package:cinequest/src/presentation/location/pages/invalid_location_page.dart';
+import 'package:cinequest/src/presentation/location/pages/select_location_page.dart';
 import 'package:cinequest/src/presentation/navigation/pages/navigation_page.dart';
 import 'package:cinequest/src/presentation/profile/pages/profile_page.dart';
 import 'package:cinequest/src/presentation/setting/pages/setting_page.dart';
@@ -82,6 +83,15 @@ final class RouterPages {
         pageBuilder: PageTransitionUtil.customPageBuilder(
           child: const InvalidLocationPage(),
           fadeTransition: true,
+        ),
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: AppRoutes.selectLocation.path,
+        builder: (context, state) => const SelectLocationPage(),
+        pageBuilder: PageTransitionUtil.customPageBuilder(
+          child: const SelectLocationPage(),
+          direction: PageTransitionDirection.down,
         ),
       ),
       GoRoute(
