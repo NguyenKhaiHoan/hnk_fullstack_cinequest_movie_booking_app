@@ -48,13 +48,17 @@ mixin _PageMixin on State<_Page> {
   void _listenerSignUp(BuildContext context, ButtonState state) {
     state.whenOrNull(
       success: () {
-        _pageController.nextPage(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
+        _next();
         context.read<TimerBloc>().add(const TimerEvent.started(duration: 60));
       },
       failure: (failure) => ToastUtil.showToastError(context, failure.message),
+    );
+  }
+
+  void _next() {
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
     );
   }
 

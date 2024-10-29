@@ -13,6 +13,7 @@ import 'package:cinequest/src/presentation/location/pages/invalid_location_page.
 import 'package:cinequest/src/presentation/location/pages/select_location_page.dart';
 import 'package:cinequest/src/presentation/navigation/pages/navigation_page.dart';
 import 'package:cinequest/src/presentation/profile/pages/profile_page.dart';
+import 'package:cinequest/src/presentation/search/pages/search_movie_page.dart';
 import 'package:cinequest/src/presentation/setting/pages/setting_page.dart';
 import 'package:cinequest/src/presentation/ticket/pages/ticket_page.dart';
 import 'package:flutter/material.dart';
@@ -91,6 +92,15 @@ final class RouterPages {
         builder: (context, state) => const SelectLocationPage(),
         pageBuilder: PageTransitionUtil.customPageBuilder(
           child: const SelectLocationPage(),
+          direction: PageTransitionDirection.down,
+        ),
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: AppRoutes.searchMovie.path,
+        builder: (context, state) => const SearchMoviePage(),
+        pageBuilder: PageTransitionUtil.customPageBuilder(
+          child: const SearchMoviePage(),
           direction: PageTransitionDirection.down,
         ),
       ),

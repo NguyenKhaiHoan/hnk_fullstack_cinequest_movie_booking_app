@@ -3,6 +3,7 @@ import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/app_bar_bottom_divider.dart';
 import 'package:cinequest/src/common/widgets/custom_circle_button.dart';
+import 'package:cinequest/src/common/widgets/custom_divider.dart';
 import 'package:cinequest/src/common/widgets/custom_text_field.dart';
 import 'package:cinequest/src/common/widgets/padding_app_bar.dart';
 import 'package:cinequest/src/core/errors/failure.dart';
@@ -10,6 +11,7 @@ import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/domain/location/entities/city.dart';
 import 'package:cinequest/src/presentation/location/blocs/select_location/select_location_bloc.dart';
+import 'package:cinequest/src/presentation/location/widgets/location_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -30,7 +32,7 @@ class SelectLocationPage extends StatelessWidget {
 }
 
 class _Page extends StatefulWidget {
-  const _Page({super.key});
+  const _Page();
 
   @override
   State<_Page> createState() => _PageState();
@@ -96,9 +98,15 @@ class _PageState extends State<_Page> with _PageMixin {
     return ListView.separated(
       shrinkWrap: true,
       itemCount: data?.length ?? 0,
-      itemBuilder: (BuildContext context, int index) =>
-          Text(data?[index].name ?? ''),
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
+      itemBuilder: (BuildContext context, int index) {
+        final cityName = data?[index].name ?? '';
+        return LocationItem(
+          cityName: cityName,
+          isSelected: cityName.contains('Hà Nội'),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) =>
+          const CustomDivider(),
     );
   }
 
