@@ -11,4 +11,10 @@ class EmailParams extends Equatable {
   List<Object?> get props => [
         email,
       ];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+    };
+  }
 }

@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:cinequest/src/core/network/model/response.dart';
-import 'package:cinequest/src/data/auth/models/requests/email_request.dart';
-import 'package:cinequest/src/data/auth/models/requests/login_request.dart';
-import 'package:cinequest/src/data/auth/models/requests/sign_up_request.dart';
-import 'package:cinequest/src/data/auth/models/requests/verify_user_request.dart';
 import 'package:cinequest/src/data/auth/models/responses/token_response.dart';
 import 'package:cinequest/src/data/auth/models/user_details_model.dart';
 import 'package:cinequest/src/data/auth/models/user_model.dart';
-import 'package:cinequest/src/data/movie/models/requests/movie_request.dart';
 import 'package:cinequest/src/data/movie/models/responses/movie_list_response.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/email_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/login_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/sign_up_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/verify_user_params.dart';
+import 'package:cinequest/src/domain/movie/usecases/params/movie_params.dart';
 import 'package:cinequest/src/external/apis/cinequest/cinequest_url.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -22,22 +22,22 @@ abstract class CineQuestApi {
 
   @POST(CineQuestUrl.loginUrl)
   Future<TokenResponse> login({
-    @Body() required LoginRequest request,
+    @Body() required LoginParams params,
   });
 
   @POST(CineQuestUrl.signUpUrl)
   Future<void> signUp({
-    @Body() required SignUpRequest request,
+    @Body() required SignUpParams params,
   });
 
   @POST(CineQuestUrl.verifyUrl)
   Future<TokenResponse> verify({
-    @Body() required VerifyUserRequest request,
+    @Body() required VerifyUserParams params,
   });
 
   @POST(CineQuestUrl.resendCodeUrl)
   Future<void> resendCode({
-    @Body() required EmailRequest request,
+    @Body() required EmailParams params,
   });
 
   @GET(CineQuestUrl.getUserUrl)
@@ -50,13 +50,13 @@ abstract class CineQuestApi {
 
   @POST(CineQuestUrl.forgotPasswordUrl)
   Future<void> forgotPassword({
-    @Body() required EmailRequest request,
+    @Body() required EmailParams params,
   });
 
   @POST(CineQuestUrl.setupAccountUrl)
   Future<UserDetailsModel> setupAccount({
     @Part(name: 'profile_photo') required File file,
-    @Part(name: 'user_details') required String request,
+    @Part(name: 'user_details') required String userDetails,
   });
 
   @GET(CineQuestUrl.getFavoritesUrl)
@@ -69,7 +69,7 @@ abstract class CineQuestApi {
   @POST(CineQuestUrl.addFavoriteUrl)
   Future<ApiResponse> addFavorite({
     @Path('user_id') required String userId,
-    @Body() required MovieRequest request,
+    @Body() required MovieParams params,
   });
 
   @POST(CineQuestUrl.deleteFavoriteUrl)

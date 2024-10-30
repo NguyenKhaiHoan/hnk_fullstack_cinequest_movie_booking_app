@@ -14,4 +14,11 @@ class LoginParams extends Equatable {
         email,
         password,
       ];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'password': password,
+    };
+  }
 }

@@ -22,4 +22,10 @@ abstract class TMDBApi {
     @Query('page') required int page,
     @Query('api_key') required String apiKey,
   });
+
+// @GET('/movie/{movie_id}')
+// Future<> getDetailMovie(
+//     {@Path('movie_id') required int movieId,
+//     @Query('api_key') required String apiKey,
+//     @Query('language') required String language});
 }

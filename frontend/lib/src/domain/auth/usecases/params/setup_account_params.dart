@@ -17,4 +17,11 @@ class SetupAccountParams extends Equatable {
         file,
         userDetailsParams,
       ];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'file': file,
+      'userDetailsParams': userDetailsParams.toJson(),
+    };
+  }
 }

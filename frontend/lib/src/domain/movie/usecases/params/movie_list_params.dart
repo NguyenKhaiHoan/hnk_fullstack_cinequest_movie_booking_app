@@ -13,4 +13,12 @@ class MovieListParams extends Equatable {
 
   @override
   List<Object?> get props => [language, page, limit];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'language': language,
+      'page': page,
+      'limit': limit,
+    };
+  }
 }

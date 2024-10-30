@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 
 abstract class CityLocalDataSource {
   Future<List<CityModel>> getCities();
-  Future<List<CityModel>> searchCity({required String request});
+  Future<List<CityModel>> searchCity({required String cityName});
 }
 
 class CityLocalDataSourceImpl implements CityLocalDataSource {
@@ -42,7 +42,7 @@ class CityLocalDataSourceImpl implements CityLocalDataSource {
   }
 
   @override
-  Future<List<CityModel>> searchCity({required String request}) async {
+  Future<List<CityModel>> searchCity({required String cityName}) async {
     try {
       await initializeCityData();
     } on Failure catch (e) {
@@ -50,7 +50,7 @@ class CityLocalDataSourceImpl implements CityLocalDataSource {
     }
 
     final filteredCities = cities.where((city) {
-      return city.name.toLowerCase().contains(request.toLowerCase());
+      return city.name.toLowerCase().contains(cityName.toLowerCase());
     }).toList();
 
     return filteredCities;
