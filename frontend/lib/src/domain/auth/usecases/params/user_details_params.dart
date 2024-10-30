@@ -23,4 +23,14 @@ class UserDetailsParams extends Equatable {
         bio,
         profilePhoto,
       ];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'username': username,
+      'name': name,
+      'surname': surname,
+      'bio': bio,
+      'profilePhoto': profilePhoto,
+    };
+  }
 }

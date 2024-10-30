@@ -45,12 +45,14 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttonStyle = buttonType == ButtonType.elevated
         ? ElevatedButton.styleFrom(
+            padding: text == null ? EdgeInsets.zero : null,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
             ),
             backgroundColor: backgroundColor,
           )
         : OutlinedButton.styleFrom(
+            padding: text == null ? EdgeInsets.zero : null,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
             ),

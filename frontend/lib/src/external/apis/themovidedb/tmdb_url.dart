@@ -7,7 +7,7 @@ class TMDBUrl {
   static const getNowPlayingMoviesUrl = '/movie/now_playing';
   static const getPopularMoviesUrl = '/movie/popular';
   static const getSimilarMoviesUrl = '/movie/{movie_id}/similar';
-  static const getDetailMovieUrl = '/movie/{movie_id}';
+  static const getDetailsMovieUrl = '/movie/{movie_id}';
   static const getCreditsMovieUrl = '/movie/{movie_id}/credits';
   static const getVideosMovieUrl = '/movie/{movie_id}/videos';
   static const searchMovieUrlUrl = '/search/movie';

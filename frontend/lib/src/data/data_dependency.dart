@@ -25,7 +25,9 @@ class DataDependency {
         ),
       )
       ..registerLazySingleton<MovieRemoteDataSource>(
-        () => MovieRemoteDataSourceImpl(tmdbApi: sl<TMDBApi>()),
+        () => MovieRemoteDataSourceImpl(
+          tmdbApi: sl<TMDBApi>(),
+        ),
       )
       ..registerLazySingleton<CityLocalDataSource>(
         CityLocalDataSourceImpl.new,

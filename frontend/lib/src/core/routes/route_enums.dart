@@ -13,7 +13,8 @@ enum AppRoutes {
   selectLocation('/selectLocation'),
   searchMovie('/searchMovie'),
   profile('/profile'),
-  setting('/setting');
+  setting('/setting'),
+  movieDetail('/movieDetail');
 
   const AppRoutes(this.path);
   final String path;

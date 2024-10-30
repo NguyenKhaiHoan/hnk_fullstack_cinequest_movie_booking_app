@@ -1,14 +1,14 @@
 import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/core/generics/type_def.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
-import 'package:cinequest/src/data/auth/datasources/_mappers/token_mapper.dart';
 import 'package:cinequest/src/data/auth/datasources/auth_remote_datasource.dart';
-import 'package:cinequest/src/data/auth/models/requests/email_request.dart';
-import 'package:cinequest/src/data/auth/models/requests/login_request.dart';
-import 'package:cinequest/src/data/auth/models/requests/sign_up_request.dart';
-import 'package:cinequest/src/data/auth/models/requests/verify_user_request.dart';
+import 'package:cinequest/src/data/auth/repositories/_mappers/token_mapper.dart';
 import 'package:cinequest/src/domain/auth/entities/token.dart';
 import 'package:cinequest/src/domain/auth/repositories/auth_repository.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/email_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/login_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/sign_up_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/verify_user_params.dart';
 import 'package:dartz/dartz.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
@@ -36,9 +36,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  FutureEither<Token> login(LoginRequest request) async {
+  FutureEither<Token> login(LoginParams params) async {
     try {
-      final result = await _authRemoteDataSource.login(request);
+      final result = await _authRemoteDataSource.login(params);
       final response = _tokenMapper.toEntity(result);
 
       // Làm mới lại toàn bộ tuyến được được lưu lại trong app
@@ -51,9 +51,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  FutureEither<void> signUp(SignUpRequest request) async {
+  FutureEither<void> signUp(SignUpParams params) async {
     try {
-      await _authRemoteDataSource.signUp(request);
+      await _authRemoteDataSource.signUp(params);
       return const Right(null);
     } on Failure catch (e) {
       return Left(e);
@@ -61,9 +61,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  FutureEither<Token> verifyUser(VerifyUserRequest request) async {
+  FutureEither<Token> verifyUser(VerifyUserParams params) async {
     try {
-      final result = await _authRemoteDataSource.verifyUser(request);
+      final result = await _authRemoteDataSource.verifyUser(params);
       final response = _tokenMapper.toEntity(result);
 
       return Right(response);
@@ -73,9 +73,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  FutureEither<void> forgotPassword(EmailRequest request) async {
+  FutureEither<void> forgotPassword(EmailParams params) async {
     try {
-      await _authRemoteDataSource.forgotPassword(request);
+      await _authRemoteDataSource.forgotPassword(params);
       return const Right(null);
     } on Failure catch (e) {
       return Left(e);
@@ -83,9 +83,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  FutureEither<void> resendCode(EmailRequest request) async {
+  FutureEither<void> resendCode(EmailParams params) async {
     try {
-      await _authRemoteDataSource.resendCode(request);
+      await _authRemoteDataSource.resendCode(params);
       return const Right(null);
     } on Failure catch (e) {
       return Left(e);

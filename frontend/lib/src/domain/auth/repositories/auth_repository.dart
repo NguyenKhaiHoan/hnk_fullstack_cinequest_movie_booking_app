@@ -1,15 +1,15 @@
 import 'package:cinequest/src/core/generics/type_def.dart';
-import 'package:cinequest/src/data/auth/models/requests/email_request.dart';
-import 'package:cinequest/src/data/auth/models/requests/login_request.dart';
-import 'package:cinequest/src/data/auth/models/requests/sign_up_request.dart';
-import 'package:cinequest/src/data/auth/models/requests/verify_user_request.dart';
 import 'package:cinequest/src/domain/auth/entities/token.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/email_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/login_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/sign_up_params.dart';
+import 'package:cinequest/src/domain/auth/usecases/params/verify_user_params.dart';
 
 abstract class AuthRepository {
-  FutureEither<void> signUp(SignUpRequest request);
-  FutureEither<Token> login(LoginRequest request);
+  FutureEither<void> signUp(SignUpParams params);
+  FutureEither<Token> login(LoginParams params);
   FutureEither<void> logOut();
-  FutureEither<Token> verifyUser(VerifyUserRequest request);
-  FutureEither<void> forgotPassword(EmailRequest request);
-  FutureEither<void> resendCode(EmailRequest request);
+  FutureEither<Token> verifyUser(VerifyUserParams params);
+  FutureEither<void> forgotPassword(EmailParams params);
+  FutureEither<void> resendCode(EmailParams params);
 }

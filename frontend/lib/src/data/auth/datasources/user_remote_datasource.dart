@@ -11,9 +11,11 @@ import 'package:dio/dio.dart';
 
 abstract class UserRemoteDataSource {
   Future<UserModel> getUser();
-  Future<UserDetailsModel> getUserDetails({required String request});
-  Future<UserDetailsModel> setupAccount(
-      {required File file, required String request});
+  Future<UserDetailsModel> getUserDetails({required String params});
+  Future<UserDetailsModel> setupAccount({
+    required File file,
+    required String userDetails,
+  });
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -40,10 +42,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
-  Future<UserDetailsModel> getUserDetails({required String request}) async {
+  Future<UserDetailsModel> getUserDetails({required String params}) async {
     if (await ConnectivityUtil.checkConnectivity()) {
       try {
-        final result = await _cineQuestApi.getUserDetails(userId: request);
+        final result = await _cineQuestApi.getUserDetails(userId: params);
         return result;
       } on DioException catch (e) {
         throw Failure(
@@ -59,13 +61,13 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<UserDetailsModel> setupAccount({
     required File file,
-    required String request,
+    required String userDetails,
   }) async {
     if (await ConnectivityUtil.checkConnectivity()) {
       try {
         final result = await _cineQuestApi.setupAccount(
           file: file,
-          request: request,
+          userDetails: userDetails,
         );
         return result;
       } on DioException catch (e) {

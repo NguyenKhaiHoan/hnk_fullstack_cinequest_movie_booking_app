@@ -3,5 +3,5 @@ import 'package:cinequest/src/domain/location/entities/city.dart';
 
 abstract class CityRepository {
   FutureEither<List<City>> getCities();
-  FutureEither<List<City>> searchCity(String request);
+  FutureEither<List<City>> searchCity(String params);
 }

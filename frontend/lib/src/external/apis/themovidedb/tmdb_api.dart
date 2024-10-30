@@ -1,3 +1,4 @@
+import 'package:cinequest/src/data/movie/models/movie_details_model.dart';
 import 'package:cinequest/src/data/movie/models/responses/movie_list_response.dart';
 import 'package:cinequest/src/external/apis/themovidedb/tmdb_url.dart';
 import 'package:dio/dio.dart';
@@ -22,4 +23,10 @@ abstract class TMDBApi {
     @Query('page') required int page,
     @Query('api_key') required String apiKey,
   });
+
+  @GET(TMDBUrl.getDetailsMovieUrl)
+  Future<MovieDetailsModel> getDetailsMovie(
+      {@Path('movie_id') required int movieId,
+      @Query('api_key') required String apiKey,
+      @Query('language') required String language});
 }

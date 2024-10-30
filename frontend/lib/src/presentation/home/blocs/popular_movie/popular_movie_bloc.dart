@@ -9,18 +9,17 @@ part 'popular_movie_bloc.freezed.dart';
 part 'popular_movie_event.dart';
 part 'popular_movie_state.dart';
 
-/// Quản lý trạng thái lấy dữ liệu danh sách movie phổ biến
 class PopularMovieBloc extends Bloc<PopularMovieEvent, PopularMovieState> {
   PopularMovieBloc(this._useCase) : super(const PopularMovieState.loading()) {
-    on<PopularMovieEvent>((events, emit) async {
-      await events.map(get: (event) => _onGet(event, emit));
+    on<PopularMovieEvent>((event, emit) async {
+      await event.map(get: (e) => _onGet(e, emit));
     });
   }
 
   final GetPopularMoviesUseCase _useCase;
 
   Future<void> _onGet(
-    EventGetPopularMovie event,
+    _PopularMovieGetEvent e,
     Emitter<PopularMovieState> emit,
   ) async {
     final result = await _useCase.call(params: const MovieListParams());

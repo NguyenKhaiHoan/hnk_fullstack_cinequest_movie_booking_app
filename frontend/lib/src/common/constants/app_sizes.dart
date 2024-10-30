@@ -27,12 +27,13 @@ class AppSizes {
   static const double imagePopularCarouselHeight = 200;
 
   // Spacing
-  static const double defaultSpace = 24;
+  static const double defaultSpace = 16;
 
   // Border Radius
   static const double borderRadiusSm = 4;
   static const double borderRadiusMd = 8;
   static const double borderRadiusLg = 12;
+  static const double borderRadiusXl = 36;
 
   // Loading Indicator Size
   static const double loadingIndicatorSize = 36;

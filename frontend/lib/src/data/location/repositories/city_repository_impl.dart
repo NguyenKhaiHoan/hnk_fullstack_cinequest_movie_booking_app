@@ -1,7 +1,7 @@
 import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/core/generics/type_def.dart';
-import 'package:cinequest/src/data/location/datasources/_mappers/city_mapper.dart';
 import 'package:cinequest/src/data/location/datasources/city_local_datasource.dart';
+import 'package:cinequest/src/data/location/repositories/_mappers/city_mapper.dart';
 import 'package:cinequest/src/domain/location/entities/city.dart';
 import 'package:cinequest/src/domain/location/repositories/city_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -25,9 +25,9 @@ class CityRepositoryImpl implements CityRepository {
   }
 
   @override
-  FutureEither<List<City>> searchCity(String request) async {
+  FutureEither<List<City>> searchCity(String params) async {
     try {
-      final result = await _cityLocalDataSource.searchCity(request: request);
+      final result = await _cityLocalDataSource.searchCity(cityName: params);
       return Right(result.map(_cityMapper.toEntity).toList());
     } on Failure catch (e) {
       return Left(e);

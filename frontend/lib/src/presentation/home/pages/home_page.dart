@@ -68,6 +68,7 @@ class _PageState extends State<_Page> with _PageMixin {
             CarouselNowPlayingMovie(),
             gapH48,
             CarouselPopularMovie(),
+            gapH48,
           ],
         ),
       ),

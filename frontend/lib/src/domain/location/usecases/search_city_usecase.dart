@@ -9,7 +9,6 @@ class SearchCityUseCase extends UseCase<List<City>, String> {
 
   @override
   FutureEither<List<City>> call({String? params}) {
-    final request = params!;
-    return _cityRepository.searchCity(request);
+    return _cityRepository.searchCity(params!);
   }
 }
