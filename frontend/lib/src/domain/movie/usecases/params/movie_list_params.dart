@@ -1,10 +1,11 @@
+import 'package:cinequest/src/common/constants/app_constant.dart';
 import 'package:equatable/equatable.dart';
 
 class MovieListParams extends Equatable {
   const MovieListParams({
-    this.language = 'en-US',
-    this.page = 1,
-    this.limit = 20,
+    this.language = AppConstant.defaultLanguage,
+    this.page = AppConstant.defaultPage,
+    this.limit = AppConstant.defaultLimit,
   });
 
   final String language;

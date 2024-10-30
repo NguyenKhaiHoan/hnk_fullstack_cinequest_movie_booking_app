@@ -11,6 +11,7 @@ import 'package:cinequest/src/presentation/home/pages/home_page.dart';
 import 'package:cinequest/src/presentation/location/pages/finding_location_page.dart';
 import 'package:cinequest/src/presentation/location/pages/invalid_location_page.dart';
 import 'package:cinequest/src/presentation/location/pages/select_location_page.dart';
+import 'package:cinequest/src/presentation/movie_detail/pages/movie_details_page.dart';
 import 'package:cinequest/src/presentation/navigation/pages/navigation_page.dart';
 import 'package:cinequest/src/presentation/profile/pages/profile_page.dart';
 import 'package:cinequest/src/presentation/search/pages/search_movie_page.dart';
@@ -178,6 +179,20 @@ final class RouterPages {
           child: const SettingPage(),
           direction: PageTransitionDirection.right,
         ),
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '${AppRoutes.movieDetail.path}/:movieId',
+        name: AppRoutes.movieDetail.path,
+        builder: (context, state) => MovieDetailPage(
+          movieId: int.parse(state.pathParameters['movieId']!),
+        ),
+        pageBuilder: (context, state) => PageTransitionUtil.customPageBuilder(
+          child: MovieDetailPage(
+            movieId: int.parse(state.pathParameters['movieId']!),
+          ),
+          fadeTransition: true,
+        )(context, state),
       ),
     ],
   );

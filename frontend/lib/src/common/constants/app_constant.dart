@@ -15,4 +15,8 @@ class AppConstant {
       'assets/animations/invalid_location_animation.json';
   static const findingLocationAnimationPath =
       'assets/animations/finding_location_animation.json';
+
+  static const defaultLanguage = 'en-US';
+  static const defaultPage = 1;
+  static const defaultLimit = 20;
 }

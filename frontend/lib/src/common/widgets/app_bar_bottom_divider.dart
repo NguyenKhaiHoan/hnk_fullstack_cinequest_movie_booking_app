@@ -1,3 +1,4 @@
+import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class AppBarBottomDivider extends StatelessWidget
     this.actions,
     this.onBackTap,
     this.hasBottom,
+    this.backgroundColor,
   });
 
   final Widget? leading;
@@ -20,10 +22,12 @@ class AppBarBottomDivider extends StatelessWidget
   final void Function()? onBackTap;
   final double? appBarHeight;
   final bool? hasBottom;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: backgroundColor ?? AppColors.black,
       leadingWidth: leadingWidth,
       leading: leading,
       actions: actions,

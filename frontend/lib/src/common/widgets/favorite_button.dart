@@ -1,6 +1,7 @@
 import 'package:cinequest/gen/assets.gen.dart';
 import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/blocs/buttton/button_bloc.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/custom_button.dart';
 import 'package:cinequest/src/domain/movie/entities/movie.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class FavoriteButton extends StatelessWidget {
       child: BlocBuilder<ButtonBloc, ButtonState>(
         builder: (context, state) {
           return CustomButton(
+            width: AppSizes.buttonHeight,
             buttonType: isFavorite ? ButtonType.elevated : ButtonType.outlined,
             colorFilter: isFavorite
                 ? const ColorFilter.mode(AppColors.black, BlendMode.srcIn)

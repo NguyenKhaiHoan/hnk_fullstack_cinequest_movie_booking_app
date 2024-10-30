@@ -5,6 +5,7 @@ import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/date_time_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/core/routes/route_enums.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:cinequest/src/domain/movie/entities/movie.dart';
 import 'package:cinequest/src/presentation/home/blocs/now_playing_movie/now_playing_movie_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:cinequest/src/presentation/home/widgets/carrousel_box.dart';
 import 'package:cinequest/src/presentation/home/widgets/now_playing_movie_carousel_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 part '_mixins/carousel_now_playing_movie.mixin.dart';
 
@@ -62,12 +64,16 @@ class _CarouselNowPlayingMovieState extends State<CarouselNowPlayingMovie>
       maxHeight: 500,
       children: List.generate(
         data.length,
-        (index) => NowPlayingMovieCarouselItem(
-          movie: data[index],
-          favoriteMovies: data,
-          listener: _listener,
-          toggleFavorite: _toggleFavorite,
-          isFavorite: false,
+        (index) => GestureDetector(
+          onTap: () => context.pushNamed(AppRoutes.movieDetail.path,
+              pathParameters: {'movieId': data[index].id!.toString()}),
+          child: NowPlayingMovieCarouselItem(
+            movie: data[index],
+            favoriteMovies: data,
+            listener: _listener,
+            toggleFavorite: _toggleFavorite,
+            isFavorite: false,
+          ),
         ),
       ),
     );

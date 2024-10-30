@@ -1,11 +1,10 @@
 import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/blocs/buttton/button_bloc.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
-import 'package:cinequest/src/common/widgets/custom_button.dart';
-import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/common/widgets/favorite_button.dart';
+import 'package:cinequest/src/common/widgets/tickets_button.dart';
 import 'package:cinequest/src/domain/movie/entities/movie.dart';
 import 'package:cinequest/src/external/apis/themovidedb/tmdb_url.dart';
-import 'package:cinequest/src/presentation/home/widgets/favorite_button.dart';
 import 'package:flutter/material.dart';
 
 class NowPlayingMovieCarouselItem extends StatelessWidget {
@@ -55,11 +54,7 @@ class NowPlayingMovieCarouselItem extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  CustomButton(
-                    buttonType: ButtonType.elevated,
-                    text: 'Tickets'.toUpperCase().hardcoded,
-                    textColor: AppColors.black,
-                  ),
+                  const TicketsButton(),
                   const Spacer(),
                   FavoriteButton(
                     movie: movie,

@@ -13,15 +13,15 @@ class NowPlayingMovieBloc
     extends Bloc<NowPlayingMovieEvent, NowPlayingMovieState> {
   NowPlayingMovieBloc(this._useCase)
       : super(const NowPlayingMovieState.loading()) {
-    on<NowPlayingMovieEvent>((events, emit) async {
-      await events.map(get: (event) => _onGet(event, emit));
+    on<NowPlayingMovieEvent>((event, emit) async {
+      await event.map(get: (e) => _onGet(e, emit));
     });
   }
 
   final GetNowPlayingMoviesUseCase _useCase;
 
   Future<void> _onGet(
-    EventGetNowPlayingMovie event,
+    _NowPlayingMovieGetEvent e,
     Emitter<NowPlayingMovieState> emit,
   ) async {
     final result = await _useCase.call(params: const MovieListParams());

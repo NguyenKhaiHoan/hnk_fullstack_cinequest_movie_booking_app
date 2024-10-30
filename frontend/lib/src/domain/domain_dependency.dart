@@ -21,6 +21,7 @@ import 'package:cinequest/src/domain/location/repositories/city_repository.dart'
 import 'package:cinequest/src/domain/location/usecases/get_cities_usecase.dart';
 import 'package:cinequest/src/domain/location/usecases/search_city_usecase.dart';
 import 'package:cinequest/src/domain/movie/repositories/movie_repository.dart';
+import 'package:cinequest/src/domain/movie/usecases/get_details_movie_usecase.dart';
 import 'package:cinequest/src/domain/movie/usecases/get_now_playing_movies_usecase.dart';
 import 'package:cinequest/src/domain/movie/usecases/get_popular_movie_usecase.dart';
 
@@ -99,6 +100,11 @@ class DomainDependency {
       )
       ..registerLazySingleton<GetNowPlayingMoviesUseCase>(
         () => GetNowPlayingMoviesUseCase(
+          sl<MovieRepository>(),
+        ),
+      )
+      ..registerLazySingleton<GetDetailsMovieUseCase>(
+        () => GetDetailsMovieUseCase(
           sl<MovieRepository>(),
         ),
       )

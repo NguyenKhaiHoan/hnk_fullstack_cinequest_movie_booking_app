@@ -4,12 +4,12 @@ import 'package:cinequest/src/data/movie/models/production_country_model.dart';
 import 'package:cinequest/src/data/movie/models/spoken_language_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'movie_detail_model.freezed.dart';
-part 'movie_detail_model.g.dart';
+part 'movie_details_model.freezed.dart';
+part 'movie_details_model.g.dart';
 
 @freezed
-class MovieDetail with _$MovieDetail {
-  const factory MovieDetail({
+class MovieDetailsModel with _$MovieDetailsModel {
+  const factory MovieDetailsModel({
     required bool adult,
     @JsonKey(name: 'backdrop_path') required String backdropPath,
     required int budget,
@@ -38,8 +38,8 @@ class MovieDetail with _$MovieDetail {
     required bool video,
     @JsonKey(name: 'vote_average') required double voteAverage,
     @JsonKey(name: 'vote_count') required int voteCount,
-  }) = _MovieDetail;
+  }) = _MovieDetailsModel;
 
-  factory MovieDetail.fromJson(Map<String, dynamic> json) =>
-      _$MovieDetailFromJson(json);
+  factory MovieDetailsModel.fromJson(Map<String, dynamic> json) =>
+      _$MovieDetailsModelFromJson(json);
 }

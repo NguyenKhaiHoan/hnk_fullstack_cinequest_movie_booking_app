@@ -13,6 +13,7 @@ class CustomCircleButton extends StatelessWidget {
     this.onPressed,
     this.colorFilter,
     this.notNeedColorFilter = false,
+    this.backgroundColor,
   });
 
   final String iconPath;
@@ -22,6 +23,7 @@ class CustomCircleButton extends StatelessWidget {
   final void Function()? onPressed;
   final ColorFilter? colorFilter;
   final bool notNeedColorFilter;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +34,9 @@ class CustomCircleButton extends StatelessWidget {
         height: buttonSize,
         width: buttonSize,
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: AppColors.blackOlive),
-        ),
+            shape: BoxShape.circle,
+            border: Border.all(color: AppColors.blackOlive),
+            color: backgroundColor ?? Colors.transparent),
         child: Padding(
           padding: EdgeInsets.all(buttonSize * 12.0 / AppSizes.buttonHeight),
           child: SvgIcon(
