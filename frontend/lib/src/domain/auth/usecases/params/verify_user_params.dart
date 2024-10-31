@@ -18,7 +18,7 @@ class VerifyUserParams extends Equatable {
   Map<String, dynamic> toJson() {
     return {
       'email': email,
-      'verificationCode': verificationCode,
+      'verification_code': verificationCode,
     };
   }
 }

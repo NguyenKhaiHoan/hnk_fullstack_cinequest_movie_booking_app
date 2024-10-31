@@ -22,7 +22,7 @@ class SignUpParams extends Equatable {
     return {
       'email': email,
       'password': password,
-      'confirmPassword': confirmPassword,
+      'confirm_password': confirmPassword,
     };
   }
 }

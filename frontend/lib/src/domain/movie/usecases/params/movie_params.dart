@@ -51,22 +51,22 @@ class MovieParams extends Equatable {
         voteCount,
       ];
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'adult': adult,
-      'backdropPath': backdropPath,
+      'backdrop_path': backdropPath,
       'genreIds': genreIds,
       'id': id,
-      'originalLanguage': originalLanguage,
-      'originalTitle': originalTitle,
+      'original_language': originalLanguage,
+      'original_title': originalTitle,
       'overview': overview,
       'popularity': popularity,
-      'posterPath': posterPath,
-      'releaseDate': releaseDate,
+      'poster_path': posterPath,
+      'release_date': releaseDate,
       'title': title,
       'video': video,
-      'voteAverage': voteAverage,
-      'voteCount': voteCount,
+      'vote_average': voteAverage,
+      'vote_count': voteCount,
     };
   }
 }
