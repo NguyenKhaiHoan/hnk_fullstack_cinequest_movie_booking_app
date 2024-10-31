@@ -35,7 +35,7 @@ class CityLocalDataSourceImpl implements CityLocalDataSource {
   Future<List<CityModel>> getCities() async {
     try {
       await initializeCityData();
-    } on Failure catch (e) {
+    } on Failure {
       rethrow;
     }
     return cities;
@@ -45,7 +45,7 @@ class CityLocalDataSourceImpl implements CityLocalDataSource {
   Future<List<CityModel>> searchCity({required String cityName}) async {
     try {
       await initializeCityData();
-    } on Failure catch (e) {
+    } on Failure {
       rethrow;
     }
 

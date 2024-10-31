@@ -4,18 +4,22 @@ import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/app_bar_bottom_divider.dart';
 import 'package:cinequest/src/common/widgets/custom_circle_button.dart';
 import 'package:cinequest/src/common/widgets/padding_app_bar.dart';
-import 'package:cinequest/src/common/widgets/tickets_button.dart';
 import 'package:cinequest/src/core/di/injection_container.dart';
-import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/date_time_extension.dart';
 import 'package:cinequest/src/core/extensions/int_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
-import 'package:cinequest/src/core/utils/ui_util.dart';
-import 'package:cinequest/src/external/apis/themovidedb/tmdb_url.dart';
-import 'package:cinequest/src/presentation/movie_detail/blocs/details_movie_bloc.dart';
+import 'package:cinequest/src/presentation/movie_detail/blocs/details_movie/details_movie_bloc.dart';
+import 'package:cinequest/src/presentation/movie_detail/blocs/trailers_movie/trailers_movie_bloc.dart';
+import 'package:cinequest/src/presentation/movie_detail/widgets/cast_crew_tab_view.dart';
+import 'package:cinequest/src/presentation/movie_detail/widgets/movie_detail_content.dart';
+import 'package:cinequest/src/presentation/movie_detail/widgets/movie_detail_image.dart';
+import 'package:cinequest/src/presentation/movie_detail/widgets/movie_detail_trailer.dart';
+import 'package:contentsize_tabbarview/contentsize_tabbarview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+part '_mixins/movie_details_page.mixin.dart';
 
 class MovieDetailPage extends StatelessWidget {
   const MovieDetailPage({required this.movieId, super.key});
@@ -24,9 +28,19 @@ class MovieDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          DetailsMovieBloc(sl())..add(DetailsMovieEvent.get(movieId: movieId)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => DetailsMovieBloc(sl())
+            ..add(DetailsMovieEvent.get(movieId: movieId)),
+        ),
+        BlocProvider(
+          create: (context) => TrailersMovieBloc(sl())
+            ..add(
+              TrailersMovieEvent.get(movieId: movieId),
+            ),
+        ),
+      ],
       child: _Page(movieId: movieId),
     );
   }
@@ -41,7 +55,16 @@ class _Page extends StatefulWidget {
   State<_Page> createState() => _PageState();
 }
 
-class _PageState extends State<_Page> {
+class _PageState extends State<_Page>
+    with _PageMixin, TickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DetailsMovieBloc, DetailsMovieState>(
@@ -61,73 +84,63 @@ class _PageState extends State<_Page> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Stack(
-                      children: [
-                        Container(
-                          height: UiUtil.deviceHeight * 2 / 3,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(AppSizes.borderRadiusXl),
-                            color: AppColors.eerieBlack,
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                TMDBUrl.imageBaseUrl +
-                                    movieDetails.backdropPath,
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: AppSizes.defaultSpace,
-                          right: AppSizes.defaultSpace,
-                          left: AppSizes.defaultSpace,
-                          child: Row(
-                            children: [
-                              const TicketsButton(),
-                              gapW8,
-                              const Spacer(),
-                              CustomCircleButton(
-                                iconPath: AppAssets.images.export.path,
-                                onPressed: () => context.pop(),
-                                backgroundColor: AppColors.black,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    MovieDetailImage(backdropPath: movieDetails.backdropPath),
+                    gapH16,
                     Padding(
-                      padding: const EdgeInsets.all(AppSizes.defaultSpace),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppSizes.defaultSpace),
                       child: Column(
                         children: [
-                          Text(
-                            '${DateTime.parse(movieDetails.releaseDate).formatToMMMDD()}   ·   ${movieDetails.runtime.formatMinutes()}   ·   ${movieDetails.originCountry.join(', ')}   ·   ★ ${movieDetails.voteAverage}'
-                                .toUpperCase(),
-                            style: context.textTheme.bodySmall!
-                                .copyWith(color: AppColors.dimGray),
-                          ),
-                          gapH32,
-                          Text(
-                            movieDetails.title,
-                            style: context.textTheme.headlineMedium,
-                            textAlign: TextAlign.center,
-                          ),
-                          gapH32,
-                          Text(
-                            movieDetails.overview,
-                            textAlign: TextAlign.center,
-                          ),
-                          gapH32,
-                          Text(
-                            movieDetails.genres
+                          MovieDetailContent(
+                            releaseDate:
+                                DateTime.parse(movieDetails.releaseDate)
+                                    .formatToMMMDD(),
+                            runtime: movieDetails.runtime.formatMinutes(),
+                            originCountry:
+                                movieDetails.originCountry.join(', '),
+                            voteAverage: '★ ${movieDetails.voteAverage}',
+                            title: movieDetails.title,
+                            overview: movieDetails.overview,
+                            genres: movieDetails.genres
                                 .map((e) => e.name)
-                                .join(', ')
-                                .toUpperCase(),
-                            style: context.textTheme.bodySmall!
-                                .copyWith(color: AppColors.dimGray),
-                            textAlign: TextAlign.center,
+                                .join(', '),
                           ),
+                        ],
+                      ),
+                    ),
+                    gapH16,
+                    const MovieDetailsTrailer(),
+                    gapH16,
+                    TabBar(
+                      labelColor: AppColors.white,
+                      unselectedLabelColor: AppColors.dimGray,
+                      controller: _tabController,
+                      indicatorColor: AppColors.white,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      indicatorPadding: const EdgeInsets.all(10),
+                      indicatorWeight: 1,
+                      indicator: UnderlineTabIndicator(
+                        borderRadius: BorderRadius.circular(
+                          AppSizes.borderRadiusMd,
+                        ),
+                      ),
+                      tabs: [
+                        Tab(
+                          text: 'Sessions'.hardcoded.toUpperCase(),
+                        ),
+                        Tab(text: 'Cast & Grew'.hardcoded.toUpperCase()),
+                        Tab(text: 'Ratings'.hardcoded.toUpperCase())
+                      ],
+                    ),
+                    gapH32,
+                    DefaultTabController(
+                      length: 3,
+                      child: ContentSizeTabBarView(
+                        controller: _tabController,
+                        children: [
+                          const Center(child: Text('Tab 1 Content')),
+                          CastCrewTabView(movieId: movieDetails.id),
+                          const Center(child: Text('Tab 3 Content')),
                         ],
                       ),
                     ),

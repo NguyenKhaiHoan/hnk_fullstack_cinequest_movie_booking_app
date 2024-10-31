@@ -4,7 +4,8 @@ import 'package:cinequest/src/core/network/model/response.dart';
 import 'package:cinequest/src/data/auth/models/responses/token_response.dart';
 import 'package:cinequest/src/data/auth/models/user_details_model.dart';
 import 'package:cinequest/src/data/auth/models/user_model.dart';
-import 'package:cinequest/src/data/movie/models/responses/movie_list_response.dart';
+import 'package:cinequest/src/data/movie/models/movie_model.dart';
+import 'package:cinequest/src/data/movie/models/responses/list_response.dart';
 import 'package:cinequest/src/domain/auth/usecases/params/email_params.dart';
 import 'package:cinequest/src/domain/auth/usecases/params/login_params.dart';
 import 'package:cinequest/src/domain/auth/usecases/params/sign_up_params.dart';
@@ -60,7 +61,7 @@ abstract class CineQuestApi {
   });
 
   @GET(CineQuestUrl.getFavoritesUrl)
-  Future<MovieListResponse> getFavorites({
+  Future<ListResponse<MovieModel>> getFavorites({
     @Query('language') required String language,
     @Query('page') required int page,
     @Query('limit') required int limit,

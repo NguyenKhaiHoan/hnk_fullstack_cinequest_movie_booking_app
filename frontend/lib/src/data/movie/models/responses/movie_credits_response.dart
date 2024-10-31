@@ -6,13 +6,13 @@ part 'movie_credits_response.freezed.dart';
 part 'movie_credits_response.g.dart';
 
 @freezed
-class MovieCreditsPersonResponse with _$MovieCreditsPersonResponse {
-  const factory MovieCreditsPersonResponse({
+class MovieCreditsResponse with _$MovieCreditsResponse {
+  const factory MovieCreditsResponse({
     required List<CreditsCastModel> cast,
     required List<CreditsCrewModel> crew,
     int? id,
-  }) = _MovieCreditsPersonResponse;
+  }) = _MovieCreditsResponse;
 
-  factory MovieCreditsPersonResponse.fromJson(Map<String, dynamic> json) =>
-      _$MovieCreditsPersonResponseFromJson(json);
+  factory MovieCreditsResponse.fromJson(Map<String, dynamic> json) =>
+      _$MovieCreditsResponseFromJson(json);
 }

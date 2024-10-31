@@ -10,5 +10,6 @@ class TMDBUrl {
   static const getDetailsMovieUrl = '/movie/{movie_id}';
   static const getCreditsMovieUrl = '/movie/{movie_id}/credits';
   static const getVideosMovieUrl = '/movie/{movie_id}/videos';
+  static const getReviewsMovieUrl = '/movie/{movie_id}/reviews';
   static const searchMovieUrlUrl = '/search/movie';
 }
