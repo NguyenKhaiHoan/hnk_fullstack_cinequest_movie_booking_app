@@ -47,6 +47,8 @@ const gapW8 = SizedBox(width: 8);
 const gapW16 = SizedBox(width: 16);
 const gapW24 = SizedBox(width: 24);
 const gapW32 = SizedBox(width: 32);
+const gapW48 = SizedBox(width: 48);
+const gapW62 = SizedBox(width: 62);
 
 // Các khoảng cách dọc
 const gapH4 = SizedBox(height: 4);

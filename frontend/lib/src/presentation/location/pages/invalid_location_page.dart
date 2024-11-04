@@ -1,5 +1,6 @@
 import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/blocs/app/app_bloc.dart';
+import 'package:cinequest/src/common/blocs/buttton/button_bloc.dart';
 import 'package:cinequest/src/common/blocs/location/location_bloc.dart';
 import 'package:cinequest/src/common/constants/app_constant.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
@@ -22,17 +23,24 @@ class InvalidLocationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LocationBloc(
-        locationStreamService: sl(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => LocationBloc(
+            locationStreamService: sl(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => ButtonBloc(),
+        ),
+      ],
       child: const _Page(),
     );
   }
 }
 
 class _Page extends StatefulWidget {
-  const _Page({super.key});
+  const _Page();
 
   @override
   State<_Page> createState() => _PageState();

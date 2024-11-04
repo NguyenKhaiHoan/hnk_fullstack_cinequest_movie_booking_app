@@ -5,7 +5,7 @@ class ConnectivityService {
 
   Future<bool> isConnected() async {
     final connectivityResult = await _connectivity.checkConnectivity();
-    return connectivityResult.first != ConnectivityResult.none;
+    return connectivityResult.last != ConnectivityResult.none;
   }
 
   Stream<List<ConnectivityResult>> get connectivityStream =>

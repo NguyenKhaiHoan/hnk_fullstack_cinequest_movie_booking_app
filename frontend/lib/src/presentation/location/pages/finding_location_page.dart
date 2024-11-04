@@ -15,7 +15,7 @@ class FindingLocationPage extends StatelessWidget {
 }
 
 class _Page extends StatefulWidget {
-  const _Page({super.key});
+  const _Page();
 
   @override
   State<_Page> createState() => _PageState();
@@ -39,8 +39,9 @@ class _PageState extends State<_Page> with _PageMixin {
         if (composition != null) {
           return Lottie(
             composition: composition,
-            width: 400,
-            height: 400,
+            width: 300,
+            height: 300,
+            fit: BoxFit.cover,
           );
         } else {
           return const Center(

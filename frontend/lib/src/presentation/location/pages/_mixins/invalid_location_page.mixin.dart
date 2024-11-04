@@ -10,11 +10,7 @@ mixin _PageMixin on State<_Page> {
   }
 
   Future<void> _resetLocation() async {
-    final position = await sl<LocationService>().getGeoLocationPosition();
-    final latitude = position.latitude;
-    final longitude = position.longitude;
-    final newLocation = LatLng(latitude, longitude);
-    sl<LocationStreamService>().updateLocation(newLocation);
+    // context.read<ButtonBloc>().add(ButtonEvent.execute(useCase: useCase));
   }
 
   void _listenerResetLocationButton(
